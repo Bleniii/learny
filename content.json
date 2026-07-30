@@ -1,0 +1,222 @@
+{
+  "version": 1,
+  "topics": [
+    {
+      "id": "bits_bytes",
+      "title": "Bits & Bytes",
+      "description": "Die kleinsten Einheiten der digitalen Datenspeicherung",
+      "sections": [
+        {
+          "heading": "Bit (Binary Digit)",
+          "content": "Das kleinste Datenelement in der Informatik. Ein Bit kann nur zwei Zustände annehmen: 0 oder 1 — entsprechend False/True, Aus/An, Nein/Ja."
+        },
+        {
+          "heading": "Byte",
+          "content": "Besteht aus 8 Bits und kann 256 verschiedene Werte darstellen (2⁸ = 256). Wird typischerweise verwendet, um ein einzelnes Zeichen darzustellen."
+        },
+        {
+          "heading": "Gängige Umrechnungen",
+          "content": "1 Byte = 8 Bit · 1 Kilobyte (KB) = 1.024 Byte · 1 Megabyte (MB) = 1.024 KB · 1 Gigabyte (GB) = 1.024 MB · 1 Terabyte (TB) = 1.024 GB"
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "question": "Wie viele Bits hat ein Byte?",
+          "type": "choice",
+          "options": ["4", "8", "16", "1024"],
+          "answer": ["8"],
+          "explanation": "Ein Byte besteht aus 8 Bit."
+        },
+        {
+          "id": 1,
+          "question": "Wie viele Byte hat ein Kilobyte?",
+          "type": "choice",
+          "options": ["100", "512", "1024", "2048"],
+          "answer": ["1024"],
+          "explanation": "1 KB = 1.024 Byte. Die Zahl kommt aus dem Binärsystem: 2¹⁰ = 1.024."
+        },
+        {
+          "id": 2,
+          "question": "Wie viele verschiedene Werte kann ein Byte darstellen?",
+          "type": "choice",
+          "options": ["8", "64", "256", "1024"],
+          "answer": ["256"],
+          "explanation": "8 Bit ergeben 2⁸ = 256 mögliche Kombinationen."
+        },
+        {
+          "id": 3,
+          "question": "Welche zwei Zustände kann ein Bit annehmen?",
+          "type": "choice",
+          "options": ["0 und 1", "-1 und 1", "A und B", "an, aus und neutral"],
+          "answer": ["0 und 1"],
+          "explanation": "Ein Bit kennt genau zwei Zustände: 0 oder 1. Alles andere im Rechner wird daraus zusammengesetzt."
+        },
+        {
+          "id": 4,
+          "question": "Wofür steht die Abkürzung Bit?",
+          "type": "text",
+          "answer": ["binary digit", "binärziffer"],
+          "explanation": "Bit ist die Kurzform von Binary Digit, also Binärziffer."
+        }
+      ]
+    },
+    {
+      "id": "osi_model",
+      "title": "OSI-Schichtenmodell",
+      "description": "Das Rahmenwerk, mit dem sich Netzwerkprotokolle einordnen lassen",
+      "sections": [
+        {
+          "heading": "Was ist das OSI-Modell?",
+          "content": "Das OSI-Modell (Open Systems Interconnection) ist ein konzeptionelles Rahmenwerk, das erklärt, wie Netzwerkprotokolle zusammenarbeiten. Es hat 7 Schichten, von der Verkabelung bis zur Anwendung."
+        },
+        {
+          "heading": "Schicht 1 — Physical Layer",
+          "content": "Überträgt rohe Bitströme über ein physisches Medium. Zuständig für Kabel, Stecker und elektrische Signale."
+        },
+        {
+          "heading": "Schicht 2 — Data Link Layer",
+          "content": "Ermöglicht die Datenübertragung von Knoten zu Knoten. Verarbeitet MAC-Adressen und Switching."
+        },
+        {
+          "heading": "Schicht 3 — Network Layer",
+          "content": "Leitet Daten zwischen verschiedenen Netzwerken weiter. Nutzt IP-Adressen und Router."
+        },
+        {
+          "heading": "Schicht 4 — Transport Layer",
+          "content": "Verwaltet die Ende-zu-Ende-Kommunikation. Protokolle: TCP (zuverlässig) und UDP (schnell)."
+        },
+        {
+          "heading": "Schicht 5 — Session Layer",
+          "content": "Verwaltet Verbindungen zwischen Anwendungen. Behandelt Sitzungsauf- und -abbau."
+        },
+        {
+          "heading": "Schicht 6 — Presentation Layer",
+          "content": "Übersetzt Datenformate und behandelt Verschlüsselung und Entschlüsselung."
+        },
+        {
+          "heading": "Schicht 7 — Application Layer",
+          "content": "Direkte Schnittstelle zu Endbenutzeranwendungen. Protokolle: HTTP, HTTPS, FTP, SMTP, DNS."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "question": "Wie viele Schichten hat das OSI-Modell?",
+          "type": "text",
+          "answer": ["7", "sieben"],
+          "explanation": "Sieben: Physical, Data Link, Network, Transport, Session, Presentation, Application."
+        },
+        {
+          "id": 1,
+          "question": "Welche Schicht nutzt IP-Adressen und Router?",
+          "type": "choice",
+          "options": ["Data Link", "Network", "Transport", "Session"],
+          "answer": ["network"],
+          "explanation": "Der Network Layer (Schicht 3) leitet Pakete zwischen Netzwerken weiter und nutzt dafür IP-Adressen."
+        },
+        {
+          "id": 2,
+          "question": "Welche Schicht verarbeitet MAC-Adressen und Switching?",
+          "type": "choice",
+          "options": ["Physical", "Data Link", "Network", "Application"],
+          "answer": ["data link"],
+          "explanation": "Der Data Link Layer (Schicht 2) regelt die Kommunikation zwischen direkt verbundenen Geräten."
+        },
+        {
+          "id": 3,
+          "question": "Welche Schicht überträgt rohe Bitströme über Kabel und Stecker?",
+          "type": "choice",
+          "options": ["Physical", "Data Link", "Presentation", "Transport"],
+          "answer": ["physical"],
+          "explanation": "Der Physical Layer (Schicht 1) ist die Ebene der Signale und Leitungen."
+        },
+        {
+          "id": 4,
+          "question": "Auf welcher Schicht arbeiten TCP und UDP? (Name oder Nummer)",
+          "type": "text",
+          "answer": ["4", "vier", "transport", "transport layer", "schicht 4"],
+          "explanation": "Transport Layer, Schicht 4. TCP ist zuverlässig, UDP ist schnell."
+        },
+        {
+          "id": 5,
+          "question": "Auf welcher Schicht arbeitet HTTP? (Name oder Nummer)",
+          "type": "text",
+          "answer": ["7", "sieben", "application", "application layer", "schicht 7"],
+          "explanation": "Application Layer, Schicht 7 — genauso wie HTTPS, FTP, SMTP und DNS."
+        }
+      ]
+    },
+    {
+      "id": "network_components",
+      "title": "Netzwerkkomponenten",
+      "description": "Switch, Router, Firewall und die anderen Geräte im Netz",
+      "sections": [
+        {
+          "heading": "Switch",
+          "content": "Verbindet Geräte innerhalb eines lokalen Netzwerks. Arbeitet auf Schicht 2 (Data Link Layer) und nutzt MAC-Adressen."
+        },
+        {
+          "heading": "Router",
+          "content": "Verbindet verschiedene Netzwerke. Arbeitet auf Schicht 3 (Network Layer), nutzt IP-Adressen und Routing-Tabellen."
+        },
+        {
+          "heading": "Firewall",
+          "content": "Netzwerksicherheitsgerät, das den Datenverkehr überwacht und kontrolliert. Arbeitet auf den Schichten 3 bis 7. Es gibt sie als Hardware und als Software."
+        },
+        {
+          "heading": "Access Point",
+          "content": "Ermöglicht drahtlosen Geräten die Verbindung zu einem Netzwerk. Wandelt elektrische Signale in Funkwellen um. Arbeitet auf Schicht 1 und 2."
+        },
+        {
+          "heading": "NIC (Netzwerkkarte)",
+          "content": "Hardwarekomponente, die einem Computer die Netzwerkverbindung ermöglicht. Besitzt eine eindeutige MAC-Adresse. Arbeitet auf Schicht 2."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "question": "Auf welcher Schicht arbeitet ein Switch? (Name oder Nummer)",
+          "type": "text",
+          "answer": ["2", "zwei", "schicht 2", "layer 2", "data link"],
+          "explanation": "Schicht 2, Data Link Layer. Ein Switch leitet anhand von MAC-Adressen weiter."
+        },
+        {
+          "id": 1,
+          "question": "Auf welcher Schicht arbeitet ein Router? (Name oder Nummer)",
+          "type": "text",
+          "answer": ["3", "drei", "schicht 3", "layer 3", "network"],
+          "explanation": "Schicht 3, Network Layer. Ein Router entscheidet anhand von IP-Adressen."
+        },
+        {
+          "id": 2,
+          "question": "Wofür steht die Abkürzung NIC?",
+          "type": "text",
+          "answer": ["network interface card", "netzwerkkarte"],
+          "explanation": "Network Interface Card, auf Deutsch Netzwerkkarte."
+        },
+        {
+          "id": 3,
+          "question": "Welches Gerät verbindet WLAN-Geräte mit dem Netzwerk?",
+          "type": "choice",
+          "options": ["Switch", "Router", "Access Point", "Firewall"],
+          "answer": ["access point"],
+          "explanation": "Der Access Point übersetzt zwischen Funk und Kabel."
+        },
+        {
+          "id": 4,
+          "question": "Was ist die Hauptaufgabe einer Firewall?",
+          "type": "choice",
+          "options": [
+            "Unerlaubten Datenverkehr blockieren",
+            "IP-Adressen verteilen",
+            "Signale verstärken",
+            "MAC-Adressen speichern"
+          ],
+          "answer": ["unerlaubten datenverkehr blockieren"],
+          "explanation": "Eine Firewall prüft den Datenverkehr anhand von Regeln und lässt nur erlaubte Verbindungen durch. IP-Adressen verteilt dagegen ein DHCP-Server."
+        }
+      ]
+    }
+  ]
+}

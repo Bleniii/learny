@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IT-Grundlagen — Lernapp</title>
+<meta name="description" content="Bits, OSI-Schichten und Netzwerkkomponenten üben. Läuft komplett im Browser.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="wordmark" href="#/start">01000101 <span>IT-Grundlagen</span></a>
+  <nav id="nav">
+    <a href="#/start">Start</a>
+    <a href="#/lernen">Lernen</a>
+    <a href="#/ueben">Üben</a>
+    <a href="#/stand">Stand</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ── START ───────────────────────────────────────────── -->
+  <section id="view-start" class="view">
+    <p class="eyebrow">Dein Wissensstand</p>
+    <div id="bitfield" class="bitfield" aria-label="Alle Fragen, gefärbt nach Sicherheit"></div>
+    <p id="bitfield-legend" class="legend">
+      <span class="key k1"></span>neu oder wackelig
+      <span class="key k2"></span>fast sicher
+      <span class="key k3"></span>sitzt
+    </p>
+    <h1 id="stand-satz">Lade …</h1>
+    <p class="lead">
+      Drei Themen, gemischt abgefragt. Jede Frage wandert nach oben, wenn du sie kannst,
+      und fällt zurück, wenn nicht. Wiederholt wird, was noch nicht sitzt.
+    </p>
+    <p class="actions">
+      <a class="btn" href="#/ueben">Üben</a>
+      <a class="btn btn-quiet" href="#/lernen">Erst lesen</a>
+    </p>
+
+    <!-- ══════════════════════════════════════════════════════
+         SELBSTPORTRAIT — hier deine Angaben eintragen.
+         Alles bewusst pseudonym: kein Klarname, keine Adresse.
+         Ersetze "byteweise", den Text und die Kontaktzeile.
+         ══════════════════════════════════════════════════════ -->
+    <section class="portrait" id="ueber">
+      <p class="eyebrow">Wer das gebaut hat</p>
+      <h2>byteweise</h2>
+      <p>
+        Ich lerne IT-Grundlagen quer ein, neben dem Job, und merke mir Dinge erst,
+        wenn ich sie zweimal falsch beantwortet habe. Diese Seite ist mein Karteikasten —
+        öffentlich, weil sie vielleicht auch anderen hilft.
+      </p>
+      <p>
+        Schwerpunkt gerade: Netzwerkgrundlagen und alles, was mit Schichten zu tun hat.
+        Was hier steht, ist mein Lernstand, keine Prüfungsgarantie. Korrekturen sind willkommen.
+      </p>
+      <dl class="contact">
+        <dt>Schreiben</dt>
+        <dd><a href="mailto:byteweise@example.org">byteweise@example.org</a></dd>
+        <dt>Code</dt>
+        <dd><a href="https://github.com/byteweise">github.com/byteweise</a></dd>
+        <dt>Ort</dt>
+        <dd>irgendwo in der Schweiz</dd>
+      </dl>
+    </section>
+    <!-- ═══ Ende Selbstportrait ══════════════════════════════ -->
+  </section>
+
+  <!-- ── LERNEN ──────────────────────────────────────────── -->
+  <section id="view-lernen" class="view">
+    <p class="eyebrow">Lesestoff</p>
+    <h1>Lernen</h1>
+    <div id="topic-list" class="stack"></div>
+    <article id="topic-reader" class="reader" hidden></article>
+  </section>
+
+  <!-- ── ÜBEN ────────────────────────────────────────────── -->
+  <section id="view-ueben" class="view">
+    <div id="quiz-pick">
+      <p class="eyebrow">Fragestapel wählen</p>
+      <h1>Üben</h1>
+      <div id="quiz-topics" class="stack"></div>
+    </div>
+
+    <div id="quiz-run" hidden>
+      <p class="eyebrow"><span id="q-counter"></span> · <span id="q-topic"></span></p>
+      <div class="rail"><div id="q-rail"></div></div>
+      <h2 id="q-text"></h2>
+      <div id="q-input"></div>
+      <div id="q-feedback" class="feedback" hidden></div>
+    </div>
+
+    <div id="quiz-done" hidden>
+      <p class="eyebrow">Runde beendet</p>
+      <h1 id="done-headline"></h1>
+      <p id="done-detail" class="lead"></p>
+      <div id="done-moves" class="stack"></div>
+      <p class="actions">
+        <a class="btn" href="#/ueben">Nächste Runde</a>
+        <a class="btn btn-quiet" href="#/stand">Stand ansehen</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── STAND ───────────────────────────────────────────── -->
+  <section id="view-stand" class="view">
+    <p class="eyebrow">Fortschritt</p>
+    <h1>Stand</h1>
+    <div id="stand-body"></div>
+    <section class="datablock">
+      <h2>Deine Daten</h2>
+      <p class="fineprint">
+        Alles liegt nur in diesem Browser. Cache leeren löscht den Lernstand —
+        darum vorher exportieren.
+      </p>
+      <p class="actions">
+        <button class="btn btn-quiet" id="btn-export">Exportieren</button>
+        <button class="btn btn-quiet" id="btn-import">Importieren</button>
+        <button class="btn btn-danger" id="btn-reset">Zurücksetzen</button>
+      </p>
+      <input type="file" id="file-import" accept="application/json" hidden>
+      <p id="data-msg" class="fineprint" hidden></p>
+    </section>
+  </section>
+
+</main>
+
+<footer>
+  <p>Läuft ohne Server, ohne Konto, ohne Tracking. <a href="#ueber">Über die Seite</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
