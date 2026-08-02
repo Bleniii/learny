@@ -96,6 +96,13 @@ const el = (tag, cls, text) => {
   return n;
 };
 
+/* Ein- und Ausblenden ohne Umweg über CSS — inline gesetzt, gewinnt immer. */
+function show(node, on) {
+  if (!node) return;
+  node.style.display = on ? '' : 'none';
+  node.hidden = !on;
+}
+
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -147,18 +154,54 @@ function renderStart() {
     bit.title = it.topic.title + ' — ' + it.q.question;
     field.appendChild(bit);
   });
+
+  const neu  = items.filter(it => it.box === 1).length;
+  const fast = items.filter(it => it.box === 2).length;
   const safe = items.filter(it => it.box === 3).length;
-  $('#stand-satz').textContent = PROGRESS.answered
-    ? safe + ' von ' + items.length + ' Fragen sitzen.'
-    : 'Eine Runde sind ' + ROUND_SIZE + ' Fragen.';
+
+  $('#stand-satz').textContent = headline(safe, items.length);
+  captionNode().textContent =
+    'Ein Kästchen ist eine Frage. Beantwortest du sie richtig, rückt sie eine Stufe weiter — '
+    + 'rot heisst neu oder zuletzt falsch, gelb einmal geschafft, grün sitzt. '
+    + 'Zeig mit der Maus darauf, um die Frage zu sehen. '
+    + (PROGRESS.answered
+        ? 'Gerade: ' + neu + ' offen · ' + fast + ' fast · ' + safe + ' sicher.'
+        : 'Noch ist alles offen — nach der ersten Runde färbt sich das hier.');
+}
+
+/* Ermutigung statt Zählerstand. Stufen nach Anteil sicherer Fragen. */
+function headline(safe, total) {
+  const pct = total ? safe / total : 0;
+  if (!PROGRESS.answered)  return 'Starte deine Lernreise in die IT.';
+  if (safe === 0)          return 'Der Anfang ist gemacht.';
+  if (pct < 0.25)          return 'Es kommt in Bewegung — weiter so.';
+  if (pct < 0.5)           return 'Du bist auf dem guten Weg.';
+  if (pct < 0.75)          return 'Mehr als die Hälfte sitzt schon.';
+  if (pct < 1)             return 'Du hast es fast geschafft!';
+  return 'Alles sitzt. Du hast bewiesen, dass du es kannst! :-)';
+}
+
+/* Erklärzeile unter der Legende — wird bei Bedarf angelegt. */
+function captionNode() {
+  let cap = document.getElementById('bitfield-caption');
+  if (!cap) {
+    cap = el('p', 'fineprint');
+    cap.id = 'bitfield-caption';
+    cap.style.margin = '-0.6rem 0 1.6rem';
+    cap.style.maxWidth = '38rem';
+    const legend = $('#bitfield-legend');
+    legend.parentNode.insertBefore(cap, legend.nextSibling);
+  }
+  return cap;
 }
 
 /* ── Lernen ────────────────────────────────────────────── */
 
 function renderTopicList() {
-  $('#topic-reader').hidden = true;
+  show($('#topic-reader'), false);
+  show($('#lernen-kopf'), true);
   const list = $('#topic-list');
-  list.hidden = false;
+  show(list, true);
   list.textContent = '';
   CONTENT.topics.forEach(t => {
     const card = el('button', 'card');
@@ -193,6 +236,12 @@ function renderTopic(id) {
   const t = topicById(id);
   const reader = $('#topic-reader');
   reader.textContent = '';
+
+  // Zurück-Link zuoberst, damit er ohne Scrollen erreichbar ist
+  const back = el('button', 'backlink', '← Alle Themen');
+  back.addEventListener('click', renderTopicList);
+  reader.appendChild(back);
+
   reader.appendChild(el('h2', null, t.title));
   t.sections.forEach(s => {
     const sec = el('section');
@@ -201,26 +250,28 @@ function renderTopic(id) {
     if (s.levels) sec.appendChild(ladder(s.levels));
     reader.appendChild(sec);
   });
-  const back = el('p', 'actions');
-  const btn = el('button', 'btn btn-quiet', 'Alle Themen');
-  btn.addEventListener('click', renderTopicList);
+
+  const foot = el('p', 'actions');
   const quiz = el('button', 'btn', 'Dieses Thema üben');
   quiz.addEventListener('click', () => { pendingTopic = t.id; location.hash = '#/ueben'; });
-  back.append(btn, quiz);
-  reader.appendChild(back);
-  reader.hidden = false;
-  $('#topic-list').hidden = true;
-  reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  reader.setAttribute('tabindex', '-1');
-  reader.focus({ preventScroll: true });
+  const back2 = el('button', 'btn btn-quiet', 'Alle Themen');
+  back2.addEventListener('click', renderTopicList);
+  foot.append(quiz, back2);
+  reader.appendChild(foot);
+
+  // Liste weg, Seitenüberschrift weg — das Thema steht damit zuoberst
+  show($('#topic-list'), false);
+  show($('#lernen-kopf'), false);
+  show(reader, true);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ── Üben ──────────────────────────────────────────────── */
 
 function renderQuizPicker() {
-  $('#quiz-run').hidden = true;
-  $('#quiz-done').hidden = true;
-  $('#quiz-pick').hidden = false;
+  show($('#quiz-run'), false);
+  show($('#quiz-done'), false);
+  show($('#quiz-pick'), true);
 
   const list = $('#quiz-topics');
   list.textContent = '';
@@ -280,9 +331,9 @@ function interleave(items) {
 
 function startRound(topicId) {
   session = { items: buildRound(topicId), i: 0, right: 0, moves: [] };
-  $('#quiz-pick').hidden = true;
-  $('#quiz-done').hidden = true;
-  $('#quiz-run').hidden = false;
+  show($('#quiz-pick'), false);
+  show($('#quiz-done'), false);
+  show($('#quiz-run'), true);
   showQuestion();
 }
 
@@ -292,7 +343,7 @@ function showQuestion() {
   $('#q-topic').textContent = it.topic.title;
   $('#q-rail').style.width = (session.i / session.items.length * 100) + '%';
   $('#q-text').textContent = it.q.question;
-  $('#q-feedback').hidden = true;
+  show($('#q-feedback'), false);
 
   const box = $('#q-input');
   box.textContent = '';
@@ -360,13 +411,13 @@ function answer(given, optWrap, clicked) {
   });
   actions.appendChild(next);
   fb.appendChild(actions);
-  fb.hidden = false;
+  show(fb, true);
   next.focus();
 }
 
 function finishRound() {
-  $('#quiz-run').hidden = true;
-  $('#quiz-done').hidden = false;
+  show($('#quiz-run'), false);
+  show($('#quiz-done'), true);
   const total = session.items.length;
   $('#done-headline').textContent = session.right + ' von ' + total + ' richtig';
 
@@ -428,7 +479,7 @@ function renderStand() {
 function notify(text) {
   const msg = $('#data-msg');
   msg.textContent = text;
-  msg.hidden = false;
+  show(msg, true);
 }
 
 function setupDataButtons() {

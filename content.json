@@ -7,12 +7,20 @@
       "description": "Die kleinsten Einheiten der digitalen Datenspeicherung",
       "sections": [
         {
+          "heading": "Warum ausgerechnet Nullen und Einsen?",
+          "content": "Weil sich zwei Zustände technisch zuverlässig unterscheiden lassen: Spannung liegt an oder nicht, magnetisiert oder nicht, Licht an oder aus. Zehn Zustände wären störanfällig, zwei sind eindeutig. Alles Weitere — Text, Bilder, Musik, Programme — ist nur eine Verabredung darüber, wie eine Folge dieser Nullen und Einsen zu lesen ist."
+        },
+        {
           "heading": "Bit (Binary Digit)",
           "content": "Das kleinste Datenelement in der Informatik. Ein Bit kann nur zwei Zustände annehmen: 0 oder 1 — entsprechend False/True, Aus/An, Nein/Ja."
         },
         {
           "heading": "Byte",
           "content": "Besteht aus 8 Bits und kann 256 verschiedene Werte darstellen (2⁸ = 256). Wird typischerweise verwendet, um ein einzelnes Zeichen darzustellen."
+        },
+        {
+          "heading": "Von Bits zu Buchstaben",
+          "content": "Ein Byte kann 256 Werte annehmen, also reicht es für ein Zeichen. ASCII legte früh fest, welche Zahl welchen Buchstaben meint: 65 ist A, 97 ist a. Für Umlaute, Griechisch oder Emoji reichten 256 Werte nicht, deshalb nutzt UTF-8 heute je nach Zeichen ein bis vier Byte. Ein „ä“, das als „Ã¤“ erscheint, ist genau dieser Fall: Die Bytes stimmen, nur die Lesevorschrift ist die falsche."
         },
         {
           "heading": "Gängige Umrechnungen",
@@ -89,6 +97,21 @@
             "binärziffer"
           ],
           "explanation": "Bit ist die Kurzform von Binary Digit, also Binärziffer."
+        },
+        {
+          "question": "Warum arbeiten Rechner mit nur zwei Zuständen?",
+          "type": "choice",
+          "options": [
+            "Zwei Zustände lassen sich technisch eindeutig unterscheiden",
+            "Weil zwei Zahlen schneller zu rechnen sind",
+            "Weil Menschen zwei Hände haben",
+            "Aus historischen Gründen ohne technischen Nutzen"
+          ],
+          "answer": [
+            "Zwei Zustände lassen sich technisch eindeutig unterscheiden"
+          ],
+          "explanation": "Strom an oder aus ist störungssicher unterscheidbar. Zehn Spannungsstufen wären fehleranfällig.",
+          "id": 5
         }
       ]
     },
@@ -228,6 +251,10 @@
         {
           "heading": "Was ist das OSI-Modell?",
           "content": "Ein Ordnungsschema, kein Gerät und keine Software. Es zerlegt „Daten von A nach B schicken“ in sieben Aufgaben, die aufeinander aufbauen — von der Spannung im Kabel bis zur Website im Browser. Der Nutzen im Alltag: Wenn etwas nicht funktioniert, lässt sich die Ursache einer Schicht zuordnen, statt alles gleichzeitig zu prüfen. Merksatz von unten nach oben: Please Do Not Throw Sausage Pizza Away."
+        },
+        {
+          "heading": "Wie ein Paket durch die Schichten wandert",
+          "content": "Beim Senden wandern die Daten von Schicht 7 nach unten, und jede Schicht legt ihre eigene Information aussen herum — wie Briefumschläge ineinander. Beim Empfänger geht es umgekehrt nach oben, jede Schicht öffnet genau ihren Umschlag. Dieses Ein- und Auspacken heisst Kapselung und ist der Grund, warum die Schichten unabhängig voneinander funktionieren: Ob die Daten per Kupferkabel oder Glasfaser kommen, ist für den Browser egal."
         },
         {
           "heading": "Schicht 1 — Physical Layer",
@@ -370,6 +397,10 @@
         {
           "heading": "Gateway & Loopback",
           "content": "Das Standardgateway ist der Ausgang aus dem eigenen Netz, meist der Router. 127.0.0.1 heisst Loopback oder localhost und meint immer den eigenen Rechner."
+        },
+        {
+          "heading": "Ports",
+          "content": "Die IP-Adresse führt zum Gerät, der Port zur richtigen Anwendung darauf — Hausnummer und Wohnungsnummer. Einige sind fest vergeben: 80 für HTTP, 443 für HTTPS, 22 für SSH, 53 für DNS. Geschrieben wird beides zusammen als 192.168.1.10:443. Eine Firewall-Regel wie „Port 22 sperren“ meint deshalb genau einen Dienst, nicht das ganze Gerät."
         }
       ],
       "questions": [
@@ -453,6 +484,21 @@
             "Den eigenen Rechner (localhost)"
           ],
           "explanation": "127.0.0.1 ist die Loopback-Adresse. Sie zeigt immer auf das Gerät selbst."
+        },
+        {
+          "question": "Wozu dient eine Portnummer?",
+          "type": "choice",
+          "options": [
+            "Sie bestimmt die Anwendung auf dem Gerät",
+            "Sie bestimmt das Zielgerät",
+            "Sie verschlüsselt die Verbindung",
+            "Sie ersetzt die MAC-Adresse"
+          ],
+          "answer": [
+            "Sie bestimmt die Anwendung auf dem Gerät"
+          ],
+          "explanation": "Die IP-Adresse führt zum Gerät, der Port zum Dienst darauf — etwa 443 für HTTPS.",
+          "id": 6
         }
       ]
     },
@@ -579,6 +625,10 @@
         {
           "heading": "Social Engineering",
           "content": "Der Angriff auf den Menschen statt auf die Technik. Phishing täuscht eine vertrauenswürdige Absenderin vor, um an Zugangsdaten zu kommen. Keine Firewall filtert eine überzeugende Mail heraus."
+        },
+        {
+          "heading": "Updates",
+          "content": "Die meisten erfolgreichen Angriffe nutzen keine unbekannte Lücke, sondern eine längst bekannte, für die es seit Monaten einen Patch gibt. Sobald ein Update veröffentlicht ist, wird die Lücke öffentlich und damit erst recht angreifbar. Zeitnah einspielen ist deshalb die wirksamste Einzelmassnahme überhaupt — vor jeder zusätzlichen Software."
         }
       ],
       "questions": [

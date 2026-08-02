@@ -24,16 +24,16 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font: 400 17px/1.65 var(--sans);
+  font: 400 15.5px/1.6 var(--sans);
   -webkit-text-size-adjust: 100%;
 }
 
-main { max-width: 44rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
-h1 { font: 500 1.9rem/1.2 var(--mono); letter-spacing: -0.02em; margin: 0 0 0.6rem; }
-h2 { font: 500 1.2rem/1.3 var(--mono); letter-spacing: -0.01em; margin: 2rem 0 0.5rem; }
-h3 { font: 500 1rem/1.4 var(--mono); margin: 0 0 0.3rem; }
-p  { margin: 0 0 1rem; }
+h1 { font: 500 1.75rem/1.2 var(--mono); letter-spacing: -0.02em; margin: 0 0 0.6rem; }
+h2 { font: 500 1.25rem/1.3 var(--mono); letter-spacing: -0.01em; margin: 2rem 0 0.5rem; }
+h3 { font: 500 0.95rem/1.4 var(--mono); margin: 0 0 0.35rem; }
+p  { margin: 0 0 0.9rem; }
 a  { color: var(--accent); }
 
 .eyebrow {
@@ -104,24 +104,24 @@ a  { color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ── Karten & Listen ─────────────────────────────────── */
-.stack { display: grid; gap: 0.75rem; margin: 1.5rem 0; }
+.stack { display: grid; gap: 0.6rem; margin: 1.25rem 0; }
 .card {
   display: block; width: 100%; text-align: left;
   background: var(--card); border: 1px solid var(--line); border-radius: 6px;
-  padding: 1.1rem 1.2rem; color: inherit; cursor: pointer; font: inherit;
+  padding: 0.9rem 1.1rem; color: inherit; cursor: pointer; font: inherit;
 }
 .card:hover { border-color: var(--accent); }
-.card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+.card p { margin: 0; color: var(--muted); font-size: 0.88rem; }
 .card .tally { font: 400 0.78rem/1 var(--mono); color: var(--muted); margin-top: 0.5rem; }
 
 .reader {
   background: var(--card); border: 1px solid var(--line); border-radius: 6px;
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem 1.5rem;
 }
-.reader section { padding: 1rem 0; border-top: 1px solid var(--line); }
+.reader section { padding: 0.9rem 0; border-top: 1px solid var(--line); }
 .reader section:first-of-type { border-top: 0; padding-top: 0; }
 .reader h3 { color: var(--accent); }
-.reader p { margin: 0; }
+.reader p { margin: 0; font-size: 0.95rem; line-height: 1.62; max-width: 40rem; }
 
 .hidden, [hidden] { display: none !important; }
 
@@ -144,7 +144,7 @@ a  { color: var(--accent); }
 .rail { height: 3px; background: var(--line); border-radius: 2px; margin: 0 0 1.75rem; }
 .rail div { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.25s; }
 
-#q-text { font-size: 1.35rem; margin: 0 0 1.5rem; }
+#q-text { font-size: 1.25rem; margin: 0 0 1.4rem; }
 .opts { display: grid; gap: 0.6rem; }
 .opt {
   text-align: left; font: inherit; cursor: pointer;
@@ -203,3 +203,12 @@ footer p { margin: 0; font: 400 0.8rem/1.6 var(--mono); color: var(--muted); }
   .contact { grid-template-columns: 1fr; }
   .contact dd { margin-bottom: 0.6rem; }
 }
+
+/* Zurück-Link oben im Lesebereich */
+.backlink {
+  display: inline-block; margin: 0 0 0.9rem; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  font: 400 0.82rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+}
+.backlink:hover { color: var(--accent); }
+.reader h2 { margin-top: 0; }
