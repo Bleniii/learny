@@ -161,7 +161,7 @@ function renderStart() {
 
   $('#stand-satz').textContent = headline(safe, items.length);
   captionNode().textContent =
-    'Ein Kästchen ist eine Frage. Beantwortest du sie richtig, rückt sie eine Stufe weiter — '
+    'Ein Kästchen ist eine Frage. Beantwortest du sie richtig, rückt sie eine Stufe weiter, '
     + 'rot heisst neu oder zuletzt falsch, gelb einmal geschafft, grün sitzt. '
     + 'Zeig mit der Maus darauf, um die Frage zu sehen. '
     + (PROGRESS.answered
@@ -187,7 +187,9 @@ function captionNode() {
   if (!cap) {
     cap = el('p', 'fineprint');
     cap.id = 'bitfield-caption';
-    cap.style.margin = '-0.6rem 0 1.6rem';
+    cap.style.fontSize = '0.78rem';
+    cap.style.lineHeight = '1.5';
+    cap.style.margin = '-0.5rem 0 2rem';
     cap.style.maxWidth = '38rem';
     const legend = $('#bitfield-legend');
     legend.parentNode.insertBefore(cap, legend.nextSibling);
@@ -218,17 +220,15 @@ function ladder(levels) {
   const wrap = el('div', 'ladder');
   levels.forEach((lv, i) => {
     const rung = el('div', 'rung');
+    const track = el('div', 'track');
     const bar = el('div', 'bar');
-    bar.style.width = (30 + i * (68 / Math.max(1, levels.length - 1))) + '%';
+    bar.style.width = (38 + i * (62 / Math.max(1, levels.length - 1))) + '%';
     bar.appendChild(el('span', null, lv.label));
-    rung.appendChild(bar);
-    rung.appendChild(el('span', 'note', lv.note));
+    track.appendChild(bar);
+    rung.append(track, el('span', 'note', lv.note));
     wrap.appendChild(rung);
   });
-  const scale = el('p', 'scale');
-  scale.appendChild(el('span', null, 'schnell, klein, teuer'));
-  scale.appendChild(el('span', null, 'langsam, gross, günstig'));
-  wrap.appendChild(scale);
+  wrap.appendChild(el('p', 'scale', 'Nach unten: langsamer, dafür grösser und günstiger.'));
   return wrap;
 }
 
