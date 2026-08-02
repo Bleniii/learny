@@ -24,40 +24,181 @@
           "id": 0,
           "question": "Wie viele Bits hat ein Byte?",
           "type": "choice",
-          "options": ["4", "8", "16", "1024"],
-          "answer": ["8"],
+          "options": [
+            "4",
+            "8",
+            "16",
+            "1024"
+          ],
+          "answer": [
+            "8"
+          ],
           "explanation": "Ein Byte besteht aus 8 Bit."
         },
         {
           "id": 1,
           "question": "Wie viele Byte hat ein Kilobyte?",
           "type": "choice",
-          "options": ["100", "512", "1024", "2048"],
-          "answer": ["1024"],
+          "options": [
+            "100",
+            "512",
+            "1024",
+            "2048"
+          ],
+          "answer": [
+            "1024"
+          ],
           "explanation": "1 KB = 1.024 Byte. Die Zahl kommt aus dem Binärsystem: 2¹⁰ = 1.024."
         },
         {
           "id": 2,
           "question": "Wie viele verschiedene Werte kann ein Byte darstellen?",
           "type": "choice",
-          "options": ["8", "64", "256", "1024"],
-          "answer": ["256"],
+          "options": [
+            "8",
+            "64",
+            "256",
+            "1024"
+          ],
+          "answer": [
+            "256"
+          ],
           "explanation": "8 Bit ergeben 2⁸ = 256 mögliche Kombinationen."
         },
         {
           "id": 3,
           "question": "Welche zwei Zustände kann ein Bit annehmen?",
           "type": "choice",
-          "options": ["0 und 1", "-1 und 1", "A und B", "an, aus und neutral"],
-          "answer": ["0 und 1"],
+          "options": [
+            "0 und 1",
+            "-1 und 1",
+            "A und B",
+            "an, aus und neutral"
+          ],
+          "answer": [
+            "0 und 1"
+          ],
           "explanation": "Ein Bit kennt genau zwei Zustände: 0 oder 1. Alles andere im Rechner wird daraus zusammengesetzt."
         },
         {
           "id": 4,
           "question": "Wofür steht die Abkürzung Bit?",
           "type": "text",
-          "answer": ["binary digit", "binärziffer"],
+          "answer": [
+            "binary digit",
+            "binärziffer"
+          ],
           "explanation": "Bit ist die Kurzform von Binary Digit, also Binärziffer."
+        }
+      ]
+    },
+    {
+      "id": "hardware",
+      "title": "Hardware & Aufbau",
+      "description": "CPU, Arbeitsspeicher, Datenträger — woraus ein Rechner besteht",
+      "sections": [
+        {
+          "heading": "CPU (Prozessor)",
+          "content": "Das Rechenwerk. Holt Befehle, führt sie aus, schreibt Ergebnisse zurück — milliardenfach pro Sekunde. Die Taktfrequenz in GHz gibt an, wie viele Arbeitsschritte pro Sekunde möglich sind. Mehrere Kerne bearbeiten mehrere Aufgaben gleichzeitig."
+        },
+        {
+          "heading": "RAM (Arbeitsspeicher)",
+          "content": "Schneller Zwischenspeicher für alles, was gerade läuft. Ein Programm wird beim Start vom Datenträger in den RAM geladen. Der RAM ist flüchtig: Beim Ausschalten ist sein Inhalt weg."
+        },
+        {
+          "heading": "Massenspeicher (HDD & SSD)",
+          "content": "Behält Daten auch ohne Strom. Die HDD (Hard Disk Drive) schreibt magnetisch auf rotierende Scheiben, die SSD (Solid State Drive) elektronisch auf Flash-Chips — deutlich schneller, weil nichts mechanisch bewegt wird."
+        },
+        {
+          "heading": "Die Speicherpyramide",
+          "content": "Von oben nach unten: Register und Cache in der CPU, dann RAM, dann SSD oder HDD. Je weiter oben, desto schneller, kleiner und teurer pro Gigabyte. Das erklärt, warum es nicht einfach nur eine Sorte Speicher gibt."
+        },
+        {
+          "heading": "Mainboard & Peripherie",
+          "content": "Das Mainboard verbindet alle Komponenten über Busse und Steckplätze. Alles Weitere teilt sich in Eingabe (Tastatur, Maus, Scanner) und Ausgabe (Monitor, Drucker, Lautsprecher)."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "question": "Welches Bauteil führt die Rechenoperationen aus?",
+          "type": "choice",
+          "options": [
+            "Prozessor (CPU)",
+            "Arbeitsspeicher (RAM)",
+            "Festplatte",
+            "Netzteil"
+          ],
+          "answer": [
+            "Prozessor (CPU)"
+          ],
+          "explanation": "Die CPU holt Befehle, führt sie aus und schreibt die Ergebnisse zurück."
+        },
+        {
+          "id": 1,
+          "question": "Was passiert mit den Daten im RAM, wenn der Rechner ausgeschaltet wird?",
+          "type": "choice",
+          "options": [
+            "Sie gehen verloren",
+            "Sie bleiben dauerhaft erhalten",
+            "Sie wandern auf die Festplatte",
+            "Sie werden verschlüsselt"
+          ],
+          "answer": [
+            "Sie gehen verloren"
+          ],
+          "explanation": "Der RAM ist flüchtig. Deshalb ist ungespeicherte Arbeit nach einem Stromausfall weg."
+        },
+        {
+          "id": 2,
+          "question": "Wofür steht die Abkürzung SSD?",
+          "type": "text",
+          "answer": [
+            "solid state drive",
+            "solid state disk"
+          ],
+          "explanation": "Solid State Drive — ein Datenträger ohne bewegliche Teile, aus Flash-Chips."
+        },
+        {
+          "id": 3,
+          "question": "Was gibt die Taktfrequenz einer CPU in GHz an?",
+          "type": "choice",
+          "options": [
+            "Arbeitsschritte pro Sekunde",
+            "Die Speichergrösse",
+            "Die Stromaufnahme",
+            "Die Anzahl der Kerne"
+          ],
+          "answer": [
+            "Arbeitsschritte pro Sekunde"
+          ],
+          "explanation": "1 GHz entspricht einer Milliarde Taktzyklen pro Sekunde."
+        },
+        {
+          "id": 4,
+          "question": "Wohin wird ein Programm geladen, damit es laufen kann?",
+          "type": "choice",
+          "options": [
+            "In den Arbeitsspeicher",
+            "Auf die Festplatte",
+            "Ins Netzwerk",
+            "In die Firewall"
+          ],
+          "answer": [
+            "In den Arbeitsspeicher"
+          ],
+          "explanation": "Beim Start wandert das Programm vom Datenträger in den RAM, weil die CPU von dort schnell genug lesen kann."
+        },
+        {
+          "id": 5,
+          "question": "Welcher Speicher ist schneller: RAM oder SSD?",
+          "type": "text",
+          "answer": [
+            "ram",
+            "der ram",
+            "arbeitsspeicher"
+          ],
+          "explanation": "Der RAM ist um Grössenordnungen schneller. Dafür ist er flüchtig und teurer pro Gigabyte."
         }
       ]
     },
@@ -104,46 +245,196 @@
           "id": 0,
           "question": "Wie viele Schichten hat das OSI-Modell?",
           "type": "text",
-          "answer": ["7", "sieben"],
+          "answer": [
+            "7",
+            "sieben"
+          ],
           "explanation": "Sieben: Physical, Data Link, Network, Transport, Session, Presentation, Application."
         },
         {
           "id": 1,
           "question": "Welche Schicht nutzt IP-Adressen und Router?",
           "type": "choice",
-          "options": ["Data Link", "Network", "Transport", "Session"],
-          "answer": ["network"],
+          "options": [
+            "Data Link",
+            "Network",
+            "Transport",
+            "Session"
+          ],
+          "answer": [
+            "network"
+          ],
           "explanation": "Der Network Layer (Schicht 3) leitet Pakete zwischen Netzwerken weiter und nutzt dafür IP-Adressen."
         },
         {
           "id": 2,
           "question": "Welche Schicht verarbeitet MAC-Adressen und Switching?",
           "type": "choice",
-          "options": ["Physical", "Data Link", "Network", "Application"],
-          "answer": ["data link"],
+          "options": [
+            "Physical",
+            "Data Link",
+            "Network",
+            "Application"
+          ],
+          "answer": [
+            "data link"
+          ],
           "explanation": "Der Data Link Layer (Schicht 2) regelt die Kommunikation zwischen direkt verbundenen Geräten."
         },
         {
           "id": 3,
           "question": "Welche Schicht überträgt rohe Bitströme über Kabel und Stecker?",
           "type": "choice",
-          "options": ["Physical", "Data Link", "Presentation", "Transport"],
-          "answer": ["physical"],
+          "options": [
+            "Physical",
+            "Data Link",
+            "Presentation",
+            "Transport"
+          ],
+          "answer": [
+            "physical"
+          ],
           "explanation": "Der Physical Layer (Schicht 1) ist die Ebene der Signale und Leitungen."
         },
         {
           "id": 4,
           "question": "Auf welcher Schicht arbeiten TCP und UDP? (Name oder Nummer)",
           "type": "text",
-          "answer": ["4", "vier", "transport", "transport layer", "schicht 4"],
+          "answer": [
+            "4",
+            "vier",
+            "transport",
+            "transport layer",
+            "schicht 4"
+          ],
           "explanation": "Transport Layer, Schicht 4. TCP ist zuverlässig, UDP ist schnell."
         },
         {
           "id": 5,
           "question": "Auf welcher Schicht arbeitet HTTP? (Name oder Nummer)",
           "type": "text",
-          "answer": ["7", "sieben", "application", "application layer", "schicht 7"],
+          "answer": [
+            "7",
+            "sieben",
+            "application",
+            "application layer",
+            "schicht 7"
+          ],
           "explanation": "Application Layer, Schicht 7 — genauso wie HTTPS, FTP, SMTP und DNS."
+        }
+      ]
+    },
+    {
+      "id": "ip_dns",
+      "title": "IP-Adressen & Namen",
+      "description": "Wie Geräte im Netz adressiert und Namen aufgelöst werden",
+      "sections": [
+        {
+          "heading": "IPv4 und IPv6",
+          "content": "Eine IPv4-Adresse besteht aus 32 Bit, geschrieben als vier Zahlen von 0 bis 255, etwa 192.168.1.10. Das ergibt rund 4,3 Milliarden Adressen — zu wenig. IPv6 nutzt 128 Bit und löst das Problem."
+        },
+        {
+          "heading": "Private und öffentliche Adressen",
+          "content": "Bestimmte Bereiche sind für lokale Netze reserviert und im Internet nicht routbar: 10.x.x.x, 172.16–31.x.x und 192.168.x.x. Dein Router übersetzt sie per NAT auf eine einzige öffentliche Adresse."
+        },
+        {
+          "heading": "Subnetzmaske",
+          "content": "Sie trennt die Adresse in Netzanteil und Geräteanteil. Bei 255.255.255.0 (kurz /24) bezeichnen die ersten drei Zahlen das Netz, die letzte das Gerät. So weiss ein Rechner, ob ein Ziel im eigenen Netz liegt oder über das Gateway muss."
+        },
+        {
+          "heading": "DHCP",
+          "content": "Vergibt IP-Adresse, Subnetzmaske, Gateway und DNS-Server automatisch an neue Geräte. Ohne DHCP müsstest du jedes Gerät von Hand konfigurieren."
+        },
+        {
+          "heading": "DNS",
+          "content": "Das Telefonbuch des Internets: Es übersetzt Namen wie example.org in IP-Adressen. Fällt DNS aus, ist das Netz technisch erreichbar, aber praktisch unbenutzbar."
+        },
+        {
+          "heading": "Gateway & Loopback",
+          "content": "Das Standardgateway ist der Ausgang aus dem eigenen Netz, meist der Router. 127.0.0.1 heisst Loopback oder localhost und meint immer den eigenen Rechner."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "question": "Aus wie vielen Bit besteht eine IPv4-Adresse?",
+          "type": "text",
+          "answer": [
+            "32",
+            "zweiunddreissig",
+            "zweiunddreißig"
+          ],
+          "explanation": "32 Bit, aufgeteilt in vier Blöcke zu je 8 Bit. IPv6 nutzt dagegen 128 Bit."
+        },
+        {
+          "id": 1,
+          "question": "Welcher Dienst vergibt automatisch IP-Adressen an neue Geräte?",
+          "type": "choice",
+          "options": [
+            "DHCP",
+            "DNS",
+            "NAT",
+            "ARP"
+          ],
+          "answer": [
+            "DHCP"
+          ],
+          "explanation": "DHCP verteilt IP-Adresse, Maske, Gateway und DNS-Server automatisch."
+        },
+        {
+          "id": 2,
+          "question": "Welcher Dienst übersetzt Namen wie example.org in IP-Adressen?",
+          "type": "text",
+          "answer": [
+            "dns",
+            "domain name system"
+          ],
+          "explanation": "DNS, das Domain Name System — das Telefonbuch des Internets."
+        },
+        {
+          "id": 3,
+          "question": "Welche dieser Adressen ist eine private Adresse?",
+          "type": "choice",
+          "options": [
+            "192.168.1.10",
+            "8.8.8.8",
+            "1.1.1.1",
+            "93.184.216.34"
+          ],
+          "answer": [
+            "192.168.1.10"
+          ],
+          "explanation": "192.168.x.x ist für lokale Netze reserviert und wird im Internet nicht geroutet."
+        },
+        {
+          "id": 4,
+          "question": "Wozu dient die Subnetzmaske?",
+          "type": "choice",
+          "options": [
+            "Sie trennt Netzanteil und Geräteanteil der Adresse",
+            "Sie verschlüsselt den Datenverkehr",
+            "Sie vergibt Adressen an Geräte",
+            "Sie speichert MAC-Adressen"
+          ],
+          "answer": [
+            "Sie trennt Netzanteil und Geräteanteil der Adresse"
+          ],
+          "explanation": "Damit erkennt ein Gerät, ob das Ziel im eigenen Netz liegt oder über das Gateway muss."
+        },
+        {
+          "id": 5,
+          "question": "Was bezeichnet die Adresse 127.0.0.1?",
+          "type": "choice",
+          "options": [
+            "Den eigenen Rechner (localhost)",
+            "Das Standardgateway",
+            "Den DNS-Server",
+            "Eine öffentliche Serveradresse"
+          ],
+          "answer": [
+            "Den eigenen Rechner (localhost)"
+          ],
+          "explanation": "127.0.0.1 ist die Loopback-Adresse. Sie zeigt immer auf das Gerät selbst."
         }
       ]
     },
@@ -178,29 +469,51 @@
           "id": 0,
           "question": "Auf welcher Schicht arbeitet ein Switch? (Name oder Nummer)",
           "type": "text",
-          "answer": ["2", "zwei", "schicht 2", "layer 2", "data link"],
+          "answer": [
+            "2",
+            "zwei",
+            "schicht 2",
+            "layer 2",
+            "data link"
+          ],
           "explanation": "Schicht 2, Data Link Layer. Ein Switch leitet anhand von MAC-Adressen weiter."
         },
         {
           "id": 1,
           "question": "Auf welcher Schicht arbeitet ein Router? (Name oder Nummer)",
           "type": "text",
-          "answer": ["3", "drei", "schicht 3", "layer 3", "network"],
+          "answer": [
+            "3",
+            "drei",
+            "schicht 3",
+            "layer 3",
+            "network"
+          ],
           "explanation": "Schicht 3, Network Layer. Ein Router entscheidet anhand von IP-Adressen."
         },
         {
           "id": 2,
           "question": "Wofür steht die Abkürzung NIC?",
           "type": "text",
-          "answer": ["network interface card", "netzwerkkarte"],
+          "answer": [
+            "network interface card",
+            "netzwerkkarte"
+          ],
           "explanation": "Network Interface Card, auf Deutsch Netzwerkkarte."
         },
         {
           "id": 3,
           "question": "Welches Gerät verbindet WLAN-Geräte mit dem Netzwerk?",
           "type": "choice",
-          "options": ["Switch", "Router", "Access Point", "Firewall"],
-          "answer": ["access point"],
+          "options": [
+            "Switch",
+            "Router",
+            "Access Point",
+            "Firewall"
+          ],
+          "answer": [
+            "access point"
+          ],
           "explanation": "Der Access Point übersetzt zwischen Funk und Kabel."
         },
         {
@@ -213,8 +526,131 @@
             "Signale verstärken",
             "MAC-Adressen speichern"
           ],
-          "answer": ["unerlaubten datenverkehr blockieren"],
+          "answer": [
+            "unerlaubten datenverkehr blockieren"
+          ],
           "explanation": "Eine Firewall prüft den Datenverkehr anhand von Regeln und lässt nur erlaubte Verbindungen durch. IP-Adressen verteilt dagegen ein DHCP-Server."
+        }
+      ]
+    },
+    {
+      "id": "it_sicherheit",
+      "title": "IT-Sicherheit",
+      "description": "Schutzziele, Zugänge, Verschlüsselung und Backups",
+      "sections": [
+        {
+          "heading": "Die drei Schutzziele",
+          "content": "Vertraulichkeit: nur Berechtigte sehen die Daten. Integrität: die Daten sind unverändert und echt. Verfügbarkeit: sie sind da, wenn man sie braucht. Englisch als CIA-Triade bekannt — Confidentiality, Integrity, Availability."
+        },
+        {
+          "heading": "Authentifizierung und Autorisierung",
+          "content": "Authentifizierung beantwortet die Frage, wer du bist (Passwort, Fingerabdruck). Autorisierung beantwortet, was du danach darfst (Lese- und Schreibrechte). Zwei Schritte, die oft verwechselt werden."
+        },
+        {
+          "heading": "Mehrfaktor-Authentifizierung",
+          "content": "Kombiniert Faktoren aus verschiedenen Kategorien: etwas, das du weisst (Passwort), etwas, das du hast (Handy, Token), etwas, das du bist (Fingerabdruck). Ein gestohlenes Passwort allein reicht dann nicht mehr."
+        },
+        {
+          "heading": "Verschlüsselung",
+          "content": "Bei der Übertragung sorgt TLS dafür, dass mitgelesener Verkehr unlesbar bleibt — das ist das S in HTTPS. Auf dem Datenträger schützt Verschlüsselung die Daten, wenn das Gerät verloren geht."
+        },
+        {
+          "heading": "Backups nach 3-2-1",
+          "content": "Drei Kopien der Daten, auf zwei verschiedenen Medien, eine davon ausser Haus. Ein Backup, das nie zurückgespielt wurde, ist kein Backup, sondern eine Vermutung."
+        },
+        {
+          "heading": "Social Engineering",
+          "content": "Der Angriff auf den Menschen statt auf die Technik. Phishing täuscht eine vertrauenswürdige Absenderin vor, um an Zugangsdaten zu kommen. Keine Firewall filtert eine überzeugende Mail heraus."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "question": "Welche drei Schutzziele bilden die CIA-Triade?",
+          "type": "choice",
+          "options": [
+            "Vertraulichkeit, Integrität, Verfügbarkeit",
+            "Kontrolle, Identität, Zugriff",
+            "Verschlüsselung, Backup, Firewall",
+            "Vertraulichkeit, Geschwindigkeit, Kontrolle"
+          ],
+          "answer": [
+            "Vertraulichkeit, Integrität, Verfügbarkeit"
+          ],
+          "explanation": "Confidentiality, Integrity, Availability — das Grundgerüst jeder Sicherheitsbetrachtung."
+        },
+        {
+          "id": 1,
+          "question": "Was ist der Unterschied zwischen Authentifizierung und Autorisierung?",
+          "type": "choice",
+          "options": [
+            "Authentifizierung klärt wer du bist, Autorisierung was du darfst",
+            "Authentifizierung klärt was du darfst, Autorisierung wer du bist",
+            "Beides bedeutet dasselbe",
+            "Authentifizierung gilt nur für Administratoren"
+          ],
+          "answer": [
+            "Authentifizierung klärt wer du bist, Autorisierung was du darfst"
+          ],
+          "explanation": "Erst Identität nachweisen, dann Rechte prüfen. Zwei getrennte Schritte."
+        },
+        {
+          "id": 2,
+          "question": "Wofür steht das S in HTTPS technisch?",
+          "type": "choice",
+          "options": [
+            "Verschlüsselte Übertragung per TLS",
+            "Ein geprüfter Seitenbetreiber",
+            "Schnellere Ladezeiten",
+            "Ein Schutz gegen Viren"
+          ],
+          "answer": [
+            "Verschlüsselte Übertragung per TLS"
+          ],
+          "explanation": "HTTPS verschlüsselt den Transportweg. Ob die Seite selbst seriös ist, sagt es nicht aus."
+        },
+        {
+          "id": 3,
+          "question": "Was besagt die 3-2-1-Regel für Backups?",
+          "type": "choice",
+          "options": [
+            "3 Kopien, 2 Medien, 1 davon ausser Haus",
+            "3 Passwörter, 2 Nutzer, 1 Server",
+            "Alle 3 Tage sichern, 2 Wochen aufbewahren",
+            "3 Festplatten im selben Gerät"
+          ],
+          "answer": [
+            "3 Kopien, 2 Medien, 1 davon ausser Haus"
+          ],
+          "explanation": "Die Kopie ausser Haus überlebt Brand, Diebstahl und Ransomware im lokalen Netz."
+        },
+        {
+          "id": 4,
+          "question": "Was ist Phishing?",
+          "type": "choice",
+          "options": [
+            "Täuschung, um an Zugangsdaten zu kommen",
+            "Ein Angriff auf die Verkabelung",
+            "Das Abhören von Funknetzen",
+            "Eine Methode zur Datensicherung"
+          ],
+          "answer": [
+            "Täuschung, um an Zugangsdaten zu kommen"
+          ],
+          "explanation": "Phishing zielt auf den Menschen, nicht auf die Technik — eine gefälschte Mail oder Website."
+        },
+        {
+          "id": 5,
+          "question": "Wofür steht die Abkürzung MFA?",
+          "type": "text",
+          "answer": [
+            "mehrfaktor authentifizierung",
+            "multifaktor authentifizierung",
+            "multi faktor authentifizierung",
+            "multi factor authentication",
+            "mehr faktor authentifizierung"
+          ],
+          "explanation": "Mehrfaktor-Authentifizierung: mindestens zwei Faktoren aus verschiedenen Kategorien, etwa Passwort plus Code aufs Handy."
         }
       ]
     }

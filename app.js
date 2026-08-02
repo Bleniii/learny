@@ -3,7 +3,7 @@
    Kein Framework, keine Abhängigkeiten. */
 
 const STORE_KEY = 'lernapp.v1';
-const ROUND_SIZE = 10;          // Fragen pro Runde
+const ROUND_SIZE = 16;          // Fragen pro Runde
 const VIEWS = ['start', 'lernen', 'ueben', 'stand'];
 
 let CONTENT = null;
@@ -75,8 +75,10 @@ function normalize(s) {
     .toLowerCase().trim()
     .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
     .replace(/(\d)[.,'](\d)/g, '$1$2')      // 1.024 und 1'024 -> 1024
+    .replace(/[-–—_/]+/g, ' ')              // Bindestriche wie Leerzeichen behandeln
     .replace(/[.,!?;:]+$/, '')
-    .replace(/\s+/g, ' ');
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function isRight(question, given) {
@@ -220,16 +222,35 @@ function renderQuizPicker() {
   });
 }
 
-/* Leitner: alles aus Box 1, halb aus Box 2, ein Rest aus Box 3. */
+/* Leitner: alles aus Box 1, halb aus Box 2, ein Viertel aus Box 3.
+   Danach reihum über die Themen verteilt, damit jedes drankommt. */
 function buildRound(topicId) {
   const pool = allQuestions().filter(it => !topicId || it.topic.id === topicId);
   const b = n => shuffle(pool.filter(it => it.box === n));
   const b2 = b(2), b3 = b(3);
-  let round = b(1)
+  let picked = b(1)
     .concat(b2.slice(0, Math.ceil(b2.length / 2)))
     .concat(b3.slice(0, Math.max(1, Math.round(b3.length / 4))));
-  if (!round.length) round = shuffle(pool);
-  return shuffle(round).slice(0, ROUND_SIZE);
+  if (!picked.length) picked = shuffle(pool);
+  return interleave(picked).slice(0, ROUND_SIZE);
+}
+
+/* Reihum eine Frage pro Thema ziehen. Die Reihenfolge innerhalb eines Themas
+   bleibt erhalten, wackelige Fragen stehen dort also vorn. */
+function interleave(items) {
+  const lanes = new Map();
+  items.forEach(it => {
+    if (!lanes.has(it.topic.id)) lanes.set(it.topic.id, []);
+    lanes.get(it.topic.id).push(it);
+  });
+  const queues = shuffle(Array.from(lanes.values()));
+  const out = [];
+  let taken = true;
+  while (taken) {
+    taken = false;
+    queues.forEach(q => { if (q.length) { out.push(q.shift()); taken = true; } });
+  }
+  return out;
 }
 
 function startRound(topicId) {
