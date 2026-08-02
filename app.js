@@ -140,7 +140,8 @@ function route() {
     }
   }
   if (view === 'stand') renderStand();
-  window.scrollTo(0, 0);
+  if (location.hash === '#ueber') openPortrait();
+  else window.scrollTo(0, 0);
 }
 
 /* ── Start ─────────────────────────────────────────────── */
@@ -181,20 +182,66 @@ function headline(safe, total) {
   return 'Alles sitzt. Du hast bewiesen, dass du es kannst! :-)';
 }
 
-/* Erklärzeile unter der Legende — wird bei Bedarf angelegt. */
+/* Erklärkasten hinter einem (?) neben der Legende — wird einmal angelegt. */
 function captionNode() {
-  let cap = document.getElementById('bitfield-caption');
-  if (!cap) {
-    cap = el('p', 'fineprint');
-    cap.id = 'bitfield-caption';
-    cap.style.fontSize = '0.78rem';
-    cap.style.lineHeight = '1.5';
-    cap.style.margin = '-0.5rem 0 2rem';
-    cap.style.maxWidth = '38rem';
+  let box = document.getElementById('bitfield-caption');
+  if (!box) {
     const legend = $('#bitfield-legend');
-    legend.parentNode.insertBefore(cap, legend.nextSibling);
+    const btn = el('button', 'hint-btn', '(?)');
+    btn.type = 'button';
+    btn.title = 'Was bedeutet dieser Balken?';
+    btn.setAttribute('aria-label', 'Erklärung zum Wissensstand');
+    btn.setAttribute('aria-expanded', 'false');
+    legend.appendChild(btn);
+
+    box = el('p', 'infobox');
+    box.id = 'bitfield-caption';
+    box.style.fontSize = '0.78rem';
+    box.style.lineHeight = '1.5';
+    box.style.maxWidth = '38rem';
+    box.style.margin = '0.2rem 0 1.8rem';
+    legend.parentNode.insertBefore(box, legend.nextSibling);
+    show(box, false);
+
+    btn.addEventListener('click', () => {
+      const auf = box.style.display === 'none';
+      show(box, auf);
+      btn.setAttribute('aria-expanded', String(auf));
+      btn.textContent = auf ? '(×)' : '(?)';
+    });
   }
-  return cap;
+  return box;
+}
+
+/* Selbstportrait hinter einem Knopf "Autor" verstecken. */
+let openPortrait = () => {};
+
+function setupPortrait() {
+  const p = document.querySelector('.portrait');
+  if (!p || p.dataset.faltbar) return;
+  p.dataset.faltbar = '1';
+
+  const body = el('div', 'portrait-body');
+  while (p.firstChild) body.appendChild(p.firstChild);
+
+  const btn = el('button', 'disclose', '▸ Autor');
+  btn.type = 'button';
+  btn.setAttribute('aria-expanded', 'false');
+  p.append(btn, body);
+  show(body, false);
+
+  const setzen = auf => {
+    show(body, auf);
+    btn.textContent = (auf ? '▾' : '▸') + ' Autor';
+    btn.setAttribute('aria-expanded', String(auf));
+  };
+  btn.addEventListener('click', () => setzen(body.style.display === 'none'));
+
+  openPortrait = () => {
+    setzen(true);
+    p.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  if (location.hash === '#ueber') openPortrait();
 }
 
 /* ── Lernen ────────────────────────────────────────────── */
@@ -541,6 +588,7 @@ async function boot() {
     return;
   }
   setupDataButtons();
+  setupPortrait();
   window.addEventListener('hashchange', route);
   route();
 }

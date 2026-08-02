@@ -126,18 +126,27 @@ a  { color: var(--accent); }
 .hidden, [hidden] { display: none !important; }
 
 /* ── Stufenleiter (z. B. Speicherpyramide) ───────────── */
-.ladder { margin: 1.1rem 0 0.3rem; display: grid; gap: 0.45rem; }
-.rung { display: flex; align-items: center; gap: 0.75rem; }
+.ladder { margin: 1.1rem 0 0.3rem; display: grid; gap: 0.4rem; }
+.rung {
+  display: grid; grid-template-columns: minmax(9rem, 38%) 1fr;
+  gap: 0.9rem; align-items: center;
+}
+.rung .track { width: 100%; }
 .rung .bar {
-  flex: none; min-width: 8rem; padding: 0.45rem 0.7rem;
+  padding: 0.4rem 0.7rem; min-width: 6.5rem;
   background: color-mix(in srgb, var(--accent) 16%, transparent);
   border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0;
-  font: 500 0.85rem/1.3 var(--mono);
+  font: 500 0.82rem/1.3 var(--mono); white-space: nowrap;
 }
-.rung .note { font-size: 0.8rem; color: var(--muted); line-height: 1.35; }
+.rung .note { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
 .ladder .scale {
-  display: flex; justify-content: space-between; margin: 0.3rem 0 0;
-  font: 400 0.72rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+  margin: 0.5rem 0 0;
+  font: 400 0.75rem/1.4 var(--mono); color: var(--muted);
+}
+@media (max-width: 34rem) {
+  .rung { grid-template-columns: 1fr; gap: 0.15rem; }
+  .rung .bar { width: 100% !important; white-space: normal; }
+  .rung .note { padding-left: 0.7rem; }
 }
 
 /* ── Übungsrunde ─────────────────────────────────────── */
@@ -212,3 +221,24 @@ footer p { margin: 0; font: 400 0.8rem/1.6 var(--mono); color: var(--muted); }
 }
 .backlink:hover { color: var(--accent); }
 .reader h2 { margin-top: 0; }
+
+/* ── Aufklappbares: (?)-Erklärung und Autor ──────────── */
+.hint-btn {
+  margin-left: 0.7rem; padding: 0; cursor: pointer;
+  background: none; border: 0; color: var(--muted);
+  font: 400 0.8rem/1 var(--mono);
+}
+.hint-btn:hover, .hint-btn[aria-expanded="true"] { color: var(--accent); }
+
+.infobox {
+  background: var(--card); border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0; padding: 0.75rem 1rem; color: var(--muted);
+}
+
+.disclose {
+  cursor: pointer; padding: 0.5rem 0.9rem;
+  background: none; border: 1px solid var(--line); border-radius: 4px;
+  color: var(--ink); font: 500 0.85rem/1 var(--mono);
+}
+.disclose:hover, .disclose[aria-expanded="true"] { border-color: var(--accent); }
+.portrait-body { margin-top: 1.3rem; }
