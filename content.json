@@ -16,7 +16,7 @@
         },
         {
           "heading": "Gängige Umrechnungen",
-          "content": "1 Byte = 8 Bit · 1 Kilobyte (KB) = 1.024 Byte · 1 Megabyte (MB) = 1.024 KB · 1 Gigabyte (GB) = 1.024 MB · 1 Terabyte (TB) = 1.024 GB"
+          "content": "Jede Stufe ist 1.024-mal grösser als die vorige — nicht 1.000, weil Rechner in Zweierpotenzen zählen (2¹⁰ = 1.024). 1 Byte = 8 Bit, 1 Kilobyte (KB) = 1.024 Byte, 1 Megabyte (MB) = 1.024 KB, 1 Gigabyte (GB) = 1.024 MB, 1 Terabyte (TB) = 1.024 GB. Deshalb zeigt eine „500-GB“-Festplatte im Betriebssystem oft nur rund 465 GB an: Der Hersteller rechnet mit 1.000, der Rechner mit 1.024."
         }
       ],
       "questions": [
@@ -99,19 +99,37 @@
       "sections": [
         {
           "heading": "CPU (Prozessor)",
-          "content": "Das Rechenwerk. Holt Befehle, führt sie aus, schreibt Ergebnisse zurück — milliardenfach pro Sekunde. Die Taktfrequenz in GHz gibt an, wie viele Arbeitsschritte pro Sekunde möglich sind. Mehrere Kerne bearbeiten mehrere Aufgaben gleichzeitig."
+          "content": "Das Rechenwerk und der einzige Teil, der wirklich rechnet. Es holt einen Befehl, führt ihn aus, schreibt das Ergebnis zurück — und wiederholt das milliardenfach pro Sekunde. Die Taktfrequenz in GHz sagt, wie viele solcher Schritte pro Sekunde möglich sind; mehrere Kerne bedeuten mehrere Arbeiten gleichzeitig."
         },
         {
           "heading": "RAM (Arbeitsspeicher)",
-          "content": "Schneller Zwischenspeicher für alles, was gerade läuft. Ein Programm wird beim Start vom Datenträger in den RAM geladen. Der RAM ist flüchtig: Beim Ausschalten ist sein Inhalt weg."
+          "content": "Die Werkbank: Hier liegt alles, woran gerade gearbeitet wird. Beim Programmstart wird das Programm vom Datenträger in den RAM kopiert, weil die CPU nur von dort schnell genug lesen kann. Der RAM ist flüchtig — ohne Strom ist sein Inhalt sofort weg. Genau darum ist ungespeicherte Arbeit nach einem Stromausfall verloren."
         },
         {
           "heading": "Massenspeicher (HDD & SSD)",
-          "content": "Behält Daten auch ohne Strom. Die HDD (Hard Disk Drive) schreibt magnetisch auf rotierende Scheiben, die SSD (Solid State Drive) elektronisch auf Flash-Chips — deutlich schneller, weil nichts mechanisch bewegt wird."
+          "content": "Das Regal: Behält Daten auch ohne Strom. Eine HDD (Hard Disk Drive) schreibt magnetisch auf rotierende Scheiben, ein Schreibkopf fährt physisch zur richtigen Stelle. Eine SSD (Solid State Drive) speichert rein elektronisch auf Flash-Chips — nichts bewegt sich, deshalb um ein Vielfaches schneller und unempfindlicher gegen Stösse."
         },
         {
           "heading": "Die Speicherpyramide",
-          "content": "Von oben nach unten: Register und Cache in der CPU, dann RAM, dann SSD oder HDD. Je weiter oben, desto schneller, kleiner und teurer pro Gigabyte. Das erklärt, warum es nicht einfach nur eine Sorte Speicher gibt."
+          "content": "Es gibt nicht eine Sorte Speicher, sondern eine Rangfolge: Je näher am Prozessor, desto schneller, aber auch kleiner und teurer pro Gigabyte. Deshalb wird nach unten durchgereicht, was oben keinen Platz hat.",
+          "levels": [
+            {
+              "label": "Register & Cache",
+              "note": "in der CPU · Bruchteile einer Nanosekunde · wenige MB"
+            },
+            {
+              "label": "RAM",
+              "note": "Arbeitsspeicher · Nanosekunden · 8–32 GB · flüchtig"
+            },
+            {
+              "label": "SSD",
+              "note": "Flash-Chips · Mikrosekunden · Hunderte GB"
+            },
+            {
+              "label": "HDD & Cloud",
+              "note": "Magnetscheiben, Netz · Millisekunden · viele TB"
+            }
+          ]
         },
         {
           "heading": "Mainboard & Peripherie",
@@ -209,35 +227,35 @@
       "sections": [
         {
           "heading": "Was ist das OSI-Modell?",
-          "content": "Das OSI-Modell (Open Systems Interconnection) ist ein konzeptionelles Rahmenwerk, das erklärt, wie Netzwerkprotokolle zusammenarbeiten. Es hat 7 Schichten, von der Verkabelung bis zur Anwendung."
+          "content": "Ein Ordnungsschema, kein Gerät und keine Software. Es zerlegt „Daten von A nach B schicken“ in sieben Aufgaben, die aufeinander aufbauen — von der Spannung im Kabel bis zur Website im Browser. Der Nutzen im Alltag: Wenn etwas nicht funktioniert, lässt sich die Ursache einer Schicht zuordnen, statt alles gleichzeitig zu prüfen. Merksatz von unten nach oben: Please Do Not Throw Sausage Pizza Away."
         },
         {
           "heading": "Schicht 1 — Physical Layer",
-          "content": "Überträgt rohe Bitströme über ein physisches Medium. Zuständig für Kabel, Stecker und elektrische Signale."
+          "content": "Die Ebene der Signale: Kabel, Stecker, Funkwellen, Spannung, Licht. Hier gibt es weder Adressen noch Bedeutung, nur Nullen und Einsen als physikalisches Signal. Ein defektes Netzwerkkabel ist ein Problem auf Schicht 1."
         },
         {
           "heading": "Schicht 2 — Data Link Layer",
-          "content": "Ermöglicht die Datenübertragung von Knoten zu Knoten. Verarbeitet MAC-Adressen und Switching."
+          "content": "Regelt die Übergabe zwischen zwei direkt verbundenen Geräten im selben Netz. Adressiert wird über die MAC-Adresse — eine fest in der Netzwerkkarte hinterlegte Kennung, vergleichbar mit einer Seriennummer. Hier arbeitet der Switch."
         },
         {
           "heading": "Schicht 3 — Network Layer",
-          "content": "Leitet Daten zwischen verschiedenen Netzwerken weiter. Nutzt IP-Adressen und Router."
+          "content": "Zuständig für den Weg über Netzgrenzen hinweg. Die IP-Adresse sagt, wo ein Gerät steht, der Router entscheidet, über welchen Weg das Paket dorthin kommt. Anders als die MAC-Adresse ist die IP-Adresse ortsabhängig und ändert sich, wenn du das Netz wechselst."
         },
         {
           "heading": "Schicht 4 — Transport Layer",
-          "content": "Verwaltet die Ende-zu-Ende-Kommunikation. Protokolle: TCP (zuverlässig) und UDP (schnell)."
+          "content": "Sorgt dafür, dass am Ziel wieder ein vollständiger Datenstrom ankommt, und ordnet ihn über Portnummern der richtigen Anwendung zu. TCP quittiert jedes Paket und fordert Fehlendes nach — zuverlässig, aber langsamer. UDP verzichtet darauf: schnell, dafür ohne Garantie. Deshalb nutzt ein Dateidownload TCP und ein Videoanruf meist UDP."
         },
         {
           "heading": "Schicht 5 — Session Layer",
-          "content": "Verwaltet Verbindungen zwischen Anwendungen. Behandelt Sitzungsauf- und -abbau."
+          "content": "Verwaltet die Gesprächsbeziehung zwischen zwei Anwendungen: aufbauen, offen halten, sauber beenden, nach Abbruch wieder aufnehmen. In der Praxis geht diese Schicht oft in den Nachbarschichten auf."
         },
         {
           "heading": "Schicht 6 — Presentation Layer",
-          "content": "Übersetzt Datenformate und behandelt Verschlüsselung und Entschlüsselung."
+          "content": "Die Übersetzerin: bringt Daten in eine Form, die die Gegenseite versteht. Zeichensätze wie UTF-8, Formate wie JPEG, Komprimierung und Verschlüsselung gehören hierher."
         },
         {
           "heading": "Schicht 7 — Application Layer",
-          "content": "Direkte Schnittstelle zu Endbenutzeranwendungen. Protokolle: HTTP, HTTPS, FTP, SMTP, DNS."
+          "content": "Die Schicht, die du siehst — genauer: die Protokolle, mit denen Programme reden. HTTP und HTTPS für Websites, SMTP und IMAP für Mail, DNS für Namensauflösung, FTP für Dateien. Der Browser selbst ist nicht Schicht 7, sondern benutzt sie."
         }
       ],
       "questions": [
@@ -331,15 +349,15 @@
       "sections": [
         {
           "heading": "IPv4 und IPv6",
-          "content": "Eine IPv4-Adresse besteht aus 32 Bit, geschrieben als vier Zahlen von 0 bis 255, etwa 192.168.1.10. Das ergibt rund 4,3 Milliarden Adressen — zu wenig. IPv6 nutzt 128 Bit und löst das Problem."
+          "content": "Eine IPv4-Adresse ist 32 Bit lang und wird als vier Zahlen von 0 bis 255 geschrieben, etwa 192.168.1.10. Das ergibt rund 4,3 Milliarden Adressen — bei Milliarden Geräten zu wenig. IPv6 nutzt 128 Bit und damit praktisch unbegrenzt viele, sieht dafür ungewohnt aus: 2001:0db8::7334."
         },
         {
           "heading": "Private und öffentliche Adressen",
-          "content": "Bestimmte Bereiche sind für lokale Netze reserviert und im Internet nicht routbar: 10.x.x.x, 172.16–31.x.x und 192.168.x.x. Dein Router übersetzt sie per NAT auf eine einzige öffentliche Adresse."
+          "content": "Drei Bereiche sind für lokale Netze reserviert und werden im Internet nicht weitergeleitet: 10.x.x.x, 172.16.x.x bis 172.31.x.x und 192.168.x.x. Alle Geräte bei dir zuhause teilen sich deshalb eine einzige öffentliche Adresse; der Router merkt sich per NAT, welche Antwort zu welchem Gerät gehört. Darum ist dein Laptop von aussen nicht direkt erreichbar."
         },
         {
           "heading": "Subnetzmaske",
-          "content": "Sie trennt die Adresse in Netzanteil und Geräteanteil. Bei 255.255.255.0 (kurz /24) bezeichnen die ersten drei Zahlen das Netz, die letzte das Gerät. So weiss ein Rechner, ob ein Ziel im eigenen Netz liegt oder über das Gateway muss."
+          "content": "Sie beantwortet eine einzige Frage: Liegt das Ziel in meinem Netz oder muss es nach draussen? Dazu teilt sie die Adresse in Netzanteil und Geräteanteil. Bei 255.255.255.0 (kurz /24) bezeichnen die ersten drei Zahlen das Netz, die letzte das Gerät — 192.168.1.10 und 192.168.1.77 sind also Nachbarn und reden direkt miteinander. Alles ausserhalb geht über das Gateway."
         },
         {
           "heading": "DHCP",
@@ -347,7 +365,7 @@
         },
         {
           "heading": "DNS",
-          "content": "Das Telefonbuch des Internets: Es übersetzt Namen wie example.org in IP-Adressen. Fällt DNS aus, ist das Netz technisch erreichbar, aber praktisch unbenutzbar."
+          "content": "Das Telefonbuch des Internets: Es übersetzt Namen wie example.org in die zugehörige IP-Adresse, weil Menschen sich Namen merken und Rechner Adressen brauchen. Fällt DNS aus, ist technisch alles erreichbar — nur findet niemand mehr hin. Ein grosser Teil vermeintlicher „Internet ist weg“-Fälle sind in Wahrheit DNS-Probleme."
         },
         {
           "heading": "Gateway & Loopback",
@@ -445,23 +463,23 @@
       "sections": [
         {
           "heading": "Switch",
-          "content": "Verbindet Geräte innerhalb eines lokalen Netzwerks. Arbeitet auf Schicht 2 (Data Link Layer) und nutzt MAC-Adressen."
+          "content": "Der Verteiler im lokalen Netz. Er merkt sich, welches Gerät an welchem Port hängt, und schickt jedes Datenpaket gezielt nur dorthin — statt es an alle zu senden. Arbeitet auf Schicht 2 mit MAC-Adressen."
         },
         {
           "heading": "Router",
-          "content": "Verbindet verschiedene Netzwerke. Arbeitet auf Schicht 3 (Network Layer), nutzt IP-Adressen und Routing-Tabellen."
+          "content": "Der Grenzübergang zwischen Netzen, typischerweise zwischen Heimnetz und Internet. Er entscheidet anhand der IP-Adresse und seiner Routing-Tabelle, wohin ein Paket als Nächstes geht. Arbeitet auf Schicht 3. Der Kasten zuhause ist meist Router, Switch, Access Point und Firewall in einem Gehäuse — das verwischt die Grenzen, technisch sind es aber vier Rollen."
         },
         {
           "heading": "Firewall",
-          "content": "Netzwerksicherheitsgerät, das den Datenverkehr überwacht und kontrolliert. Arbeitet auf den Schichten 3 bis 7. Es gibt sie als Hardware und als Software."
+          "content": "Die Türsteherin: prüft Datenverkehr gegen Regeln und lässt nur Erlaubtes durch. Einfache Firewalls entscheiden nach Adresse und Port (Schicht 3 und 4), moderne schauen bis in den Inhalt der Anwendung hinein (bis Schicht 7). Es gibt sie als eigenes Gerät und als Software auf dem Rechner."
         },
         {
           "heading": "Access Point",
-          "content": "Ermöglicht drahtlosen Geräten die Verbindung zu einem Netzwerk. Wandelt elektrische Signale in Funkwellen um. Arbeitet auf Schicht 1 und 2."
+          "content": "Der Übersetzer zwischen Funk und Kabel: Er nimmt WLAN-Signale entgegen und gibt sie ins kabelgebundene Netz weiter. Arbeitet auf Schicht 1 und 2. Netze verbindet er nicht — das macht der Router."
         },
         {
           "heading": "NIC (Netzwerkkarte)",
-          "content": "Hardwarekomponente, die einem Computer die Netzwerkverbindung ermöglicht. Besitzt eine eindeutige MAC-Adresse. Arbeitet auf Schicht 2."
+          "content": "Die Schnittstelle des Geräts zum Netz, heute meist fest verbaut. Jede NIC trägt ab Werk eine weltweit eindeutige MAC-Adresse. Arbeitet auf Schicht 2."
         }
       ],
       "questions": [
@@ -540,7 +558,7 @@
       "sections": [
         {
           "heading": "Die drei Schutzziele",
-          "content": "Vertraulichkeit: nur Berechtigte sehen die Daten. Integrität: die Daten sind unverändert und echt. Verfügbarkeit: sie sind da, wenn man sie braucht. Englisch als CIA-Triade bekannt — Confidentiality, Integrity, Availability."
+          "content": "Jede Sicherheitsmassnahme zahlt auf mindestens eines von drei Zielen ein. Vertraulichkeit: nur Berechtigte sehen die Daten. Integrität: die Daten sind unverändert und stammen wirklich von der angegebenen Quelle. Verfügbarkeit: sie sind da, wenn man sie braucht. Im Englischen als CIA-Triade bekannt. Die Ziele stehen in Spannung zueinander — maximale Vertraulichkeit senkt meist die Verfügbarkeit."
         },
         {
           "heading": "Authentifizierung und Autorisierung",
@@ -548,11 +566,11 @@
         },
         {
           "heading": "Mehrfaktor-Authentifizierung",
-          "content": "Kombiniert Faktoren aus verschiedenen Kategorien: etwas, das du weisst (Passwort), etwas, das du hast (Handy, Token), etwas, das du bist (Fingerabdruck). Ein gestohlenes Passwort allein reicht dann nicht mehr."
+          "content": "Ein Faktor allein ist zu leicht zu stehlen. Deshalb kombiniert MFA Nachweise aus verschiedenen Kategorien: etwas, das du weisst (Passwort), etwas, das du hast (Handy, Hardware-Token), etwas, das du bist (Fingerabdruck). Entscheidend ist die Mischung — zwei Passwörter sind kein zweiter Faktor."
         },
         {
           "heading": "Verschlüsselung",
-          "content": "Bei der Übertragung sorgt TLS dafür, dass mitgelesener Verkehr unlesbar bleibt — das ist das S in HTTPS. Auf dem Datenträger schützt Verschlüsselung die Daten, wenn das Gerät verloren geht."
+          "content": "Zwei getrennte Fälle. Unterwegs: TLS macht mitgelesenen Verkehr unlesbar, das ist das S in HTTPS. Im Ruhezustand: Festplattenverschlüsselung schützt die Daten, wenn das Gerät gestohlen wird. Wichtig zu wissen: HTTPS sagt nur, dass der Transportweg geschützt ist — über die Seriosität der Website sagt es nichts."
         },
         {
           "heading": "Backups nach 3-2-1",

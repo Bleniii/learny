@@ -123,6 +123,23 @@ a  { color: var(--accent); }
 .reader h3 { color: var(--accent); }
 .reader p { margin: 0; }
 
+.hidden, [hidden] { display: none !important; }
+
+/* ── Stufenleiter (z. B. Speicherpyramide) ───────────── */
+.ladder { margin: 1.1rem 0 0.3rem; display: grid; gap: 0.45rem; }
+.rung { display: flex; align-items: center; gap: 0.75rem; }
+.rung .bar {
+  flex: none; min-width: 8rem; padding: 0.45rem 0.7rem;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0;
+  font: 500 0.85rem/1.3 var(--mono);
+}
+.rung .note { font-size: 0.8rem; color: var(--muted); line-height: 1.35; }
+.ladder .scale {
+  display: flex; justify-content: space-between; margin: 0.3rem 0 0;
+  font: 400 0.72rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+}
+
 /* ── Übungsrunde ─────────────────────────────────────── */
 .rail { height: 3px; background: var(--line); border-radius: 2px; margin: 0 0 1.75rem; }
 .rail div { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.25s; }

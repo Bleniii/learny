@@ -3,7 +3,7 @@
    Kein Framework, keine Abhängigkeiten. */
 
 const STORE_KEY = 'lernapp.v1';
-const ROUND_SIZE = 16;          // Fragen pro Runde
+const ROUND_SIZE = 15;          // Fragen pro Runde
 const VIEWS = ['start', 'lernen', 'ueben', 'stand'];
 
 let CONTENT = null;
@@ -150,7 +150,7 @@ function renderStart() {
   const safe = items.filter(it => it.box === 3).length;
   $('#stand-satz').textContent = PROGRESS.answered
     ? safe + ' von ' + items.length + ' Fragen sitzen.'
-    : items.length + ' Fragen warten auf dich.';
+    : 'Eine Runde sind ' + ROUND_SIZE + ' Fragen.';
 }
 
 /* ── Lernen ────────────────────────────────────────────── */
@@ -170,6 +170,25 @@ function renderTopicList() {
   });
 }
 
+/* Gestufte Balken für Abschnitte mit "levels" — oben schmal, unten breit. */
+function ladder(levels) {
+  const wrap = el('div', 'ladder');
+  levels.forEach((lv, i) => {
+    const rung = el('div', 'rung');
+    const bar = el('div', 'bar');
+    bar.style.width = (30 + i * (68 / Math.max(1, levels.length - 1))) + '%';
+    bar.appendChild(el('span', null, lv.label));
+    rung.appendChild(bar);
+    rung.appendChild(el('span', 'note', lv.note));
+    wrap.appendChild(rung);
+  });
+  const scale = el('p', 'scale');
+  scale.appendChild(el('span', null, 'schnell, klein, teuer'));
+  scale.appendChild(el('span', null, 'langsam, gross, günstig'));
+  wrap.appendChild(scale);
+  return wrap;
+}
+
 function renderTopic(id) {
   const t = topicById(id);
   const reader = $('#topic-reader');
@@ -179,6 +198,7 @@ function renderTopic(id) {
     const sec = el('section');
     sec.appendChild(el('h3', null, s.heading));
     sec.appendChild(el('p', null, s.content));
+    if (s.levels) sec.appendChild(ladder(s.levels));
     reader.appendChild(sec);
   });
   const back = el('p', 'actions');
@@ -190,6 +210,9 @@ function renderTopic(id) {
   reader.appendChild(back);
   reader.hidden = false;
   $('#topic-list').hidden = true;
+  reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  reader.setAttribute('tabindex', '-1');
+  reader.focus({ preventScroll: true });
 }
 
 /* ── Üben ──────────────────────────────────────────────── */
@@ -222,17 +245,19 @@ function renderQuizPicker() {
   });
 }
 
-/* Leitner: alles aus Box 1, halb aus Box 2, ein Viertel aus Box 3.
-   Danach reihum über die Themen verteilt, damit jedes drankommt. */
+/* Leitner: zuerst alles aus Box 1, halb aus Box 2, ein Viertel aus Box 3.
+   Bleibt Platz, wird mit dem Rest aufgefüllt — eine Runde hat immer ROUND_SIZE Fragen.
+   Beides wird reihum über die Themen verteilt, damit jedes drankommt. */
 function buildRound(topicId) {
   const pool = allQuestions().filter(it => !topicId || it.topic.id === topicId);
   const b = n => shuffle(pool.filter(it => it.box === n));
   const b2 = b(2), b3 = b(3);
-  let picked = b(1)
+  const dringend = b(1)
     .concat(b2.slice(0, Math.ceil(b2.length / 2)))
     .concat(b3.slice(0, Math.max(1, Math.round(b3.length / 4))));
-  if (!picked.length) picked = shuffle(pool);
-  return interleave(picked).slice(0, ROUND_SIZE);
+  const gewaehlt = new Set(dringend);
+  const rest = shuffle(pool.filter(it => !gewaehlt.has(it)));
+  return interleave(dringend).concat(interleave(rest)).slice(0, ROUND_SIZE);
 }
 
 /* Reihum eine Frage pro Thema ziehen. Die Reihenfolge innerhalb eines Themas
