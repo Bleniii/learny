@@ -1,7 +1,6 @@
 # IT-Grundlagen — Lernapp
 
-Statische Lernapp mit HTML, CSS und JavaScript. Kein Build, keine Abhängigkeiten,
-kein Backend. Der Lernstand liegt im Browser.
+Statische Lernapp mit HTML, CSS und JavaScript.
 
 ```
 index.html      Seitengerüst und Selbstportrait
