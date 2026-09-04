@@ -196,7 +196,7 @@ a  { color: var(--accent); }
 }
 .portrait h2 { margin-top: 0; font-size: 1.4rem; }
 .portrait p { max-width: 34rem; }
-.contact { display: grid; grid-template-columns: 7rem 1fr; gap: 0.4rem 0; margin: 1.5rem 0 0; }
+.contact { display: grid; grid-template-columns: max-content 1fr; gap: 0.9rem 2rem; margin: 1.5rem 0 0; align-items: baseline; }
 .contact dt { font: 400 0.78rem/1.6 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .contact dd { margin: 0; font-size: 0.95rem; }
 
@@ -242,3 +242,4 @@ footer p { margin: 0; font: 400 0.8rem/1.6 var(--mono); color: var(--muted); }
 }
 .disclose:hover, .disclose[aria-expanded="true"] { border-color: var(--accent); }
 .portrait-body { margin-top: 1.3rem; }
+
