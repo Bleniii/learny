@@ -1,12 +1,13 @@
-/* IT-Grundlagen — Lernapp
-   Alles im Browser: Inhalte aus content.json, Lernstand in localStorage.
-   Kein Framework, keine Abhängigkeiten. */
+/* Portfolio + Lernapp
+   Alles im Browser: Projekte aus projects.json, Lerninhalte aus content.json,
+   Lernstand in localStorage. Kein Framework, keine Abhängigkeiten. */
 
 const STORE_KEY = 'lernapp.v1';
 const ROUND_SIZE = 15;          // Fragen pro Runde
-const VIEWS = ['start', 'lernen', 'ueben', 'stand'];
 
 let CONTENT = null;
+let PROJECTS = [];
+let SERVICE = null;
 let PROGRESS = loadProgress();
 let session = null;
 let pendingTopic;               // Thema, das nach dem Ansichtswechsel starten soll
@@ -116,38 +117,258 @@ const allQuestions = () =>
   CONTENT.topics.flatMap(t => t.questions.map(q => ({ topic: t, q, box: boxOf(t.id, q.id) })));
 
 const topicById = id => CONTENT.topics.find(t => t.id === id);
+const projectById = id => PROJECTS.find(p => p.id === id);
 
 /* ── Router ────────────────────────────────────────────── */
 
-function route() {
-  const name = (location.hash.replace('#/', '') || 'start').split('?')[0];
-  const view = VIEWS.includes(name) ? name : 'start';
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  $('#view-' + view).classList.add('active');
-  document.querySelectorAll('#nav a').forEach(a => {
-    if (a.getAttribute('href') === '#/' + view) a.setAttribute('aria-current', 'page');
-    else a.removeAttribute('aria-current');
-  });
-  if (view === 'start') renderStart();
-  if (view === 'lernen') renderTopicList();
-  if (view === 'ueben') {
-    if (pendingTopic !== undefined) {
-      const t = pendingTopic;
-      pendingTopic = undefined;
-      startRound(t);
-    } else {
-      renderQuizPicker();
-    }
-  }
-  if (view === 'stand') renderStand();
-  if (location.hash === '#ueber') openPortrait();
-  else window.scrollTo(0, 0);
+/* Pfad -> Ansicht. Die Lernapp hängt bewusst unter /lernapp, damit sie ein
+   Projekt unter mehreren bleibt und nicht die Startseite bestimmt. */
+const ROUTES = {
+  'start':          { view: 'start',    render: renderBoard,        tab: '#/start' },
+  'projekte':       { view: 'projekte', render: renderProjects,     tab: '#/projekte' },
+  'lernapp':        { view: 'lernapp',  render: renderLernappHome,  tab: '#/projekte', bar: true },
+  'lernapp/lernen': { view: 'lernen',   render: renderTopicList,    tab: '#/projekte', bar: true },
+  'lernapp/ueben':  { view: 'ueben',    render: renderUeben,        tab: '#/projekte', bar: true },
+  'lernapp/stand':  { view: 'stand',    render: renderStand,        tab: '#/projekte', bar: true },
+};
+
+/* Alte Adressen der reinen Lernapp weiterleiten. */
+const ALIAS = {
+  'lernen': 'lernapp/lernen',
+  'ueben':  'lernapp/ueben',
+  'stand':  'lernapp/stand',
+  'ueber':  'start',
+};
+
+function currentPath() {
+  const raw = location.hash.replace(/^#\/?/, '').split('?')[0];
+  return raw || 'start';
 }
 
-/* ── Start ─────────────────────────────────────────────── */
+function route() {
+  let path = currentPath();
+  if (ALIAS[path]) {
+    location.replace('#/' + ALIAS[path]);
+    return;
+  }
 
-function renderStart() {
+  let entry = ROUTES[path];
+  let projectId = null;
+
+  if (!entry && path.startsWith('projekt/')) {
+    projectId = path.slice('projekt/'.length);
+    if (projectById(projectId)) {
+      entry = { view: 'projekt', render: () => renderProject(projectId), tab: '#/projekte' };
+    }
+  }
+  if (!entry) {
+    entry = ROUTES['start'];
+    path = 'start';
+  }
+
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  $('#view-' + entry.view).classList.add('active');
+
+  markCurrent('#nav a', entry.tab);
+  show($('#lernapp-bar'), !!entry.bar);
+  if (entry.bar) markCurrent('#subnav a', '#/' + path);
+
+  if (entry.render) entry.render();
+  window.scrollTo(0, 0);
+}
+
+function markCurrent(selector, href) {
+  document.querySelectorAll(selector).forEach(a => {
+    if (a.getAttribute('href') === href) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+}
+
+/* ── Startseite: Projekte als Statusliste ──────────────── */
+
+/* Wer Monitoring baut, darf seine Startseite wie eine Statusseite lesen.
+   Die Zustände stehen in projects.json, hier wird nichts live gemessen. */
+function renderBoard() {
+  const board = $('#board');
+  board.textContent = '';
+
+  PROJECTS.forEach(p => {
+    const row = el('a', 'board-row');
+    row.href = p.kind === 'detail' ? '#/projekt/' + p.id : p.href;
+    if (p.kind === 'extern') { row.rel = 'noopener'; row.target = '_blank'; }
+
+    row.appendChild(el('span', 'dot dot-' + (p.state || 'extern')));
+    row.appendChild(el('span', 'board-name', p.title));
+    row.appendChild(el('span', 'board-state', p.stateLabel || ''));
+    board.appendChild(row);
+  });
+}
+
+/* ── Projektübersicht ──────────────────────────────────── */
+
+function renderProjects() {
+  const list = $('#project-list');
+  list.textContent = '';
+
+  PROJECTS.forEach(p => {
+    const href = p.kind === 'detail' ? '#/projekt/' + p.id : p.href;
+    const card = el('a', 'card card-project');
+    card.href = href;
+    if (p.kind === 'extern') {
+      card.rel = 'noopener';
+      card.target = '_blank';
+    }
+
+    card.appendChild(el('p', 'meta', p.meta));
+    card.appendChild(el('h3', null, p.title));
+    card.appendChild(el('p', null, p.tagline));
+    if (p.note) card.appendChild(el('p', null, p.note));
+
+    const foot = el('p', 'tally', p.status);
+    card.appendChild(foot);
+
+    // Fortschrittsstreifen nur dort, wo es eine echte Reihenfolge gibt
+    if (p.stages) card.appendChild(stageStrip(p.stages));
+
+    list.appendChild(card);
+  });
+
+  renderService();
+}
+
+/* Kein Projekt, sondern ein Angebot — darum unter den Karten und
+   in eigener Form, ohne Zustandspunkt und ohne Fortschritt. */
+function renderService() {
+  if (!SERVICE) return;
+
+  // Container notfalls selbst anlegen. Wird noch eine ältere index.html
+  // verwendet, fehlt er — ohne das bliebe der Block kommentarlos aus.
+  let box = $('#service');
+  if (!box) {
+    box = el('section', 'service');
+    box.id = 'service';
+    $('#project-list').parentNode.insertBefore(box, $('#project-list').nextSibling);
+  }
+  show(box, true);
+
+  box.textContent = '';
+  box.appendChild(el('h2', null, SERVICE.title));
+  if (SERVICE.intro) box.appendChild(el('p', 'lead', SERVICE.intro));
+
+  SERVICE.items.forEach(it => {
+    const p = el('p', 'service-item');
+    p.appendChild(el('strong', null, it.name + '.'));
+    p.appendChild(document.createTextNode(' ' + it.text));
+    box.appendChild(p);
+  });
+
+  if (SERVICE.link) box.appendChild(linkRow([{ ...SERVICE.link, primary: true }]));
+}
+
+function stageStrip(stages) {
+  const strip = el('div', 'bitfield bitfield-tight');
+  stages.forEach(s => {
+    const bit = el('div', 'bit' + (s.done ? ' b3' : ''));
+    bit.title = 'Stufe ' + s.n + ' — ' + s.title + (s.done ? '' : ' (offen)');
+    strip.appendChild(bit);
+  });
+  return strip;
+}
+
+/* ── Eine Projektseite ─────────────────────────────────── */
+
+function renderProject(id) {
+  const p = projectById(id);
+  const root = $('#view-projekt');
+  root.textContent = '';
+
+  const back = el('a', 'backlink', '← Alle Projekte');
+  back.href = '#/projekte';
+  root.appendChild(back);
+
+  root.appendChild(el('p', 'meta', p.meta));
+  root.appendChild(el('h1', null, p.title));
+  root.appendChild(el('p', 'lead', p.tagline));
+
+  if (p.stack) {
+    const chips = el('ul', 'chips');
+    p.stack.forEach(s => chips.appendChild(el('li', null, s)));
+    root.appendChild(chips);
+  }
+
+  if (p.intro) {
+    const prose = el('div', 'prose');
+    p.intro.forEach(t => prose.appendChild(el('p', null, t)));
+    root.appendChild(prose);
+  }
+
+  if (p.parts) {
+    root.appendChild(el('h2', null, 'Aufbau'));
+    if (p.partsNote) root.appendChild(el('p', 'lead', p.partsNote));
+    const dl = el('dl', 'parts');
+    p.parts.forEach(part => {
+      dl.appendChild(el('dt', null, part.name));
+      dl.appendChild(el('dd', null, part.note));
+    });
+    root.appendChild(dl);
+  }
+
+  if (p.stages) {
+    const done = p.stages.filter(s => s.done).length;
+    root.appendChild(el('h2', null, 'Stufen'));
+    root.appendChild(el('p', 'lead',
+      done + ' von ' + p.stages.length + ' abgeschlossen. Jede Stufe ergänzt einen Baustein.'));
+    root.appendChild(stageStrip(p.stages));
+
+    const ol = el('ol', 'stages');
+    p.stages.forEach(s => {
+      const li = el('li', 'stage' + (s.done ? ' done' : ''));
+      li.appendChild(el('span', 'stage-n', String(s.n)));
+      const body = el('div');
+      body.appendChild(el('h3', null, s.title));
+      body.appendChild(el('p', null, s.note));
+      li.appendChild(body);
+      ol.appendChild(li);
+    });
+    root.appendChild(ol);
+  }
+
+  if (p.reflection) {
+    root.appendChild(el('h2', null, 'Was ich dabei gelernt habe'));
+    p.reflection.forEach(r => {
+      const block = el('section', 'reflect');
+      block.appendChild(el('h3', null, r.heading));
+      r.body.forEach(t => block.appendChild(el('p', null, t)));
+      root.appendChild(block);
+    });
+  }
+
+  if (p.repoNote) root.appendChild(el('p', 'lead repo-note', p.repoNote));
+  if (p.links) root.appendChild(linkRow(p.links));
+}
+
+function linkRow(links) {
+  const row = el('p', 'actions');
+  links.forEach(l => {
+    const a = el('a', 'btn' + (l.primary ? '' : ' btn-quiet'), l.label);
+    a.href = l.href;
+    a.rel = 'noopener';
+    if (/^https?:/.test(l.href)) a.target = '_blank';
+    row.appendChild(a);
+  });
+  return row;
+}
+
+/* ── Lernapp: Übersicht ────────────────────────────────── */
+
+function renderLernappHome() {
   const items = allQuestions();
+
+  // Vor der ersten Antwort gibt es nichts zu zeigen. Ein Feld voller
+  // "kannst du noch nicht" ist als Begrüssung das falsche Signal.
+  show($('#lernapp-fortschritt'), PROGRESS.answered > 0);
+  if (!PROGRESS.answered) return;
+
   const field = $('#bitfield');
   field.textContent = '';
   items.forEach(it => {
@@ -162,12 +383,10 @@ function renderStart() {
 
   $('#stand-satz').textContent = headline(safe, items.length);
   captionNode().textContent =
-    'Ein Kästchen ist eine Frage. Beantwortest du sie richtig, rückt sie eine Stufe weiter, '
-    + 'rot heisst neu oder zuletzt falsch, gelb einmal geschafft, grün sitzt. '
+    'Ein Kästchen ist eine Frage. Beantwortest du sie richtig, rückt sie eine Stufe weiter: '
+    + 'grau heisst offen oder zuletzt daneben, gelb einmal geschafft, grün sitzt. '
     + 'Zeig mit der Maus darauf, um die Frage zu sehen. '
-    + (PROGRESS.answered
-        ? 'Gerade: ' + neu + ' offen · ' + fast + ' fast · ' + safe + ' sicher.'
-        : 'Noch ist alles offen — nach der ersten Runde färbt sich das hier.');
+    + 'Gerade: ' + neu + ' offen · ' + fast + ' fast · ' + safe + ' sicher.';
 }
 
 /* Ermutigung statt Zählerstand. Stufen nach Anteil sicherer Fragen. */
@@ -196,10 +415,6 @@ function captionNode() {
 
     box = el('p', 'infobox');
     box.id = 'bitfield-caption';
-    box.style.fontSize = '0.78rem';
-    box.style.lineHeight = '1.5';
-    box.style.maxWidth = '38rem';
-    box.style.margin = '0.2rem 0 1.8rem';
     legend.parentNode.insertBefore(box, legend.nextSibling);
     show(box, false);
 
@@ -213,38 +428,7 @@ function captionNode() {
   return box;
 }
 
-/* Selbstportrait hinter einem Knopf "Autor" verstecken. */
-let openPortrait = () => {};
-
-function setupPortrait() {
-  const p = document.querySelector('.portrait');
-  if (!p || p.dataset.faltbar) return;
-  p.dataset.faltbar = '1';
-
-  const body = el('div', 'portrait-body');
-  while (p.firstChild) body.appendChild(p.firstChild);
-
-  const btn = el('button', 'disclose', '▸ Autor');
-  btn.type = 'button';
-  btn.setAttribute('aria-expanded', 'false');
-  p.append(btn, body);
-  show(body, false);
-
-  const setzen = auf => {
-    show(body, auf);
-    btn.textContent = (auf ? '▾' : '▸') + ' Autor';
-    btn.setAttribute('aria-expanded', String(auf));
-  };
-  btn.addEventListener('click', () => setzen(body.style.display === 'none'));
-
-  openPortrait = () => {
-    setzen(true);
-    p.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  if (location.hash === '#ueber') openPortrait();
-}
-
-/* ── Lernen ────────────────────────────────────────────── */
+/* ── Lernapp: Lernen ───────────────────────────────────── */
 
 function renderTopicList() {
   show($('#topic-reader'), false);
@@ -254,6 +438,7 @@ function renderTopicList() {
   list.textContent = '';
   CONTENT.topics.forEach(t => {
     const card = el('button', 'card');
+    card.type = 'button';
     card.appendChild(el('h3', null, t.title));
     card.appendChild(el('p', null, t.description));
     card.appendChild(el('p', 'tally', t.sections.length + ' Abschnitte · ' + t.questions.length + ' Fragen'));
@@ -284,8 +469,8 @@ function renderTopic(id) {
   const reader = $('#topic-reader');
   reader.textContent = '';
 
-  // Zurück-Link zuoberst, damit er ohne Scrollen erreichbar ist
   const back = el('button', 'backlink', '← Alle Themen');
+  back.type = 'button';
   back.addEventListener('click', renderTopicList);
   reader.appendChild(back);
 
@@ -300,20 +485,31 @@ function renderTopic(id) {
 
   const foot = el('p', 'actions');
   const quiz = el('button', 'btn', 'Dieses Thema üben');
-  quiz.addEventListener('click', () => { pendingTopic = t.id; location.hash = '#/ueben'; });
+  quiz.type = 'button';
+  quiz.addEventListener('click', () => { pendingTopic = t.id; location.hash = '#/lernapp/ueben'; });
   const back2 = el('button', 'btn btn-quiet', 'Alle Themen');
+  back2.type = 'button';
   back2.addEventListener('click', renderTopicList);
   foot.append(quiz, back2);
   reader.appendChild(foot);
 
-  // Liste weg, Seitenüberschrift weg — das Thema steht damit zuoberst
   show($('#topic-list'), false);
   show($('#lernen-kopf'), false);
   show(reader, true);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ── Üben ──────────────────────────────────────────────── */
+/* ── Lernapp: Üben ─────────────────────────────────────── */
+
+function renderUeben() {
+  if (pendingTopic !== undefined) {
+    const t = pendingTopic;
+    pendingTopic = undefined;
+    startRound(t);
+  } else {
+    renderQuizPicker();
+  }
+}
 
 function renderQuizPicker() {
   show($('#quiz-run'), false);
@@ -324,6 +520,7 @@ function renderQuizPicker() {
   list.textContent = '';
 
   const mixed = el('button', 'card');
+  mixed.type = 'button';
   mixed.appendChild(el('h3', null, 'Alles gemischt'));
   mixed.appendChild(el('p', null, 'Wackelige Fragen aus allen Themen, aufgefüllt mit Wiederholungen.'));
   mixed.addEventListener('click', () => startRound(null));
@@ -332,6 +529,7 @@ function renderQuizPicker() {
   CONTENT.topics.forEach(t => {
     const boxes = t.questions.map(q => boxOf(t.id, q.id));
     const card = el('button', 'card');
+    card.type = 'button';
     card.appendChild(el('h3', null, t.title));
     card.appendChild(el('p', null, t.questions.length + ' Fragen'));
     card.appendChild(el('p', 'tally',
@@ -399,6 +597,7 @@ function showQuestion() {
     const wrap = el('div', 'opts');
     shuffle(it.q.options).forEach((opt, n) => {
       const btn = el('button', 'opt');
+      btn.type = 'button';
       btn.dataset.value = opt;
       btn.appendChild(el('span', 'tick', String.fromCharCode(65 + n)));
       btn.appendChild(document.createTextNode(opt));
@@ -413,6 +612,7 @@ function showQuestion() {
     input.placeholder = 'Deine Antwort';
     input.autocomplete = 'off';
     const btn = el('button', 'btn', 'Prüfen');
+    btn.type = 'button';
     const go = () => { if (input.value.trim()) answer(input.value, null, null); };
     btn.addEventListener('click', go);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
@@ -451,6 +651,7 @@ function answer(given, optWrap, clicked) {
   const actions = el('p', 'actions');
   const last = session.i === session.items.length - 1;
   const next = el('button', 'btn', last ? 'Runde abschliessen' : 'Weiter');
+  next.type = 'button';
   next.addEventListener('click', () => {
     session.i++;
     if (session.i >= session.items.length) finishRound();
@@ -476,15 +677,14 @@ function finishRound() {
   const list = $('#done-moves');
   list.textContent = '';
   session.moves.filter(m => !m.right).forEach(m => {
-    const card = el('div', 'card');
-    card.style.cursor = 'default';
+    const card = el('div', 'card card-static');
     card.appendChild(el('h3', null, m.q.question));
     card.appendChild(el('p', null, m.q.answer[0] + ' — ' + m.q.explanation));
     list.appendChild(card);
   });
 }
 
-/* ── Stand ─────────────────────────────────────────────── */
+/* ── Lernapp: Stand ────────────────────────────────────── */
 
 function renderStand() {
   const items = allQuestions();
@@ -508,8 +708,7 @@ function renderStand() {
 
   CONTENT.topics.forEach(t => {
     const boxes = t.questions.map(q => boxOf(t.id, q.id));
-    const row = el('div', 'card');
-    row.style.cursor = 'default';
+    const row = el('div', 'card card-static');
     row.appendChild(el('h3', null, t.title));
     const strip = el('div', 'bitfield');
     boxes.forEach(b => strip.appendChild(el('div', 'bit b' + b)));
@@ -573,22 +772,33 @@ function setupDataButtons() {
 
 /* ── Start ─────────────────────────────────────────────── */
 
+async function laden(datei) {
+  // no-cache erzwingt eine Rückfrage beim Server. Ohne das liefert der
+  // Browser gerne die alte JSON-Datei aus, obwohl sie längst geändert ist.
+  const res = await fetch(datei, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(datei + ': HTTP ' + res.status);
+  return res.json();
+}
+
 async function boot() {
   try {
-    const res = await fetch('content.json');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    CONTENT = await res.json();
+    const [content, projects] = await Promise.all([
+      laden('content.json'),
+      laden('projects.json'),
+    ]);
+    CONTENT = content;
+    PROJECTS = projects.projects;
+    SERVICE = projects.service || null;
   } catch (err) {
     console.error(err);
     document.querySelector('main').innerHTML =
-      '<h1>Inhalte nicht geladen</h1><p class="lead">content.json ist nicht erreichbar. ' +
-      'Lokal geht das nur über einen Webserver, nicht per Doppelklick auf die Datei: ' +
-      '<code>python3 -m http.server</code> im Projektordner starten und ' +
-      '<code>http://localhost:8000</code> öffnen.</p>';
+      '<h1>Inhalte nicht geladen</h1><p class="lead">content.json oder projects.json ist nicht erreichbar. '
+      + 'Lokal geht das nur über einen Webserver, nicht per Doppelklick auf die Datei: '
+      + '<code>python3 -m http.server</code> im Projektordner starten und '
+      + '<code>http://localhost:8000</code> öffnen.</p>';
     return;
   }
   setupDataButtons();
-  setupPortrait();
   window.addEventListener('hashchange', route);
   route();
 }

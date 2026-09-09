@@ -1,0 +1,116 @@
+{
+  "version": 2,
+  "service": {
+    "title": "Auf Anfrage",
+    "intro": "Zwei Dinge mache ich auch für andere.",
+    "items": [
+      {
+        "name": "Kleine Websites",
+        "text": "Gestaltung, Umsetzung, Domain und Einrichtung: schlank und schnell. Für Einzelpersonen, Selbstständige, Vereine, Kollegen und kleine Projekte. Schick mir dein Anliegen oder deine Idee, wir schauen es uns gerne gemeinsam an."
+      },
+      {
+        "name": "IT-Fragen",
+        "text": "Eine zweite Meinung vor einem Kauf, Hilfe beim Einrichten, oder die Frage, ob Backup und Passwörter bei dir eigentlich vernünftig geregelt sind."
+      }
+    ],
+    "link": {
+      "label": "Anfrage senden",
+      "href": "mailto:nachbar.aptitude308@passinbox.com?subject=Anfrage%20über%20die%20Website"
+    }
+  },
+  "projects": [
+    {
+      "id": "uptime-monitor",
+      "kind": "detail",
+      "title": "Uptime-Monitor",
+      "tagline": "Fragt jede Minute selbst nach, ob eine Website noch antwortet, und zeichnet den Verlauf auf. Stand: 9 von 9 abgeschlossen.",
+      "state": "live",
+      "stateLabel": "Monitoring Projekt",
+      "intro": [
+        "Eine Website fällt nachts aus, der Kunde merkt es am Morgen als Erster und ruft an. Genau diesen Moment soll ein Uptime-Monitor verhindern. Solche Werkzeuge gibt es fertig zu kaufen. Ich wollte trotzdem einmal selbst durch die ganze Kette gehen, vom Skript über Tests und Systemdienst bis zum Dashboard.", 
+		"Das Python-Programm selbst ist bewusst klein geblieben, damit es beim Lernen nicht im Weg steht. Der Zweck liegt im Weg dorthin: Tests, Container, CI/CD, Observability und Infrastructure as Code waren vorher Begriffe, die ich kannte, aber nie angefasst hatte."
+      ],
+      "stack": ["Python 3.11", "requests", "prometheus_client", "pytest", "Docker Compose", "Prometheus", "Grafana", "GitHub Actions"],
+      "partsNote": "Drei Container in einem Compose-Netz. Sie finden sich über ihren Servicenamen, ohne eine einzige IP-Adresse in der Konfiguration.",
+      "parts": [
+        { "name": "monitor:8000", "note": "Prüft alle 60 Sekunden und stellt die Messwerte unter /metrics bereit" },
+        { "name": "prometheus:9090", "note": "Holt die Werte alle 15 Sekunden ab und speichert die Zeitreihen" },
+        { "name": "grafana:3000", "note": "Dashboard aus Dateien provisioniert, nicht in der Oberfläche geklickt" }
+      ],
+      "stages": [
+        { "n": 1, "title": "Erste Abfrage", "note": "Eine URL, ein Statuscode, eine gemessene Zeit.", "done": true },
+        { "n": 2, "title": "Konfiguration und Logging", "note": "Ziele raus aus dem Code, print raus aus dem Programm.", "done": true },
+        { "n": 3, "title": "Fehlerbehandlung", "note": "Antwort, Fehlercode und Ausbleiben sauber getrennt.", "done": true },
+        { "n": 4, "title": "Tests", "note": "In Funktionen zerlegt, dann fünf pytest-Tests ohne Netzwerk.", "done": true },
+        { "n": 5, "title": "Betrieb als Dienst", "note": "systemd-Unit, Logs ans Journal statt in eine eigene Datei.", "done": true },
+        { "n": 6, "title": "Container", "note": "Dockerfile nach Änderungshäufigkeit sortiert, Lauf ohne root.", "done": true },
+        { "n": 7, "title": "Pipeline", "note": "GitHub Actions prüft bei jedem Push auf fremder Maschine.", "done": true },
+        { "n": 8, "title": "Metriken", "note": "Aus dem Skript wird ein Dienst mit /metrics-Endpunkt.", "done": true },
+        { "n": 9, "title": "Erfassung und Darstellung", "note": "Compose-Stack, Prometheus scrapt, Grafana zeigt den Verlauf.", "done": true }
+      ],
+      "reflection": [
+        {
+          "heading": "Min Background",
+          "body": [
+            "Mehrere Jahre im Microsoft-Umfeld: viel Windows Server, viel Microsoft 365, kaum Linux. DevOps, Container und Infrastructure as Code kannte ich nur als Begriffe. Dieses Projekt war der erste Ort, an dem ich mich versucht habe."
+          ]
+        },
+        {
+          "heading": "De Fehler, wo nöt azeigt worde ish",
+          "body": [
+            "Am meisten gelernt habe ich an einem Fehler, der lange unentdeckt blieb: Fiel eine Website aus, blieb ihr letzter Statuscode im Dashboard stehen: 200 (erreichbar), obwohl seit Stunden niemand mehr antwortete. Tests grün, Dashboard unauffällig. Aufgefallen ist es erst, als ich mich gefragt habe, was eigentlich passieren müsste. Seitdem prüfe ich nicht nur, ob etwas läuft, sondern ob es sich so verhält wie erwartet."
+          ]
+        },
+        {
+          "heading": "Uf dem zweite PC",
+          "body": [
+            "Denselben Punkt habe ich noch einmal erlebt, als das Dashboard auf einer anderen Maschine leer blieb, ohne jede Fehlermeldung. Der Grund waren Dateirechte, die Git nicht mitüberträgt. Die Pipeline hätte das nie gefunden, sie baut nur das Image. Gezeigt hat es erst der Test auf einem fremden PC."
+          ]
+        },
+        {
+          "heading": "Linux het mer am meiste Spass gmacht",
+          "body": [
+            "Vermutlich, weil dort meine Lücke am grössten war. Wie systemd einen Dienst überwacht, warum ein belegter Port aussieht wie ein Konfigurationsfehler: Vieles davon habe ich erst verstanden, als es einmal nicht funktioniert hat."
+          ]
+        },
+        {
+          "heading": "Chlini Reflexion",
+          "body": [
+            "Bisher habe ich Einstellungen im Admin Center geklickt oder per PowerShell gesetzt: danach war nur das Ergebnis da, es fehlte der beschrieben Weg bis zum Ergebnis. Mit diesem Projekt, steht der gewünschte Zustand in einer Datei (yaml, json), die ich versionieren und so oft ich will, wiederholen kann. Das ist der Teil, dass ist auch ein Teil den ich sehr spannend finde."
+          ]
+        },
+        {
+          "heading": "Nonig fertig",
+          "body": [
+            "Das Projekt ist noch nicht fertig. Aber es ist das erste, an dem ich wirklich verstanden habe, wovon ich vorher nur die Begriffe kannte."
+          ]
+        }
+      ],
+      "repoNote": "Offene Punkte, Befehle und die vollständige Dokumentation liegen im Repository.",
+      "links": [
+        { "label": "Repository ansehen", "href": "https://github.com/bleniii/uptime-monitor", "primary": true }
+      ]
+    },
+    {
+      "id": "lernapp",
+      "kind": "app",
+      "title": "Learny",
+      "tagline": "Das ist meine kleine Lernapp. Entstanden aus der Motivation, Menschen in meinem Umfeld den Einstieg in die Informatik zu erleichtern. Versuch es auch du und teste dein Wissen.",
+      "meta": "HTML · CSS · JavaScript",
+      "state": "live",
+      "stateLabel": "Kleine Lern-App: Hier Starten",
+      "href": "#/lernapp",
+      "note": "Sechs Themen, gemischt abgefragt. Kein Konto, kein Backend, dein Lernstand bleibt in deinem Browser."
+    },
+    {
+      "id": "mittelalter",
+      "kind": "extern",
+      "title": "Nachschlagewerk Mittelalter",
+      "tagline": "Infos zu den verschiedenen muslimischen Dynastien bis hin zum osmanischen Reich.",
+      "meta": "Externe Seite",
+      "state": "extern",
+      "stateLabel": "Nebenprojekt",
+      "href": "https://nachbars-glaube.de"
+    }
+  ]
+}

@@ -3,98 +3,134 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IT-Grundlagen — Mini Lernapp</title>
-<meta name="description" content="Bits, OSI-Schichten und Netzwerkkomponenten üben. Läuft komplett im Browser.">
+<title>Bleni E-Portfolio</title>
+<meta name="description" content="Projekte eines Informatikers aus der Schweiz: ein Uptime-Monitor mit Python, Prometheus und Grafana, eine kleine Lernapp für IT-Grundlagen, ein Nachschlagewerk.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
 
 <header class="topbar">
-  <a class="wordmark" href="#/start">IT-Basics <span>IT-Grundlagen</span></a>
+  <a class="wordmark" href="#/start">Bleni <span>Informatiker</span></a>
   <nav id="nav">
-    <a href="#/start">Start</a>
-    <a href="#/lernen">Lernen</a>
-    <a href="#/ueben">Üben</a>
-    <a href="#/stand">Stand</a>
+    <a href="#/start">Über mich</a>
+    <a href="#/projekte">Projekte</a>
   </nav>
 </header>
 
 <main>
 
-  <!-- ── START ───────────────────────────────────────────── -->
-    <p class="lead" style="margin-bottom: 2.5rem;">
-      IT-Grundlagen Themen, gemischt abgefragt. Jede Frage wandert nach oben, wenn du sie kannst,
-      und fällt zurück, wenn nicht. Was noch nicht sitzt wird einfach wiederholt. 😊
-    </p>
-  
+  <!-- ── Leiste innerhalb der Lernapp ────────────────────── -->
+  <div id="lernapp-bar" class="subnav" hidden>
+    <a class="backlink" href="#/projekte">← Alle Projekte</a>
+    <nav id="subnav">
+      <a href="#/lernapp">Übersicht</a>
+      <a href="#/lernapp/lernen">Lernen</a>
+      <a href="#/lernapp/ueben">Üben</a>
+      <a href="#/lernapp/stand">Stand</a>
+    </nav>
+  </div>
+
+  <!-- ── Über mich ───────────────────────────────────────────── -->
   <section id="view-start" class="view">
-    <p class="eyebrow">Dein Wissensstand</p>
-    <div id="bitfield" class="bitfield" aria-label="Alle Fragen, gefärbt nach Sicherheit"></div>
-    <p id="bitfield-legend" class="legend">
-      <span class="key k1"></span>starter
-      <span class="key k2"></span>almost there
-      <span class="key k3"></span>safe
-    </p>
-    <h1 id="stand-satz">Lade …</h1>
 
-    <p class="actions">
-      <a class="btn" href="#/ueben">Üben</a>
-      <a class="btn btn-quiet" href="#/lernen">Erst lesen &amp; lernen</a>
-    </p>
+    <div class="masthead">
+      <h1>Bleni</h1>
+      <p class="role">System Engineer, ZH</p>
+      <p class="lead">
+        Bleni ist mein Spitzname. Ich bin kurz vor 1998 geboren. <a href="https://bit.ly/3UA9Eyv">(Kurz vor der Geburt von Google und Windows 98)</a>
+		Ich mache diesen Beruf auch ausserhalb der Bürozeiten gerne.
+        Was dabei entsteht, kann man hier nachschauen. 👀
+      </p>
+      <div id="board" class="board"></div>
+    </div>
 
-    <!-- ══════════════════════════════════════════════════════
-         SELBSTPORTRAIT — hier deine Angaben eintragen.
-         Alles bewusst pseudonym: kein Klarname, keine Adresse.
-         Ersetze "byteweise", den Text und die Kontaktzeile.
-         ══════════════════════════════════════════════════════ -->
-    <section class="portrait" id="ueber">
-      <p class="eyebrow">Autor</p>
-      <h2>Bleni</h2>
+    <div class="prose">
+      <h2>Was mich beschäftigt</h2>
       <p>
-       Diese Mini-App ist mein Versuch, eine Lernapp allein mit HTML, CSS und JavaScript zu bauen. Alles im Browser, ohne Backend.
+        🐧 Linux und Automation. Ich komme aus dem Microsoft-Umfeld: Windows Server, Microsoft 365, Admin Center. 
+		Linux hat viele Parallelen, mein Fokus liegt auf Dinge bauen, so dass sie sich wiederholen lassen.
+		Ein Server, der aus einer Konfigurationsdatei genauso wieder entsteht, wie er einmal aufgesetzt wurde,
+		finde ich sehr spannend.
       </p>
       <p>
-        Ich bin gelernter Informatiker und mache diesen Beruf auch ausserhalb der Bürozeiten gerne.
-		KI und Cybersecurity lassen mich aufhorchen:<br>
-		🤖KI: Ich versuche mich up to date zu halten, die Entwicklungen rundum die verschiedenen Modelle und neuen Funktionen sind sehr schnell, man kommt teilweise nicht nach.👀 Yup, diese Webseite wurde mit Hilfe einer KI erstellt. Dennoch versuche ich den Code nicht nur einfach zu generieren, sondern möglichst weit zu verstehen.<br>
-		🔍Cybersecurity: Ein Thema dass genauso mein Dashboard ausmacht, ob Claude Mythos oder die neusten Entwicklungen in Zusammenhang mit KI, ich versuche auch hier nicht nur bei den Grundlagen zu bleiben. Auf dieser Webseite wird man keine genauen Kontaktangaben finden. 👀<br><br>
-		Neben Informatik gibt es da noch Mountain Bike, historische Orte besuchen und 
-		die Geschichte der letzten 2000 Jahre, die mich interessiert. 
+        🤖 KI und Cybersecurity. Ich versuche, in beidem auf dem Laufenden zu bleiben, gerade weil sie sich 
+		zunehmend gegenseitig beeinflussen. Bei der KI ist mir wichtig, Code nicht nur zu erzeugen, sondern 
+		zu verstehen und nachzuprüfen, auch bei dieser Seite. Das ist die schwierigere 
+		Hälfte der Arbeit. Bei Security bleibe ich nicht bei den Grundlagen stehen.
       </p>
+      <p>
+        🚵 Daneben gibt es Mountainbike, historische Orte und Schach ♞.
+      </p>
+    </div>
+
+    <section class="portrait">
+      <h2>Kontakt</h2>
       <dl class="contact">
-        <dt>Kontakt</dt>
-        <dd><a href="mailto:nachbar.aptitude308@passinbox.com"> ➜ Send Mail</a></dd>
-		
+        <dt>Mail</dt>
+        <dd><a href="mailto:nachbar.aptitude308@passinbox.com">Mail schreiben</a></dd>
+
         <dt>Code</dt>
-        <dd><a href="https://github.com/bleniii"> ➜ github.com/bleniii</a></dd>
-		
-		<dt>Projekt: Uptime-Monitor</dt>
-		<dd><a href="https://github.com/bleniii/uptime-monitor"> ➜ Uptime-Monitor</a></dd>
-		
-		<dt>Projekt: Nachschlagewerk</dt>
-		<dd><a href="https://nachbars-glaube.de"> ➜ Mittelalter Nahost?</a></dd>
-	
-        <dt>Wo man mich findet</dt>
-        <a href="https://maps.app.goo.gl/b3mdgkDgmqDk9gE68"> ➜ Irgendwo in der Schweiz</a></dd>
+        <dd><a href="https://github.com/bleniii">github.com/bleniii</a></dd>
+
+        <dt>Standort</dt>
+        <dd><a href="https://maps.app.goo.gl/b3mdgkDgmqDk9gE68">Irgendwo in der Schweiz</a></dd>
       </dl>
     </section>
-    <!-- ═══ Ende Selbstportrait ══════════════════════════════ -->
   </section>
 
-  <!-- ── LERNEN ──────────────────────────────────────────── -->
+  <!-- ── PROJEKTE ────────────────────────────────────────── -->
+  <section id="view-projekte" class="view">
+    <h1>Projekte</h1>
+    <p class="lead">
+      Drei Sachen, die tatsächlich laufen. Eine davon kannst du direkt hier benutzen.
+    </p>
+    <div id="project-list" class="stack stack-wide"></div>
+    <section id="service" class="service" hidden></section>
+  </section>
+
+  <!-- ── EIN PROJEKT ─────────────────────────────────────── -->
+  <section id="view-projekt" class="view"></section>
+
+  <!-- ── LERNAPP: ÜBERSICHT ──────────────────────────────── -->
+  <section id="view-lernapp" class="view">
+    <h1>Learny - Eine kleine IT-Lernapp</h1>
+    <p class="lead">
+      Das ist meine kleine Lernapp. Entstanden aus der Motivation, Menschen in meinem Umfeld den
+      Einstieg in die Informatik zu erleichtern. Versuch es auch du und teste dein Wissen.
+    </p>
+
+    <p class="actions">
+      <a class="btn" href="#/lernapp/ueben">Wissen testen</a>
+      <a class="btn btn-quiet" href="#/lernapp/lernen">Erst lesen</a>
+    </p>
+
+    <div id="lernapp-fortschritt" hidden>
+      <h2 id="stand-satz"></h2>
+      <div id="bitfield" class="bitfield" aria-label="Alle Fragen, gefärbt nach Sicherheit"></div>
+      <p id="bitfield-legend" class="legend">
+        <span class="key k1"></span>offen
+        <span class="key k2"></span>fast
+        <span class="key k3"></span>sitzt
+      </p>
+    </div>
+  </section>
+
+  <!-- ── LERNAPP: LERNEN ─────────────────────────────────── -->
   <section id="view-lernen" class="view">
-    <p class="eyebrow">Lesestoff</p>
-    <h1>Lernen</h1>
+    <div id="lernen-kopf">
+      <h1>Lernen</h1>
+      <p class="lead">Wähle ein Thema. Am Ende jedes Themas kannst du direkt üben.</p>
+    </div>
     <div id="topic-list" class="stack"></div>
     <article id="topic-reader" class="reader" hidden></article>
   </section>
 
-  <!-- ── ÜBEN ────────────────────────────────────────────── -->
+  <!-- ── LERNAPP: ÜBEN ───────────────────────────────────── -->
   <section id="view-ueben" class="view">
     <div id="quiz-pick">
-      <p class="eyebrow">Fragestapel wählen</p>
       <h1>Üben</h1>
+      <p class="lead">Eine Runde hat 15 Fragen. Wackelige zuerst.</p>
       <div id="quiz-topics" class="stack"></div>
     </div>
 
@@ -107,26 +143,24 @@
     </div>
 
     <div id="quiz-done" hidden>
-      <p class="eyebrow">Runde beendet</p>
       <h1 id="done-headline"></h1>
       <p id="done-detail" class="lead"></p>
       <div id="done-moves" class="stack"></div>
       <p class="actions">
-        <a class="btn" href="#/ueben">Nächste Runde</a>
-        <a class="btn btn-quiet" href="#/stand">Stand ansehen</a>
+        <a class="btn" href="#/lernapp/ueben">Nächste Runde</a>
+        <a class="btn btn-quiet" href="#/lernapp/stand">Stand ansehen</a>
       </p>
     </div>
   </section>
 
-  <!-- ── STAND ───────────────────────────────────────────── -->
+  <!-- ── LERNAPP: STAND ──────────────────────────────────── -->
   <section id="view-stand" class="view">
-    <p class="eyebrow">Fortschritt</p>
     <h1>Stand</h1>
     <div id="stand-body"></div>
     <section class="datablock">
       <h2>Deine Daten</h2>
       <p class="fineprint">
-        Alles liegt nur in diesem Browser. Cache leeren löscht den Lernstand —
+        Alles liegt nur in diesem Browser. Cache leeren löscht den Lernstand,
         darum vorher exportieren.
       </p>
       <p class="actions">
@@ -142,7 +176,7 @@
 </main>
 
 <footer>
-  <p>Mini Lern-App Learny - B.N © Version 0.3 </p>
+  <p>Bleni · E-Portfolio· v0.4</p>
 </footer>
 
 <script src="app.js"></script>
