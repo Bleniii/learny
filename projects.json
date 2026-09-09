@@ -23,7 +23,7 @@
       "id": "uptime-monitor",
       "kind": "detail",
       "title": "Uptime-Monitor",
-      "tagline": "Fragt jede Minute selbst nach, ob eine Website noch antwortet, und zeichnet den Verlauf auf. Stand: 9 von 9 abgeschlossen.",
+      "tagline": "Fragt jede Minute selbst nach, ob eine Website noch antwortet, und zeichnet den Verlauf auf. Stand: Stufe 9 von 9 abgeschlossen.",
       "state": "live",
       "stateLabel": "Monitoring Projekt",
       "intro": [
@@ -95,18 +95,18 @@
       "id": "lernapp",
       "kind": "app",
       "title": "Learny",
-      "tagline": "Das ist meine kleine Lernapp. Entstanden aus der Motivation, Menschen in meinem Umfeld den Einstieg in die Informatik zu erleichtern. Versuch es auch du und teste dein Wissen.",
+      "tagline": "Das ist meine kleine Lernapp. Entstanden aus der Motivation, Menschen in meinem Umfeld den Einstieg in die Informatik zu erleichtern. Versuch es auch Du und teste dein Wissen.",
       "meta": "HTML · CSS · JavaScript",
       "state": "live",
       "stateLabel": "Kleine Lern-App: Hier Starten",
       "href": "#/lernapp",
-      "note": "Sechs Themen, gemischt abgefragt. Kein Konto, kein Backend, dein Lernstand bleibt in deinem Browser."
+      "note": "Sechs Themen, gemischt abgefragt. Es gibt keine Datenbank, dein Lernstand bleibt in deinem Browser."
     },
     {
       "id": "mittelalter",
       "kind": "extern",
-      "title": "Nachschlagewerk Mittelalter",
-      "tagline": "Infos zu den verschiedenen muslimischen Dynastien bis hin zum osmanischen Reich.",
+      "title": "Geschichte: Mittelalter im Nahen Osten",
+      "tagline": "Ein Nachschlagewerk zu den verschiedenen muslimischen Dynastien, von der Entstehung bis hin zum Osmanischen Reich.",
       "meta": "Externe Seite",
       "state": "extern",
       "stateLabel": "Nebenprojekt",
