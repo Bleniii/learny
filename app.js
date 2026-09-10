@@ -325,7 +325,18 @@ function renderProject(id) {
       const li = el('li', 'stage' + (s.done ? ' done' : ''));
       li.appendChild(el('span', 'stage-n', String(s.n)));
       const body = el('div');
-      body.appendChild(el('h3', null, s.title));
+            const titel = el('h3');
+      if (s.image) {
+        const a = el('a', null, s.title);
+        a.href = s.image;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.title = 'Screenshot öffnen';
+        titel.appendChild(a);
+      } else {
+        titel.textContent = s.title;
+      }
+      body.appendChild(titel);
       body.appendChild(el('p', null, s.note));
       li.appendChild(body);
       ol.appendChild(li);
@@ -364,8 +375,6 @@ function linkRow(links) {
 function renderLernappHome() {
   const items = allQuestions();
 
-  // Vor der ersten Antwort gibt es nichts zu zeigen. Ein Feld voller
-  // "kannst du noch nicht" ist als Begrüssung das falsche Signal.
   show($('#lernapp-fortschritt'), PROGRESS.answered > 0);
   if (!PROGRESS.answered) return;
 

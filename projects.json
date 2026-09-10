@@ -27,8 +27,8 @@
       "state": "live",
       "stateLabel": "Monitoring Projekt",
       "intro": [
-        "Eine Website fällt nachts aus, der Kunde merkt es am Morgen als Erster und ruft an. Genau diesen Moment soll ein Uptime-Monitor verhindern. Solche Werkzeuge gibt es fertig zu kaufen. Ich wollte trotzdem einmal selbst durch die ganze Kette gehen, vom Skript über Tests und Systemdienst bis zum Dashboard.", 
-		"Das Python-Programm selbst ist bewusst klein geblieben, damit es beim Lernen nicht im Weg steht. Der Zweck liegt im Weg dorthin: Tests, Container, CI/CD, Observability und Infrastructure as Code waren vorher Begriffe, die ich kannte, aber nie angefasst hatte."
+        "Eine Website fällt nachts aus, der Kunde merkt es am Morgen als Erster und ruft an, bevor man reagiert. Genau diesen Moment soll ein Uptime-Monitor verhindern. Solche Werkzeuge gibt es fertig zu kaufen. Meine Motivation war ein Tool zu erstellen von Scratch, mithilfe von KI. Dabei hab ich KI nicht einfach 'zum Viben' genutzt, sondern um echte Lernprozesse bis zum fertige Produkt zu gehen. Jeder Output wurde mir erklärt, jeder Codezeile wurde mir beschrieben, oft wurde ich auch selbst herausgefordert Funktionen, Bausteine zusammenzustellen mit unfertigen/teilfertigen Infos. Ziel war vom kleinen Skript, über Tests (Python), Systemdienst bis zum Dashboard (Prometheus,Grafana) ein Tool zu erstellen das den Uptime-Verlauf zeigt.", 
+		"Der Zweck liegt im Weg dorthin: Tests, Container, CI/CD, Observability und Infrastructure as Code waren vorher Begriffe, die ich kannte, aber kaum angefasst hatte."
       ],
       "stack": ["Python 3.11", "requests", "prometheus_client", "pytest", "Docker Compose", "Prometheus", "Grafana", "GitHub Actions"],
       "partsNote": "Drei Container in einem Compose-Netz. Sie finden sich über ihren Servicenamen, ohne eine einzige IP-Adresse in der Konfiguration.",
@@ -46,43 +46,43 @@
         { "n": 6, "title": "Container", "note": "Dockerfile nach Änderungshäufigkeit sortiert, Lauf ohne root.", "done": true },
         { "n": 7, "title": "Pipeline", "note": "GitHub Actions prüft bei jedem Push auf fremder Maschine.", "done": true },
         { "n": 8, "title": "Metriken", "note": "Aus dem Skript wird ein Dienst mit /metrics-Endpunkt.", "done": true },
-        { "n": 9, "title": "Erfassung und Darstellung", "note": "Compose-Stack, Prometheus scrapt, Grafana zeigt den Verlauf.", "done": true }
+                { "n": 9, "title": "Erfassung und Darstellung", "note": "Compose-Stack, Prometheus scrapt, Grafana zeigt den Verlauf.", "done": true, "image": "images/dashboard.png" }
       ],
       "reflection": [
         {
           "heading": "Min Background",
           "body": [
-            "Mehrere Jahre im Microsoft-Umfeld: viel Windows Server, viel Microsoft 365, kaum Linux. DevOps, Container und Infrastructure as Code kannte ich nur als Begriffe. Dieses Projekt war der erste Ort, an dem ich mich versucht habe."
+            "Mehrere Jahre im Microsoft-Umfeld: Administration, Windows Server, viel Microsoft 365. On-Prem Umgebung, teilweise Azure, Intune und Admin-Center. Teilweise Linux, wie Debian und Ubuntu."
           ]
         },
         {
           "heading": "De Fehler, wo nöt azeigt worde ish",
           "body": [
-            "Am meisten gelernt habe ich an einem Fehler, der lange unentdeckt blieb: Fiel eine Website aus, blieb ihr letzter Statuscode im Dashboard stehen: 200 (erreichbar), obwohl seit Stunden niemand mehr antwortete. Tests grün, Dashboard unauffällig. Aufgefallen ist es erst, als ich mich gefragt habe, was eigentlich passieren müsste. Seitdem prüfe ich nicht nur, ob etwas läuft, sondern ob es sich so verhält wie erwartet."
+            "Am meisten gelernt habe ich an einem Fehler, der lange unentdeckt blieb: Fiel eine Website aus, blieb ihr letzter Statuscode im Dashboard stehen: 200 (erreichbar), obwohl seit Stunden niemand mehr antwortete. Tests grün, Dashboard unauffällig. Aufgefallen ist es erst, als ich eine defekte URL als Ziel eingebaut habe. Seitdem prüfe ich nicht nur, ob etwas läuft, sondern ob es sich so verhält wie erwartet."
           ]
         },
         {
           "heading": "Uf dem zweite PC",
           "body": [
-            "Denselben Punkt habe ich noch einmal erlebt, als das Dashboard auf einer anderen Maschine leer blieb, ohne jede Fehlermeldung. Der Grund waren Dateirechte, die Git nicht mitüberträgt. Die Pipeline hätte das nie gefunden, sie baut nur das Image. Gezeigt hat es erst der Test auf einem fremden PC."
+            "Projekt geklont auf einem anderen PC: das Dashboard erschien nicht. Der Grund waren Dateirechte, die Git nicht mitüberträgt. Die Github-Pipeline hätte das nie gefunden, sie baut nur das Image. Gezeigt hat es erst der Test auf einem fremden PC."
           ]
         },
         {
           "heading": "Linux het mer am meiste Spass gmacht",
           "body": [
-            "Vermutlich, weil dort meine Lücke am grössten war. Wie systemd einen Dienst überwacht, warum ein belegter Port aussieht wie ein Konfigurationsfehler: Vieles davon habe ich erst verstanden, als es einmal nicht funktioniert hat."
+            "Mir gefällt die Umgebung von Linux und wie es aufgebaut ist. Dabei gelernt; wie systemd einen Dienst überwacht, warum ein belegter Port aussieht wie ein Konfigurationsfehler: Vieles davon habe ich erst verstanden, als es einmal nicht funktioniert hat."
           ]
         },
         {
-          "heading": "Chlini Reflexion",
+          "heading": "Automation",
           "body": [
-            "Bisher habe ich Einstellungen im Admin Center geklickt oder per PowerShell gesetzt: danach war nur das Ergebnis da, es fehlte der beschrieben Weg bis zum Ergebnis. Mit diesem Projekt, steht der gewünschte Zustand in einer Datei (yaml, json), die ich versionieren und so oft ich will, wiederholen kann. Das ist der Teil, dass ist auch ein Teil den ich sehr spannend finde."
+            "Bisher habe ich Einstellungen im Admin Center geklickt oder per PowerShell gesetzt: danach war nur das Ergebnis da, es fehlte der beschrieben Weg bis zum Ergebnis. Mit diesem Projekt, steht der gewünschte Zustand in einer Datei (yaml, json), die ich versionieren und so oft ich will, wiederholen kann. Dass ist auch ein Teil den ich sehr spannend finde."
           ]
         },
         {
           "heading": "Nonig fertig",
           "body": [
-            "Das Projekt ist noch nicht fertig. Aber es ist das erste, an dem ich wirklich verstanden habe, wovon ich vorher nur die Begriffe kannte."
+            "Das Lern-Projekt wird ein längeres Projekt, dadurch das AI genutzt wurde um gewisse Infos zu generieren, möchte ich im Nachhinein die einzelnen Schritte, selbstständig noch besser vertiefen damit mein Lernstand so nah wie möglich, an das fertige Produkt kommt."
           ]
         }
       ],
@@ -95,7 +95,7 @@
       "id": "lernapp",
       "kind": "app",
       "title": "Learny",
-      "tagline": "Das ist meine kleine Lernapp. Entstanden aus der Motivation, Menschen in meinem Umfeld den Einstieg in die Informatik zu erleichtern. Versuch es auch Du und teste dein Wissen.",
+      "tagline": "Das ist meine kleine Lernapp. Entstanden aus der Motivation, Menschen in meinem Umfeld den Einstieg in die Informatik zu erleichtern & dabei selbst zu lernen. Versuch es auch Du und teste dein Wissen. 😊",
       "meta": "HTML · CSS · JavaScript",
       "state": "live",
       "stateLabel": "Kleine Lern-App: Hier Starten",
