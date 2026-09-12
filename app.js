@@ -224,7 +224,7 @@ function renderProjects() {
     card.appendChild(el('p', null, p.tagline));
     if (p.note) card.appendChild(el('p', null, p.note));
 
-    const foot = el('p', 'tally', p.status);
+    const foot = el('p', 'tally', p.stateLabel);
     card.appendChild(foot);
 
     // Fortschrittsstreifen nur dort, wo es eine echte Reihenfolge gibt
@@ -325,7 +325,7 @@ function renderProject(id) {
       const li = el('li', 'stage' + (s.done ? ' done' : ''));
       li.appendChild(el('span', 'stage-n', String(s.n)));
       const body = el('div');
-            const titel = el('h3');
+      const titel = el('h3');
       if (s.image) {
         const a = el('a', null, s.title);
         a.href = s.image;
@@ -375,6 +375,8 @@ function linkRow(links) {
 function renderLernappHome() {
   const items = allQuestions();
 
+  // Vor der ersten Antwort gibt es nichts zu zeigen. Ein Feld voller
+  // "kannst du noch nicht" ist als Begrüssung das falsche Signal.
   show($('#lernapp-fortschritt'), PROGRESS.answered > 0);
   if (!PROGRESS.answered) return;
 
@@ -636,40 +638,18 @@ function answer(given, optWrap, clicked) {
   const right = isRight(it.q, given);
   const move = recordAnswer(it.topic.id, it.q.id, right);
   if (right) session.right++;
-  session.moves.push({ q: it.q, topic: it.topic, right: right, move: move });
 
-  if (optWrap) {
-    optWrap.querySelectorAll('.opt').forEach(o => { o.disabled = true; });
-    if (clicked) clicked.classList.add(right ? 'right' : 'wrong');
-    if (!right) {
-      optWrap.querySelectorAll('.opt').forEach(o => {
-        if (isRight(it.q, o.dataset.value)) o.classList.add('right');
-      });
-    }
-  } else {
-    $('#q-input').textContent = '';
-  }
-
-  const fb = $('#q-feedback');
-  fb.className = 'feedback ' + (right ? 'right' : 'wrong');
-  fb.textContent = '';
-  fb.appendChild(el('p', 'verdict', right ? 'Richtig' : 'Nicht richtig'));
-  if (!right) fb.appendChild(el('p', null, 'Richtig wäre: ' + it.q.answer[0]));
-  fb.appendChild(el('p', null, it.q.explanation));
-
-  const actions = el('p', 'actions');
-  const last = session.i === session.items.length - 1;
-  const next = el('button', 'btn', last ? 'Runde abschliessen' : 'Weiter');
-  next.type = 'button';
-  next.addEventListener('click', () => {
-    session.i++;
-    if (session.i >= session.items.length) finishRound();
-    else showQuestion();
+  // Die gegebene Antwort wird mitgeschrieben, damit am Ende nachvollziehbar
+  // ist, was man geantwortet hat — nicht nur, ob es stimmte.
+  session.moves.push({
+    q: it.q, topic: it.topic, right: right, move: move, given: given.trim()
   });
-  actions.appendChild(next);
-  fb.appendChild(actions);
-  show(fb, true);
-  next.focus();
+
+  // Absichtlich keine Rückmeldung hier: Auflösung kommt erst am Ende der Runde.
+  show($('#q-feedback'), false);
+  session.i++;
+  if (session.i >= session.items.length) finishRound();
+  else showQuestion();
 }
 
 function finishRound() {
@@ -685,10 +665,30 @@ function finishRound() {
 
   const list = $('#done-moves');
   list.textContent = '';
-  session.moves.filter(m => !m.right).forEach(m => {
-    const card = el('div', 'card card-static');
-    card.appendChild(el('h3', null, m.q.question));
-    card.appendChild(el('p', null, m.q.answer[0] + ' — ' + m.q.explanation));
+
+  // Alle Fragen, nicht nur die falschen — sonst sieht man nicht, was man
+  // effektiv gewusst hat.
+  session.moves.forEach((m, i) => {
+    const card = el('div', 'card card-static review ' + (m.right ? 'right' : 'wrong'));
+
+    const kopf = el('div', 'review-head');
+    kopf.appendChild(el('span', 'review-mark', m.right ? '✓' : '✗'));
+    kopf.appendChild(el('h3', null, (i + 1) + '. ' + m.q.question));
+    card.appendChild(kopf);
+
+    const deine = el('p', 'review-answer');
+    deine.appendChild(el('strong', null, 'Deine Antwort: '));
+    deine.appendChild(document.createTextNode(m.given || '—'));
+    card.appendChild(deine);
+
+    if (!m.right) {
+      const richtig = el('p', 'review-answer');
+      richtig.appendChild(el('strong', null, 'Richtig: '));
+      richtig.appendChild(document.createTextNode(m.q.answer[0]));
+      card.appendChild(richtig);
+    }
+
+    card.appendChild(el('p', 'review-note', m.q.explanation));
     list.appendChild(card);
   });
 }
@@ -781,6 +781,19 @@ function setupDataButtons() {
 
 /* ── Start ─────────────────────────────────────────────── */
 
+/* Ein Link auf die Adresse, die bereits aktiv ist, löst kein hashchange aus.
+   Ohne das hier bliebe "Nächste Runde" auf der Ergebnisseite wirkungslos. */
+function setupSameLinkClicks() {
+  document.addEventListener('click', ev => {
+    const a = ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    if (a.getAttribute('href') === location.hash) {
+      ev.preventDefault();
+      route();
+    }
+  });
+}
+
 async function laden(datei) {
   // no-cache erzwingt eine Rückfrage beim Server. Ohne das liefert der
   // Browser gerne die alte JSON-Datei aus, obwohl sie längst geändert ist.
@@ -808,6 +821,7 @@ async function boot() {
     return;
   }
   setupDataButtons();
+  setupSameLinkClicks();
   window.addEventListener('hashchange', route);
   route();
 }

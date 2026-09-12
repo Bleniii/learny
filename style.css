@@ -349,6 +349,35 @@ a.card { text-decoration: none; }
 .feedback p { margin: 0.6rem 0 0; }
 .feedback .actions { margin: 1.1rem 0 0; }
 
+/* ── Auswertung am Ende einer Runde ──────────────────── */
+/* Jede Frage einzeln, damit sichtbar ist, was gesessen hat und was nicht. */
+.review { border-left: 3px solid var(--line); }
+.review.right { border-left-color: var(--accent); }
+.review.wrong { border-left-color: var(--red); }
+
+.review-head {
+  display: grid; grid-template-columns: 1.2rem 1fr; gap: 0.5rem;
+  align-items: baseline; margin-bottom: 0.6rem;
+}
+.review-head h3 { margin: 0; font-size: 0.95rem; line-height: 1.4; }
+.review-mark { font: 500 0.95rem/1.4 var(--mono); }
+.review.right .review-mark { color: var(--accent); }
+.review.wrong .review-mark { color: var(--red); }
+
+.review-answer {
+  font-size: 0.88rem; margin: 0 0 0.3rem; padding-left: 1.7rem;
+  color: var(--ink) !important;
+}
+.review-answer strong { font-weight: 500; color: var(--muted); }
+.review-note {
+  font-size: 0.85rem; margin: 0.5rem 0 0; padding-left: 1.7rem;
+  color: var(--muted); line-height: 1.55;
+}
+
+@media (max-width: 30rem) {
+  .review-answer, .review-note { padding-left: 0; }
+}
+
 /* ── Stand & Kontakt ─────────────────────────────────── */
 .figures { display: flex; flex-wrap: wrap; gap: 2.5rem; margin: 0 0 2rem; }
 .figure strong { display: block; font: 500 2rem/1 var(--mono); }

@@ -366,6 +366,36 @@
             "schicht 7"
           ],
           "explanation": "Application Layer, Schicht 7 — genauso wie HTTPS, FTP, SMTP und DNS."
+        },
+        {
+          "id": 6,
+          "type": "choice",
+          "question": "Welche Schicht liegt im OSI-Modell zwischen Network Layer und Session Layer?",
+          "options": [
+            "Transport",
+            "Data Link",
+            "Presentation",
+            "Physical"
+          ],
+          "answer": [
+            "Transport"
+          ],
+          "explanation": "Reihenfolge von unten: Physical, Data Link, Network, Transport, Session, Presentation, Application."
+        },
+        {
+          "id": 7,
+          "type": "choice",
+          "question": "Welche Aussage zur Kapselung im OSI-Modell ist richtig?",
+          "options": [
+            "Jede Schicht fügt beim Senden einen eigenen Header hinzu, der Empfänger entfernt sie wieder Schicht für Schicht",
+            "Nur die Transportschicht fügt einen Header hinzu, alle anderen Schichten lassen die Daten unverändert",
+            "Header werden ausschliesslich beim Empfang hinzugefügt, nie beim Senden",
+            "Kapselung betrifft nur drahtlose Verbindungen"
+          ],
+          "answer": [
+            "Jede Schicht fügt beim Senden einen eigenen Header hinzu, der Empfänger entfernt sie wieder Schicht für Schicht"
+          ],
+          "explanation": "Jede Schicht kapselt beim Senden die Daten der Schicht darüber mit einem eigenen Header. Beim Empfänger geschieht das umgekehrt: Schicht für Schicht wird der jeweilige Header wieder entfernt."
         }
       ]
     },
@@ -499,6 +529,34 @@
           ],
           "explanation": "Die IP-Adresse führt zum Gerät, der Port zum Dienst darauf — etwa 443 für HTTPS.",
           "id": 6
+        },
+        {
+          "id": 7,
+          "type": "text",
+          "question": "Welche CIDR-Schreibweise entspricht der Subnetzmaske 255.255.255.0?",
+          "answer": [
+            "/24",
+            "24"
+          ],
+          "explanation": "255.255.255.0 setzt 24 Bit für den Netzanteil, geschrieben als /24."
+        },
+        {
+          "id": 8,
+          "type": "text",
+          "question": "Welcher Port wird standardmässig für HTTPS verwendet?",
+          "answer": [
+            "443"
+          ],
+          "explanation": "Port 443 ist der Standardport für HTTPS. HTTP nutzt stattdessen Port 80."
+        },
+        {
+          "id": 9,
+          "type": "text",
+          "question": "Wie viele Adressen lassen sich in einem /24-Netz tatsächlich an Geräte vergeben?",
+          "answer": [
+            "254"
+          ],
+          "explanation": "256 Adressen insgesamt, minus Netzadresse und Broadcast-Adresse ergeben 254 nutzbare Host-Adressen."
         }
       ]
     },
@@ -594,6 +652,45 @@
             "unerlaubten datenverkehr blockieren"
           ],
           "explanation": "Eine Firewall prüft den Datenverkehr anhand von Regeln und lässt nur erlaubte Verbindungen durch. IP-Adressen verteilt dagegen ein DHCP-Server."
+        },
+        {
+          "id": 5,
+          "type": "choice",
+          "question": "Welches Gerät stellt die Verbindung zum Internetanbieter her und wandelt dessen Signal um?",
+          "options": [
+            "Modem",
+            "Switch",
+            "Access Point",
+            "NIC"
+          ],
+          "answer": [
+            "Modem"
+          ],
+          "explanation": "Ein Modem übersetzt zwischen dem Signal des Internetanbieters (z. B. DSL oder Kabel) und dem lokalen Netzwerk."
+        },
+        {
+          "id": 6,
+          "type": "text",
+          "question": "Wofür steht die Abkürzung VLAN?",
+          "answer": [
+            "virtual local area network"
+          ],
+          "explanation": "Ein VLAN teilt ein physisches Netzwerk logisch in mehrere getrennte Netzwerke auf, ohne zusätzliche Verkabelung."
+        },
+        {
+          "id": 7,
+          "type": "choice",
+          "question": "Was unterscheidet einen managed Switch von einem unmanaged Switch?",
+          "options": [
+            "Managed Switches lassen sich konfigurieren und überwachen",
+            "Unmanaged Switches sind grundsätzlich schneller",
+            "Es gibt technisch keinen Unterschied",
+            "Managed Switches brauchen kein Netzteil"
+          ],
+          "answer": [
+            "Managed Switches lassen sich konfigurieren und überwachen"
+          ],
+          "explanation": "Managed Switches erlauben z. B. VLANs und gezielte Portkonfiguration. Unmanaged Switches leiten nur weiter, ohne Einstellmöglichkeiten."
         }
       ]
     },
@@ -719,6 +816,137 @@
             "mehr faktor authentifizierung"
           ],
           "explanation": "Mehrfaktor-Authentifizierung: mindestens zwei Faktoren aus verschiedenen Kategorien, etwa Passwort plus Code aufs Handy."
+        }
+      ]
+    },
+    {
+      "id": "windows_grundlagen",
+      "title": "Windows-Grundlagen",
+      "description": "Server, Client und die Werkzeuge, mit denen man sie zentral verwaltet",
+      "sections": [
+        {
+          "heading": "Windows Server und Windows Client",
+          "content": "Windows Client (10/11) ist für den Arbeitsplatz eines einzelnen Benutzers gedacht. Windows Server ist für Dienste ausgelegt, die vielen Benutzern gleichzeitig zur Verfügung stehen — Dateifreigaben, Anmeldung, Drucker, virtuelle Maschinen. Dieselbe Grundlage, aber andere Rollen und andere Lizenzierung."
+        },
+        {
+          "heading": "Active Directory",
+          "content": "Der zentrale Verzeichnisdienst einer Windows-Domäne. Benutzer, Computer und Gruppen werden an einer Stelle verwaltet statt an jedem Rechner einzeln. Meldet sich jemand an einem Domänen-Rechner an, prüft ein Domain Controller die Zugangsdaten gegen Active Directory."
+        },
+        {
+          "heading": "Gruppenrichtlinien (GPO)",
+          "content": "Group Policy Objects verteilen Einstellungen zentral an viele Benutzer oder Computer gleichzeitig — etwa Passwortregeln, Laufwerksverbindungen oder gesperrte Programme. Einmal in der Domäne gesetzt, gilt die Regel automatisch beim nächsten Anmelden oder Neustart."
+        },
+        {
+          "heading": "PowerShell",
+          "content": "Die Kommandozeile für Verwaltungsaufgaben unter Windows. Befehle (Cmdlets) folgen dem Schema Verb-Substantiv, etwa Get-Process oder Set-ADUser. Anders als klassische Batch-Skripte arbeitet PowerShell mit Objekten statt reinem Text, was sich gut mit Automatisierung verträgt."
+        },
+        {
+          "heading": "Update-Verwaltung",
+          "content": "In grösseren Umgebungen holt nicht jeder Rechner Updates einzeln bei Microsoft ab. Ein zentraler Dienst wie WSUS lädt Updates einmal herunter, lässt sie freigeben und verteilt sie kontrolliert im eigenen Netzwerk."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "choice",
+          "question": "Welcher Dienst verwaltet Benutzer, Computer und Gruppen zentral in einer Windows-Domäne?",
+          "options": [
+            "Active Directory",
+            "Task-Manager",
+            "Gerätemanager",
+            "Update-Verwaltung"
+          ],
+          "answer": [
+            "Active Directory"
+          ],
+          "explanation": "Active Directory ist der Verzeichnisdienst, gegen den sich Domänen-Rechner bei der Anmeldung prüfen lassen."
+        },
+        {
+          "id": 1,
+          "type": "text",
+          "question": "Wie heisst die objektorientierte Kommandozeile für Windows-Verwaltungsaufgaben? (Ein Wort)",
+          "answer": [
+            "powershell"
+          ],
+          "explanation": "PowerShell arbeitet mit Objekten statt mit reinem Text und folgt dem Muster Verb-Substantiv, etwa Get-Process."
+        },
+        {
+          "id": 2,
+          "type": "choice",
+          "question": "Was bewirkt eine Gruppenrichtlinie (GPO) in einer Windows-Domäne?",
+          "options": [
+            "Sie verteilt Einstellungen zentral an viele Rechner oder Benutzer",
+            "Sie installiert automatisch neue Treiber",
+            "Sie verschlüsselt die Festplatte",
+            "Sie erstellt automatisch Backups"
+          ],
+          "answer": [
+            "Sie verteilt Einstellungen zentral an viele Rechner oder Benutzer"
+          ],
+          "explanation": "GPOs setzen Regeln wie Passwortrichtlinien oder Laufwerksverbindungen zentral durch, ohne jeden Rechner einzeln zu konfigurieren."
+        }
+      ]
+    },
+    {
+      "id": "linux_grundlagen",
+      "title": "Linux-Grundlagen",
+      "description": "Dateisystem, Rechte und Dienste — das Fundament jedes Linux-Systems",
+      "sections": [
+        {
+          "heading": "Ein Baum statt Laufwerksbuchstaben",
+          "content": "Linux kennt kein C:\\ oder D:\\. Alles hängt unter einer einzigen Wurzel, geschrieben als /. Eine zweite Festplatte bekommt keinen eigenen Buchstaben, sondern wird an einer Stelle in diesen Baum eingehängt (gemountet)."
+        },
+        {
+          "heading": "Rechte: rwx",
+          "content": "Jede Datei kennt drei Gruppen von Rechten — Eigentümer, Gruppe, alle anderen — und je drei Arten: lesen (r), schreiben (w), ausführen (x). Die Ausgabe rwxr-xr-x bedeutet: Eigentümer darf alles, Gruppe und alle anderen dürfen lesen und ausführen, aber nicht schreiben."
+        },
+        {
+          "heading": "Prozesse",
+          "content": "Jedes laufende Programm ist ein Prozess mit einer eigenen Nummer, der PID. Prozesse laufen im Vorder- oder Hintergrund und lassen sich gezielt beenden — meist zuerst höflich, notfalls mit Nachdruck."
+        },
+        {
+          "heading": "systemd und Dienste",
+          "content": "systemd startet und überwacht Dienste beim Hochfahren und danach. Ein Dienst, der abstürzt, kann automatisch neu gestartet werden. Über systemctl lässt er sich starten, stoppen und im Status prüfen; über journalctl liest man seine Logs."
+        },
+        {
+          "heading": "Paketverwaltung",
+          "content": "Software wird nicht als einzelne .exe-Datei heruntergeladen, sondern über eine Paketverwaltung installiert, die alle Abhängigkeiten gleich mitbringt. Unter Debian und Ubuntu heisst das Werkzeug dafür apt."
+        }
+      ],
+      "questions": [
+        {
+          "id": 0,
+          "type": "text",
+          "question": "Wie nennt man das oberste Verzeichnis der Linux-Verzeichnisstruktur?",
+          "answer": [
+            "root",
+            "wurzelverzeichnis"
+          ],
+          "explanation": "Alles liegt unter der Wurzel /, es gibt keine separaten Laufwerksbuchstaben wie unter Windows."
+        },
+        {
+          "id": 1,
+          "type": "choice",
+          "question": "Welcher Befehl ändert die Zugriffsrechte einer Datei?",
+          "options": [
+            "chmod",
+            "chown",
+            "ls -l",
+            "grep"
+          ],
+          "answer": [
+            "chmod"
+          ],
+          "explanation": "chmod (change mode) setzt die Rechte für Eigentümer, Gruppe und alle anderen. chown ändert stattdessen den Eigentümer."
+        },
+        {
+          "id": 2,
+          "type": "text",
+          "question": "Mit welchem Befehl liest man die Logs eines systemd-Dienstes aus? (Ein Wort)",
+          "answer": [
+            "journalctl"
+          ],
+          "explanation": "journalctl zeigt die vom systemd-Journal gesammelten Logs an, gefiltert etwa nach Dienst oder Zeitraum."
         }
       ]
     }
