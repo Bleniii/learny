@@ -27,11 +27,12 @@
       "state": "live",
       "stateLabel": "Monitoring Projekt",
       "intro": [
-        "Eine Website fällt nachts aus, der Kunde merkt es am Morgen als Erster und ruft an, bevor man reagiert. Genau diesen Moment soll ein Uptime-Monitor verhindern. Solche Werkzeuge gibt es fertig zu kaufen. Meine Motivation war ein Tool zu erstellen von Scratch, mithilfe von KI. Dabei hab ich KI nicht einfach 'zum Viben' genutzt, sondern um echte Lernprozesse bis zum fertige Produkt zu gehen. Jeder Output wurde mir erklärt, jeder Codezeile wurde mir beschrieben, oft wurde ich auch selbst herausgefordert Funktionen, Bausteine zusammenzustellen mit unfertigen/teilfertigen Infos. Ziel war vom kleinen Skript, über Tests (Python), Systemdienst bis zum Dashboard (Prometheus,Grafana) ein Tool zu erstellen das den Uptime-Verlauf zeigt.", 
-		"Der Zweck liegt im Weg dorthin: Tests, Container, CI/CD, Observability und Infrastructure as Code waren vorher Begriffe, die ich kannte, aber kaum angefasst hatte."
+        "Eine Website fällt nachts aus, der Kunde merkt es am Morgen als Erster. Genau diesen Moment soll ein Uptime-Monitor verhindern. Statt eines fertigen Tools habe ich dieses from scratch (mithilfe von KI) gebaut, nicht zum Viben, sondern um jeden Schritt zu verstehen. Vom kleinen Skript über Tests bis zum Dashboard war jedes Konzept ein Lernprozess.",  
+		"Im Zentrum steht monitor.py: Es läuft dauerhaft in einer Endlosschleife, liest Ziele aus targets.txt, prüft jede URL, schreibt das Ergebnis ins Log und legt Metriken ab. Danach wartet es 60 Sekunden und beginnt von vorn. Technisch ist der Code in drei Bausteine geteilt: lade_targets, pruefe_url und aktualisiere_metriken.",
+		"Der eigentliche Zweck lag aber im Weg dorthin: Tests, Container, CI/CD und Observability waren vorher nur Begriffe für mich. Dieses Projekt hat sie zu Praxis gemacht."
       ],
       "stack": ["Python 3.11", "requests", "prometheus_client", "pytest", "Docker Compose", "Prometheus", "Grafana", "GitHub Actions"],
-      "partsNote": "Drei Container in einem Compose-Netz. Sie finden sich über ihren Servicenamen, ohne eine einzige IP-Adresse in der Konfiguration.",
+      "partsNote": "Drei Container in einem Compose-Netz. Die Service-Namen:",
       "parts": [
         { "name": "monitor:8000", "note": "Prüft alle 60 Sekunden und stellt die Messwerte unter /metrics bereit" },
         { "name": "prometheus:9090", "note": "Holt die Werte alle 15 Sekunden ab und speichert die Zeitreihen" },
