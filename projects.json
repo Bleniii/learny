@@ -114,7 +114,7 @@
       "intro": [
         "Ein Rätselspiel für kleine Gruppen, für draussen: Fünf Stationen im Dorf, an jeder ein QR-Code, auf dem Handy ein Rätsel zur Geschichte von Andalusien und der Alhambra. Konzept, Geschichte, Rätsel und Gestaltung habe ich selbst erarbeitet, die Programmierung habe ich mit KI-Unterstützung umgesetzt.",
         "Technisch ist es eine reine Browser-App ohne Server.",
-        "Gelernt habe ich dabei vor allem, Code in kleine, testbare Teile zu gliedern, Rätsel automatisch auf Lösbarkeit zu prüfen und eine statische Seite so auszuliefern, dass nichts Ungewolltes öffentlich wird."
+        "Es ist Free-2-Play und noch in der Testphase."
       ],
       "links": [
         { "label": "Startseite des Spiels", "href": "https://andalus.andalusiagame.workers.dev/", "primary": true }
