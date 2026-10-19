@@ -110,7 +110,7 @@
       "tagline": "Ortsbasiertes Rätselspiel als Web-App: Konzept, Inhalt und Umsetzung aus einer Hand.",
       "meta": "Outdoor · Rätsel · Web-App",
       "state": "live",
-      "stateLabel": "Outdoor-Game · mit Java Skript",
+      "stateLabel": "Outdoor-Game · Online",
       "intro": [
         "Ein Rätselspiel für kleine Gruppen, für draussen: Fünf Stationen im Dorf, an jeder ein QR-Code, auf dem Handy ein Rätsel zur Geschichte von Andalusien und der Alhambra. Konzept, Geschichte, Rätsel und Gestaltung habe ich selbst erarbeitet, die Programmierung habe ich mit KI-Unterstützung umgesetzt.",
         "Technisch ist es eine reine Browser-App ohne Server.",
