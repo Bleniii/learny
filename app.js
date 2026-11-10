@@ -192,6 +192,14 @@ function renderBoard() {
   const board = $('#board');
   board.textContent = '';
 
+  /* Statuszeile wie auf einer Monitoring-Seite: aus den States gerechnet */
+  const live = PROJECTS.filter(p => p.state === 'live').length;
+  const status = el('p', 'board-status');
+  status.appendChild(el('span', 'dot dot-live'));
+  status.appendChild(el('span', null,
+    live + ' von ' + PROJECTS.length + ' Projekten live'));
+  board.appendChild(status);
+
   PROJECTS.forEach(p => {
     const row = el('a', 'board-row');
     row.href = p.kind === 'detail' ? '#/projekt/' + p.id : p.href;

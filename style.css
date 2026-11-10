@@ -251,6 +251,12 @@ a.card { text-decoration: none; }
 
 /* Liest sich wie eine Statusseite — passend zu dem, was hier gebaut wird */
 .board { border-top: 1px solid var(--line); }
+/* Statuszeile ueber der Liste, wie auf einer Monitoring-Seite */
+.board-status {
+  display: flex; align-items: center; gap: 0.55rem;
+  padding: 0.75rem 0.6rem; border-bottom: 1px solid var(--line);
+  font: 400 0.78rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+}
 .board-row {
   display: grid; grid-template-columns: 0.7rem 1fr max-content;
   gap: 0.9rem; align-items: baseline;
@@ -271,6 +277,15 @@ a.card { text-decoration: none; }
   background: var(--line); align-self: center;
 }
 .dot-live { background: var(--accent); }
+/* Leben zeigen: die live-Punkte pulsieren, wer weniger Motion will, bekommt keine */
+@media (prefers-reduced-motion: no-preference) {
+  .dot-live { animation: dot-pulse 2.4s ease-out infinite; }
+  @keyframes dot-pulse {
+    0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+    70%  { box-shadow: 0 0 0 0.45rem transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+}
 .dot-wip  { background: var(--amber); }
 
 @media (max-width: 30rem) {
@@ -411,11 +426,13 @@ footer p { margin: 0; font: 400 0.8rem/1.6 var(--mono); color: var(--muted); }
 
 /* Zurück-Link */
 .backlink {
-  display: inline-block; margin: 0 0 0.9rem; padding: 0;
-  background: none; border: 0; cursor: pointer; text-decoration: none;
-  font: 400 0.82rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+  display: inline-block; margin: 0 0 1.1rem; padding: 0.45rem 0.85rem;
+  background: none; border: 1px solid var(--line); border-radius: 999px;
+  cursor: pointer; text-decoration: none;
+  font: 400 0.78rem/1 var(--mono); letter-spacing: 0.04em; color: var(--muted);
+  transition: color 0.15s, border-color 0.15s;
 }
-.backlink:hover { color: var(--accent); }
+.backlink:hover { color: var(--accent); border-color: var(--accent); }
 .reader h2 { margin-top: 0; }
 
 /* ── Aufklappbare (?)-Erklärung ──────────────────────── */
