@@ -197,6 +197,8 @@ a.card { text-decoration: none; }
 }
 .parts dt { font: 400 0.85rem/1.5 var(--mono); color: var(--accent); }
 .parts dd { margin: 0; font-size: 0.92rem; color: var(--muted); }
+/* Eintraege ohne Note: unsichtbar, aber die Grid-Struktur bleibt erhalten */
+.parts dd:empty { visibility: hidden; }
 
 /* Stufen: eine echte Reihenfolge, darum nummeriert */
 .stages { list-style: none; padding: 0; margin: 1.25rem 0 0.5rem; }

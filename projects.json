@@ -130,8 +130,18 @@
       "stateLabel": "New release · Download",
       "intro": [
         "Für alle, die mit KI bauen, installieren oder deployen und dabei sicherer arbeiten wollen.",
-        "Kann: Risikokalibrierung pro Aufgabe (Trivial / Ordinary / Risky) · Pipeline: erkennen → Belege → informieren → Autor entscheidet → dokumentieren → bauen · Stufenmodell Hinweis / Warnung / Stopp · Fussabdruck vor dem Bauen · drei Vertrauensfragen pro Dependency · Download-Baseline · aktuelle Bedrohungs-Checks (0-Days, Supply Chain) · Richtungswarnungen · Checklisten.",
-        "Limitationen: Methodik, kein Scanner · keine automatische Schwachstellensuche · nur so aktuell wie die Recherche im Moment des Bauens · setzt informierte Entscheidungen des Autors voraus."
+        "Limitationen: Es ist eine Methodik, kein Scanner. Sie sucht nicht automatisch nach Schwachstellen, ist nur so aktuell wie die Recherche im Moment des Bauens und setzt informierte Entscheidungen des Autors voraus."
+      ],
+      "partsTitle": "Kann",
+      "parts": [
+        { "name": "Risikokalibrierung", "note": "pro Aufgabe: Trivial / Ordinary / Risky" },
+        { "name": "Pipeline", "note": "erkennen → Belege → informieren → Autor entscheidet → dokumentieren → bauen" },
+        { "name": "Stufenmodell", "note": "Hinweis / Warnung / Stopp" },
+        { "name": "Fussabdruck", "note": "vor dem Bauen" },
+        { "name": "Vertrauensfragen", "note": "drei pro Dependency" },
+        { "name": "Download-Baseline" },
+        { "name": "Bedrohungs-Checks", "note": "0-Days, Supply Chain" },
+        { "name": "Richtungswarnungen und Checklisten" }
       ],
       "links": [
         { "label": "GitHub-Repository", "href": "https://github.com/bleniii/security-methodology", "primary": true }

@@ -303,7 +303,7 @@ function renderProject(id) {
   }
 
   if (p.parts) {
-    root.appendChild(el('h2', null, 'Aufbau'));
+    root.appendChild(el('h2', null, p.partsTitle || 'Aufbau'));
     if (p.partsNote) root.appendChild(el('p', 'lead', p.partsNote));
     const dl = el('dl', 'parts');
     p.parts.forEach(part => {
