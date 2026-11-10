@@ -120,7 +120,7 @@
         { "label": "Startseite des Spiels", "href": "https://andalusiangame.ch/", "primary": true }
       ]
     },
-         {
+             {
       "id": "security-methodology",
       "kind": "detail",
       "title": "Security Methodology",
@@ -129,9 +129,9 @@
       "state": "available",
       "stateLabel": "New release · Download",
       "intro": [
-        "Gedacht für alle, die mit KI-Assistenten etwas bauen, installieren oder deployen und dabei mehr Sicherheit wollen: eigene Skripte und Tools, neue Dependencies, Downloads und Modell-Dateien, Root-Rechte, Netzwerk-Dienste, Automatisierungen, oder schlicht die Frage «ist dieses Repo, dieses Paket, diese Quelle vertrauenswürdig?».",
-        "Kann: Risikokalibrierung pro Aufgabe (Trivial / Ordinary / Risky) · Freigabe-Pipeline: erkennen, Belege holen, informieren, Autor entscheidet, dokumentieren, bauen · Stufenmodell Hinweis / Warnung / Stopp · Fussabdruck vor dem Bauen (Pakete, Rechte, Netzwerk, Fremddaten) · drei Vertrauensfragen pro Dependency · Baseline für Downloads · Checks auf aktuelle Bedrohungen (0-Days, Supply Chain) · Richtungswarnungen mit sicherer Alternative · Checklisten und Anti-Patterns.",
-        "Limitationen: keine Garantie für Vollständigkeit, der Skill ersetzt keine eigene Prüfung kritischer Systeme; CVE-Daten und Bedrohungslage sind nur so aktuell wie die Recherche im Moment des Bauens; die Qualität hängt davon ab, dass der Autor informierte Entscheidungen auch trifft; und er ist eine Methodik, kein Scanner, automatische Schwachstellensuche leistet er nicht."
+        "Für alle, die mit KI bauen, installieren oder deployen und dabei sicherer arbeiten wollen.",
+        "Kann: Risikokalibrierung pro Aufgabe (Trivial / Ordinary / Risky) · Pipeline: erkennen → Belege → informieren → Autor entscheidet → dokumentieren → bauen · Stufenmodell Hinweis / Warnung / Stopp · Fussabdruck vor dem Bauen · drei Vertrauensfragen pro Dependency · Download-Baseline · aktuelle Bedrohungs-Checks (0-Days, Supply Chain) · Richtungswarnungen · Checklisten.",
+        "Limitationen: Methodik, kein Scanner · keine automatische Schwachstellensuche · nur so aktuell wie die Recherche im Moment des Bauens · setzt informierte Entscheidungen des Autors voraus."
       ],
       "links": [
         { "label": "GitHub-Repository", "href": "https://github.com/bleniii/security-methodology", "primary": true }
