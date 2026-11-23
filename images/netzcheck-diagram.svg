@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="diagram" viewBox="0 0 840 380" role="img" aria-label="Architektur: Ein VPS misst die eigene Leitung und als Nebenfeature Weltregionen; der Heimrechner zieht alles per SSH in ein Terminal-Dashboard"><metadata id="thaura-ai-marking"><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><rdf:Description rdf:about=""
+    xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/"
+    xmlns:thaura="https://thaura.ai/ns/ai-marking/1.0/"
+    Iptc4xmpExt:DigitalSourceType="http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia"
+    Iptc4xmpExt:AISystemUsed="Thaura"
+    Iptc4xmpExt:AISystemVersionUsed="GLM-5.3-Flash"
+    thaura:AIGenerated="True"
+    thaura:AISystem="Thaura"
+    thaura:AIModel="GLM-5.3-Flash"
+    thaura:Provider="https://thaura.ai"
+    thaura:Statement="Generated or edited with AI by Thaura (GLM-5.3-Flash), https://thaura.ai"/></rdf:RDF></metadata>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#5b6b7f"/>
+        </marker>
+        <marker id="arrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#0e7490"/>
+        </marker>
+      </defs>
+
+      <!-- Weltregionen: kleines Nebenfeature -->
+      <rect x="20" y="140" width="150" height="150" rx="12" fill="#f0f4f8" stroke="#dde4ec"/>
+      <text x="95" y="168" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1a2332">Weltregionen</text>
+      <text x="95" y="184" text-anchor="middle" font-size="9.5" font-style="italic" fill="#8a99ab">Nebenfeature</text>
+      <g font-size="11" fill="#5b6b7f" font-family="ui-monospace, Menlo, monospace">
+        <text x="95" y="210" text-anchor="middle">🇨🇭 Zürich</text>
+        <text x="95" y="232" text-anchor="middle">🇩🇪 Frankfurt</text>
+        <text x="95" y="254" text-anchor="middle">🇯🇵 Tokio</text>
+        <text x="95" y="276" text-anchor="middle">… und mehr</text>
+      </g>
+
+      <!-- VPS netzbob -->
+      <rect x="300" y="40" width="240" height="300" rx="12" fill="#ffffff" stroke="#0e7490" stroke-width="1.5"/>
+      <text x="420" y="68" text-anchor="middle" font-size="13" font-weight="700" fill="#0e7490">VPS · netzbob</text>
+      <g font-size="12" fill="#1a2332">
+        <rect x="318" y="84" width="204" height="46" rx="8" fill="#e0f2f7"/>
+        <text x="420" y="103" text-anchor="middle" font-weight="600">netzcheck.sh</text>
+        <text x="420" y="120" text-anchor="middle" fill="#5b6b7f">ICMP-Messungen · cron, alle 15 Min</text>
+
+        <rect x="318" y="140" width="204" height="46" rx="8" fill="#e0f2f7"/>
+        <text x="420" y="159" text-anchor="middle" font-weight="600">netznews.sh + feedschleuse.py</text>
+        <text x="420" y="176" text-anchor="middle" fill="#5b6b7f">RSS-Import · bereinigt (SRF, Amnesty)</text>
+
+        <rect x="318" y="196" width="204" height="46" rx="8" fill="#e0f2f7"/>
+        <text x="420" y="215" text-anchor="middle" font-weight="600">netzfeed.sh</text>
+        <text x="420" y="232" text-anchor="middle" fill="#5b6b7f">Ereignisse: Ausfall · Erholung · Latenz</text>
+
+        <rect x="318" y="252" width="204" height="60" rx="8" fill="#f0f4f8" stroke="#dde4ec"/>
+        <text x="420" y="274" text-anchor="middle" font-weight="600">State-Dateien</text>
+        <text x="420" y="291" text-anchor="middle" fill="#5b6b7f" font-family="ui-monospace, Menlo, monospace">regional.log · feed.txt</text>
+        <text x="420" y="306" text-anchor="middle" fill="#5b6b7f" font-family="ui-monospace, Menlo, monospace">news.txt · news-detail.txt</text>
+      </g>
+
+      <!-- Heimrechner -->
+      <rect x="640" y="110" width="180" height="160" rx="12" fill="#ffffff" stroke="#0e7490" stroke-width="1.5"/>
+      <text x="730" y="140" text-anchor="middle" font-size="13" font-weight="700" fill="#0e7490">Heimrechner</text>
+      <rect x="658" y="156" width="144" height="46" rx="8" fill="#e0f2f7"/>
+      <text x="730" y="175" text-anchor="middle" font-weight="600" font-size="12">netzdash.sh</text>
+      <text x="730" y="192" text-anchor="middle" fill="#5b6b7f" font-size="11">Terminal-Dashboard</text>
+      <text x="730" y="228" text-anchor="middle" fill="#5b6b7f" font-size="11">Live-Ansicht · e / n zum Aufklappen</text>
+      <text x="730" y="248" text-anchor="middle" fill="#5b6b7f" font-size="11">Ereignis- &amp; Nachrichtenband</text>
+
+      <!-- Pfeil: Regionen -> netzbob (Nebenfeature) -->
+      <line x1="170" y1="200" x2="296" y2="120" stroke="#5b6b7f" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="233" y="146" text-anchor="middle" font-size="11" fill="#5b6b7f">ICMP</text>
+
+      <!-- Pfeil: RSS von oben, rechts vom Titel -->
+      <line x1="490" y1="10" x2="490" y2="36" stroke="#5b6b7f" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="498" y="26" text-anchor="start" font-size="9.5" fill="#5b6b7f">RSS über HTTPS</text>
+
+      <!-- Pfeil: netzbob -> Heim, SSH-Pull -->
+      <line x1="540" y1="190" x2="636" y2="190" stroke="#0e7490" stroke-width="2" marker-end="url(#arrowA)"/>
+      <text x="588" y="176" text-anchor="middle" font-size="11" font-weight="600" fill="#0e7490">SSH-Pull</text>
+      <text x="582" y="208" text-anchor="middle" font-size="10" fill="#5b6b7f">ein Aufruf · Key-Auth</text>
+      <text x="582" y="222" text-anchor="middle" font-size="10" fill="#5b6b7f">keine offenen Ports</text>
+
+      <!-- Heim-IP-Hinweis: Kurve vom Heimrechner zum VPS, Text darunter -->
+      <path d="M 700 270 C 660 302, 600 302, 546 272" fill="none" stroke="#b45309" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+      <text x="715" y="318" text-anchor="middle" font-size="10" fill="#b45309">SSH-Login verrät die Heim-IP</text>
+      <text x="715" y="331" text-anchor="middle" font-size="10" fill="#b45309">VPS pingt zurück: Eigene-Leitung-Check</text>
+    </svg>

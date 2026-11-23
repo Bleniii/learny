@@ -93,18 +93,22 @@
       ]
     },
     {
-      "id": "Netzcheck",
+      "id": "netzcheck",
       "kind": "detail",
-      "title": "Netzcheck",
+      "title": "netzcheck",
       "tagline": "Ein Nebenprojekt for fun: Linux-Kentnisse vertiefen und mir gleichzeitig ein cooles Terminal-Dashboard bauen, das Internet-Status und Nachrichten zeigt.",
       "meta": "Bash · Python · SSH · Cron",
       "state": "live",
       "stateLabel": "Nebenprojekt · Auf Anfrage",
       "intro": [
-        "Ich wollte meine Linux-Kenntnisse vertiefen und mir gleichzeitig ein cooles Dashboard bauen, das mir auf einen Blick zeigt, ob das Internet läuft und was gerade passiert. Entstanden ist ein kleiner Verfügbarkeits-Monitor fürs Terminal, der Netzwerk-Troubleshooting in einen festen Trichter giesst: lokal, IP, DNS, Regionen, Traceroute.",
-        "Dabei beantwortet es die Frage, die jedes Netzwerk-Problem stellt: Das Internet ist weg, aber wo? Am eigenen Gerät, am Router, am Anschluss, beim Provider oder in der Zielregion? netzcheck misst statt zu raten: Ein VPS prüft rund um die Uhr, was in Weltregionen von Zürich bis Tokio erreichbar ist, und misst den eigenen Heimanschluss gleich mit. «Ist die Region down, oder liegt es an meiner Leitung?» hat so eine echte Antwort statt eines Bauchgefühls.",
-        "Bewusst Terminal statt Web-Dashboard: Der Heimrechner holt alle 15 Minuten einmal per SSH alles auf einmal ab und schläft sonst. Kein Browser, kein Framework, kein Daemon, Speicherbedarf im einstelligen MB-Bereich. Genau das Vertiefen von bash, cron, SSH und systemd-Dingen war ja der Punkt.",
-        "Nebenbei mitgedacht: Pull-only-Architektur ohne offene Ports, Key-Authentifizierung, ein gehärteter Feed-Parser mit XXE-Schutz und Allowlist, Least Privilege überall. Und als Bonusband laufen bereinigte Nachrichten (SRF News, Amnesty International) direkt neben den Messwerten."
+        "Das ist eher ein Nebenprojekt gewesen, for fun: Linux-Kenntnisse vertiefen und mir ein cooles Dashboard bauen, das Internet-Status und Nachrichten auf einen Blick zeigt. Entstanden ist ein kleiner Verfügbarkeits-Monitor fürs Terminal.",
+        "Das Internet ist weg, aber wo? Am Gerät, am Router, beim Provider oder in der Zielregion? netzcheck misst statt zu raten: Ein VPS prüft rund um die Uhr Weltregionen und die eigene Leitung, also hat «Region down oder meine Leitung?» eine echte Antwort.",
+        "Bewusst Terminal statt Web-Dashboard: Einmal SSH-Pull alle 15 Minuten, sonst schläft der Rechner. Kein Browser, kein Framework, kein Daemon. Genau das Vertiefen von bash, cron und SSH war ja der Punkt.",
+        "Nebenbei mitgedacht: Pull-only ohne offene Ports, Key-Auth, gehärteter Feed-Parser, Least Privilege. Und als Bonusband laufen bereinigte Nachrichten (SRF, Amnesty) neben den Messwerten."
+      ],
+      "gallery": [
+        { "src": "images/netzcheck-diagram.svg", "caption": "Aufbau: Der VPS misst Weltregionen und die eigene Leitung, das Dashboard holt alles per SSH ab." },
+        { "src": "images/netzcheck-dashboard.png", "caption": "Terminal-Dashboard: Verlauf, Latenz und Status je Zone, darunter das Ereignisband." }
       ],
       "stack": ["Bash", "Python 3", "SSH (Key-Auth)", "cron", "RSS"],
       "parts": [
@@ -117,21 +121,15 @@
       "reflectionTitle": "Verbesserungswürdig",
       "reflection": [
         {
-          "heading": "ICMP misst Erreichbarkeit, nicht Verfügbarkeit",
+          "heading": "Grenzen der Messung",
           "body": [
-            "Ein grüner Anker heisst: Dieser Server antwortet auf Ping. Nicht mehr. Drosselt oder filtert ein Host ICMP, zeigt die Region rot, obwohl alles andere dort läuft. Und ein Anker ist ein einzelner Server, nicht die ganze Region."
+            "ICMP misst Erreichbarkeit, nicht Verfügbarkeit: Drosselt ein Host Ping, zeigt die Region rot, obwohl alles läuft. Die Anker sind zudem teils über denselben Betreiber verbunden (Frankfurt und USA West über Hurricane Electric), und 1.1.1.1 antwortet als Anycast vom nächsten Knotenpunkt."
           ]
         },
         {
-          "heading": "Die Anker sind nicht unabhängig",
+          "heading": "Feinheiten",
           "body": [
-            "Frankfurt und die USA-Westküste laufen beide über Hurricane Electric. Fällt eine HE-Strecke aus, gehen mehrere Regionen gleichzeitig rot, obwohl die Zielregionen gesund sind. Stärker wären zwei, drei diverse Ziele pro Region. Dazu kommt: 1.1.1.1 ist Anycast und antwortet vom nächsten Knotenpunkt, der Test sagt «mein Weg nach draussen geht», nicht «das ganze Internet geht»."
-          ]
-        },
-        {
-          "heading": "Kurze Störungen und der VPN-Fall",
-          "body": [
-            "Bei cron alle 15 Minuten bleiben Störungen unter 15 Minuten unsichtbar, und Latenzsprünge brauchen pro Region eine eigene Baseline. Der Gateway-Check verdient einen Blick: Die 100.x-Adresse liegt im CGNAT-Bereich und das Interface gehört zum VPN-Tunnel, je nach Tunnel-Zustand misst der Check also das Tunnel-Gateway statt des Routers."
+            "Bei cron alle 15 Minuten bleiben kürzere Störungen unsichtbar, und der Gateway-Check misst je nach VPN-Zustand das Tunnel-Gateway statt des Routers. Stärker wären zwei, drei diverse Ziele pro Region."
           ]
         }
       ],

@@ -50,6 +50,18 @@ a  { color: var(--accent); }
 .prose p { max-width: 34rem; }
 .prose strong { font-weight: 600; }
 
+/* Bilder im Projekt: Diagramm und Screenshots, mit Bildunterschrift */
+.gallery { display: grid; gap: 1.4rem; margin: 1.4rem 0 0.4rem; }
+.gallery figure { margin: 0; }
+.gallery img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+}
+.gallery figcaption {
+  font-size: 0.82rem; color: var(--muted);
+  margin-top: 0.5rem; text-align: center;
+}
+
 /* Kleine Kennzeile über einem Titel: Technik bzw. Art des Projekts */
 .meta {
   font: 400 0.78rem/1 var(--mono);

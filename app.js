@@ -310,6 +310,21 @@ function renderProject(id) {
     root.appendChild(prose);
   }
 
+  if (p.gallery) {
+    const gal = el('div', 'gallery');
+    p.gallery.forEach(g => {
+      const fig = el('figure');
+      const img = el('img');
+      img.src = g.src;
+      img.alt = g.caption || '';
+      img.loading = 'lazy';
+      fig.appendChild(img);
+      if (g.caption) fig.appendChild(el('figcaption', null, g.caption));
+      gal.appendChild(fig);
+    });
+    root.appendChild(gal);
+  }
+
   if (p.parts) {
     root.appendChild(el('h2', null, p.partsTitle || 'Aufbau'));
     if (p.partsNote) root.appendChild(el('p', 'lead', p.partsNote));
