@@ -353,7 +353,7 @@ function renderProject(id) {
   }
 
   if (p.reflection) {
-    root.appendChild(el('h2', null, 'Was ich dabei gelernt habe'));
+    root.appendChild(el('h2', null, p.reflectionTitle || 'Was ich dabei gelernt habe'));
     p.reflection.forEach(r => {
       const block = el('section', 'reflect');
       block.appendChild(el('h3', null, r.heading));

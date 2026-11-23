@@ -93,6 +93,53 @@
       ]
     },
     {
+      "id": "netzcheck",
+      "kind": "detail",
+      "title": "netzcheck",
+      "tagline": "Ein Nebenprojekt for fun: Linux-Kentnisse vertiefen und mir gleichzeitig ein cooles Terminal-Dashboard bauen, das Internet-Status und Nachrichten zeigt.",
+      "meta": "Bash · Python · SSH · Cron",
+      "state": "available",
+      "stateLabel": "Nebenprojekt · Auf Anfrage",
+      "intro": [
+        "Das ist eher ein Nebenprojekt gewesen, for fun: Ich wollte meine Linux-Kenntnisse vertiefen und mir gleichzeitig ein cooles Dashboard bauen, das mir auf einen Blick zeigt, ob das Internet läuft und was gerade passiert. Entstanden ist ein kleiner Verfügbarkeits-Monitor fürs Terminal, der Netzwerk-Troubleshooting in einen festen Trichter giesst: lokal, IP, DNS, Regionen, Traceroute.",
+        "Dabei beantwortet es die Frage, die jedes Netzwerk-Problem stellt: Das Internet ist weg, aber wo? Am eigenen Gerät, am Router, am Anschluss, beim Provider oder in der Zielregion? netzcheck misst statt zu raten: Ein VPS prüft rund um die Uhr, was in Weltregionen von Zürich bis Tokio erreichbar ist, und misst den eigenen Heimanschluss gleich mit. «Ist die Region down, oder liegt es an meiner Leitung?» hat so eine echte Antwort statt eines Bauchgefühls.",
+        "Bewusst Terminal statt Web-Dashboard: Der Heimrechner holt alle 15 Minuten einmal per SSH alles auf einmal ab und schläft sonst. Kein Browser, kein Framework, kein Daemon, Speicherbedarf im einstelligen MB-Bereich. Genau das Vertiefen von bash, cron, SSH und systemd-Dingen war ja der Punkt.",
+        "Nebenbei mitgedacht: Pull-only-Architektur ohne offene Ports, Key-Authentifizierung, ein gehärteter Feed-Parser mit XXE-Schutz und Allowlist, Least Privilege überall. Und als Bonusband laufen bereinigte Nachrichten (SRF News, Amnesty International) direkt neben den Messwerten."
+      ],
+      "stack": ["Bash", "Python 3", "SSH (Key-Auth)", "cron", "RSS"],
+      "parts": [
+        { "name": "VPS · netzbob", "note": "Messstandort: netzcheck.sh, ICMP-Messungen per cron alle 15 Minuten" },
+        { "name": "netznews.sh + feedschleuse.py", "note": "RSS-Import, bereinigt (SRF News, Amnesty International)" },
+        { "name": "netzfeed.sh", "note": "Ereigniserkennung: Ausfall, Erholung, Latenzsprung" },
+        { "name": "State-Dateien", "note": "regional.log, feed.txt, news.txt, news-detail.txt" },
+        { "name": "Heimrechner · netzdash.sh", "note": "Terminal-Dashboard per SSH-Pull, Live-Ansicht, e / n zum Aufklappen" }
+      ],
+      "reflectionTitle": "Verbesserungswürdig",
+      "reflection": [
+        {
+          "heading": "ICMP misst Erreichbarkeit, nicht Verfügbarkeit",
+          "body": [
+            "Ein grüner Anker heisst: Dieser Server antwortet auf Ping. Nicht mehr. Drosselt oder filtert ein Host ICMP, zeigt die Region rot, obwohl alles andere dort läuft. Und ein Anker ist ein einzelner Server, nicht die ganze Region."
+          ]
+        },
+        {
+          "heading": "Die Anker sind nicht unabhängig",
+          "body": [
+            "Frankfurt und die USA-Westküste laufen beide über Hurricane Electric. Fällt eine HE-Strecke aus, gehen mehrere Regionen gleichzeitig rot, obwohl die Zielregionen gesund sind. Stärker wären zwei, drei diverse Ziele pro Region. Dazu kommt: 1.1.1.1 ist Anycast und antwortet vom nächsten Knotenpunkt, der Test sagt «mein Weg nach draussen geht», nicht «das ganze Internet geht»."
+          ]
+        },
+        {
+          "heading": "Kurze Störungen und der VPN-Fall",
+          "body": [
+            "Bei cron alle 15 Minuten bleiben Störungen unter 15 Minuten unsichtbar, und Latenzsprünge brauchen pro Region eine eigene Baseline. Der Gateway-Check verdient einen Blick: Die 100.x-Adresse liegt im CGNAT-Bereich und das Interface gehört zum VPN-Tunnel, je nach Tunnel-Zustand misst der Check also das Tunnel-Gateway statt des Routers."
+          ]
+        }
+      ],
+      "links": [
+        { "label": "Ausführliche Projektseite", "href": "netzcheck.html", "primary": true }
+      ]
+    },
+    {
       "id": "lernapp",
       "kind": "app",
       "title": "Learny",
