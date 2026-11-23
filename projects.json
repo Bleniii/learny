@@ -28,26 +28,90 @@
       "stateLabel": "Monitoring Projekt",
       "intro": [
         "Eine Website fällt nachts aus, der Kunde merkt es am Morgen als Erster. Genau diesen Moment soll ein Uptime-Monitor verhindern. Statt eines fertigen Tools habe ich dieses from scratch (mithilfe von KI) gebaut, nicht zum Viben, sondern um jeden Schritt zu verstehen. Vom kleinen Skript über Tests bis zum Dashboard war jedes Konzept ein Lernprozess.",
-		"Im Zentrum steht monitor.py: Es läuft dauerhaft in einer Endlosschleife, liest Ziele aus targets.txt, prüft jede URL, schreibt das Ergebnis ins Log und legt Metriken ab. Danach wartet es 60 Sekunden und beginnt von vorn. Technisch ist der Code in drei Bausteine geteilt: lade_targets, pruefe_url und aktualisiere_metriken.",
-		"Der eigentliche Zweck lag aber im Weg dorthin: Tests, Container, CI/CD und Observability waren vorher nur Begriffe für mich. Dieses Projekt hat sie zu Praxis gemacht."
+        "Im Zentrum steht monitor.py: Es läuft dauerhaft in einer Endlosschleife, liest Ziele aus targets.txt, prüft jede URL, schreibt das Ergebnis ins Log und legt Metriken ab. Danach wartet es 60 Sekunden und beginnt von vorn. Technisch ist der Code in drei Bausteine geteilt: lade_targets, pruefe_url und aktualisiere_metriken.",
+        "Der eigentliche Zweck lag aber im Weg dorthin: Tests, Container, CI/CD und Observability waren vorher nur Begriffe für mich. Dieses Projekt hat sie zu Praxis gemacht."
       ],
-      "stack": ["Python 3.11", "requests", "prometheus_client", "pytest", "Docker Compose", "Prometheus", "Grafana", "GitHub Actions"],
+      "stack": [
+        "Python 3.11",
+        "requests",
+        "prometheus_client",
+        "pytest",
+        "Docker Compose",
+        "Prometheus",
+        "Grafana",
+        "GitHub Actions"
+      ],
       "partsNote": "Drei Container in einem Compose-Netz. Die Service-Namen:",
       "parts": [
-        { "name": "monitor:8000", "note": "Prüft alle 60 Sekunden und stellt die Messwerte unter /metrics bereit" },
-        { "name": "prometheus:9090", "note": "Holt die Werte alle 15 Sekunden ab und speichert die Zeitreihen" },
-        { "name": "grafana:3000", "note": "Dashboard aus Dateien provisioniert, nicht in der Oberfläche geklickt" }
+        {
+          "name": "monitor:8000",
+          "note": "Prüft alle 60 Sekunden und stellt die Messwerte unter /metrics bereit"
+        },
+        {
+          "name": "prometheus:9090",
+          "note": "Holt die Werte alle 15 Sekunden ab und speichert die Zeitreihen"
+        },
+        {
+          "name": "grafana:3000",
+          "note": "Dashboard aus Dateien provisioniert, nicht in der Oberfläche geklickt"
+        }
       ],
       "stages": [
-        { "n": 1, "title": "Erste Abfrage", "note": "Eine URL, ein Statuscode, eine gemessene Zeit.", "done": true },
-        { "n": 2, "title": "Konfiguration und Logging", "note": "Ziele raus aus dem Code, print raus aus dem Programm.", "done": true },
-        { "n": 3, "title": "Fehlerbehandlung", "note": "Antwort, Fehlercode und Ausbleiben sauber getrennt.", "done": true },
-        { "n": 4, "title": "Tests", "note": "In Funktionen zerlegt, dann fünf pytest-Tests ohne Netzwerk.", "done": true },
-        { "n": 5, "title": "Betrieb als Dienst", "note": "systemd-Unit, Logs ans Journal statt in eine eigene Datei.", "done": true },
-        { "n": 6, "title": "Container", "note": "Dockerfile nach Änderungshäufigkeit sortiert, Lauf ohne root.", "done": true },
-        { "n": 7, "title": "Pipeline", "note": "GitHub Actions prüft bei jedem Push auf fremder Maschine.", "done": true },
-        { "n": 8, "title": "Metriken", "note": "Aus dem Skript wird ein Dienst mit /metrics-Endpunkt.", "done": true },
-                { "n": 9, "title": "Erfassung und Darstellung", "note": "Compose-Stack, Prometheus scrapt, Grafana zeigt den Verlauf.", "done": true, "image": "images/dashboard.png" }
+        {
+          "n": 1,
+          "title": "Erste Abfrage",
+          "note": "Eine URL, ein Statuscode, eine gemessene Zeit.",
+          "done": true
+        },
+        {
+          "n": 2,
+          "title": "Konfiguration und Logging",
+          "note": "Ziele raus aus dem Code, print raus aus dem Programm.",
+          "done": true
+        },
+        {
+          "n": 3,
+          "title": "Fehlerbehandlung",
+          "note": "Antwort, Fehlercode und Ausbleiben sauber getrennt.",
+          "done": true
+        },
+        {
+          "n": 4,
+          "title": "Tests",
+          "note": "In Funktionen zerlegt, dann fünf pytest-Tests ohne Netzwerk.",
+          "done": true
+        },
+        {
+          "n": 5,
+          "title": "Betrieb als Dienst",
+          "note": "systemd-Unit, Logs ans Journal statt in eine eigene Datei.",
+          "done": true
+        },
+        {
+          "n": 6,
+          "title": "Container",
+          "note": "Dockerfile nach Änderungshäufigkeit sortiert, Lauf ohne root.",
+          "done": true
+        },
+        {
+          "n": 7,
+          "title": "Pipeline",
+          "note": "GitHub Actions prüft bei jedem Push auf fremder Maschine.",
+          "done": true
+        },
+        {
+          "n": 8,
+          "title": "Metriken",
+          "note": "Aus dem Skript wird ein Dienst mit /metrics-Endpunkt.",
+          "done": true
+        },
+        {
+          "n": 9,
+          "title": "Erfassung und Darstellung",
+          "note": "Compose-Stack, Prometheus scrapt, Grafana zeigt den Verlauf.",
+          "done": true,
+          "image": "images/dashboard.png"
+        }
       ],
       "reflection": [
         {
@@ -89,34 +153,66 @@
       ],
       "repoNote": "Offene Punkte, Befehle und die vollständige Dokumentation liegen im Repository.",
       "links": [
-        { "label": "Repository ansehen", "href": "https://github.com/bleniii/uptime-monitor", "primary": true }
+        {
+          "label": "Repository ansehen",
+          "href": "https://github.com/bleniii/uptime-monitor",
+          "primary": true
+        }
       ]
     },
     {
       "id": "netzcheck",
       "kind": "detail",
-      "title": "netzcheck",
-      "tagline": "Ein Nebenprojekt for fun: Linux-Kentnisse vertiefen und mir gleichzeitig ein cooles Terminal-Dashboard bauen, das Internet-Status und Nachrichten zeigt.",
+      "title": "Netzcheck",
+      "tagline": "Nebenprojekt for fun: Linux-Kenntnisse vertiefen und ein cooles Terminal-Dashboard bauen, das Internet-Status und Nachrichten zeigt.",
       "meta": "Bash · Python · SSH · Cron",
       "state": "live",
       "stateLabel": "Nebenprojekt · Auf Anfrage",
       "intro": [
-        "Das ist eher ein Nebenprojekt gewesen, for fun: Linux-Kenntnisse vertiefen und mir ein cooles Dashboard bauen, das Internet-Status und Nachrichten auf einen Blick zeigt. Entstanden ist ein kleiner Verfügbarkeits-Monitor fürs Terminal.",
-        "Das Internet ist weg, aber wo? Am Gerät, am Router, beim Provider oder in der Zielregion? netzcheck misst statt zu raten: Ein VPS prüft rund um die Uhr Weltregionen und die eigene Leitung, also hat «Region down oder meine Leitung?» eine echte Antwort.",
-        "Bewusst Terminal statt Web-Dashboard: Einmal SSH-Pull alle 15 Minuten, sonst schläft der Rechner. Kein Browser, kein Framework, kein Daemon. Genau das Vertiefen von bash, cron und SSH war ja der Punkt.",
-        "Nebenbei mitgedacht: Pull-only ohne offene Ports, Key-Auth, gehärteter Feed-Parser, Least Privilege. Und als Bonusband laufen bereinigte Nachrichten (SRF, Amnesty) neben den Messwerten."
+        "Das Internet ist weg, aber wo? Am Gerät, am Router, beim Provider oder in der Zielregion? Netzcheck misst statt zu raten: Ein VPS prüft rund um die Uhr Weltregionen und die eigene Leitung, das Dashboard zeigt Verlauf und Ereignisse."
       ],
       "gallery": [
-        { "src": "images/netzcheck-diagram.svg", "caption": "Aufbau: Der VPS misst Weltregionen und die eigene Leitung, das Dashboard holt alles per SSH ab." },
-        { "src": "images/netzcheck-dashboard.png", "caption": "Terminal-Dashboard: Verlauf, Latenz und Status je Zone, darunter das Ereignisband." }
+        {
+          "src": "images/netzcheck-diagram.svg",
+          "caption": "Aufbau: Der VPS misst Weltregionen und die eigene Leitung, das Dashboard holt alles per SSH ab."
+        },
+        {
+          "src": "images/netzcheck-dashboard.png",
+          "caption": "Terminal-Dashboard: Verlauf, Latenz und Status je Zone, darunter das Ereignisband."
+        }
       ],
-      "stack": ["Bash", "Python 3", "SSH (Key-Auth)", "cron", "RSS"],
+      "stack": [
+        "Bash",
+        "Python 3",
+        "SSH (Key-Auth)",
+        "cron",
+        "RSS"
+      ],
       "parts": [
-        { "name": "VPS · netzbob", "note": "Messstandort: netzcheck.sh, ICMP-Messungen per cron alle 15 Minuten" },
-        { "name": "netznews.sh + feedschleuse.py", "note": "RSS-Import, bereinigt (SRF News, Amnesty International)" },
-        { "name": "netzfeed.sh", "note": "Ereigniserkennung: Ausfall, Erholung, Latenzsprung" },
-        { "name": "State-Dateien", "note": "regional.log, feed.txt, news.txt, news-detail.txt" },
-        { "name": "Heimrechner · netzdash.sh", "note": "Terminal-Dashboard per SSH-Pull, Live-Ansicht, e / n zum Aufklappen" }
+        {
+          "name": "5 Checks im Trichter",
+          "note": "lokal → IP (1.1.1.1) → DNS → Regionen → Traceroute"
+        },
+        {
+          "name": "Zweiter Beobachter",
+          "note": "VPS misst Weltregionen (Zürich bis Tokio) und die Heimleitung: trennt «Region down» von «meine Leitung»"
+        },
+        {
+          "name": "Terminal-Dashboard",
+          "note": "SSH-Pull alle 15 Minuten, sonst schläft der Rechner: kein Browser, kein Framework, kein Daemon"
+        },
+        {
+          "name": "Nachrichtenband",
+          "note": "bereinigte Feeds (SRF, Amnesty) direkt neben den Messwerten"
+        },
+        {
+          "name": "Sicherheit",
+          "note": "Pull-only, keine offenen Ports, Key-Auth, gehärteter Feed-Parser, Least Privilege"
+        },
+        {
+          "name": "Gelernt",
+          "note": "bash, cron, SSH und systemd-Dinge in der Praxis vertieft"
+        }
       ],
       "reflectionTitle": "Verbesserungswürdig",
       "reflection": [
@@ -132,9 +228,6 @@
             "Bei cron alle 15 Minuten bleiben kürzere Störungen unsichtbar, und der Gateway-Check misst je nach VPN-Zustand das Tunnel-Gateway statt des Routers. Stärker wären zwei, drei diverse Ziele pro Region."
           ]
         }
-      ],
-      "links": [
-        { "label": "Ausführliche Projektseite", "href": "netzcheck.html", "primary": true }
       ]
     },
     {
@@ -162,10 +255,14 @@
         "Es ist Free-2-Play und noch in der Testphase."
       ],
       "links": [
-        { "label": "Startseite des Spiels", "href": "https://andalusiangame.ch/", "primary": true }
+        {
+          "label": "Startseite des Spiels",
+          "href": "https://andalusiangame.ch/",
+          "primary": true
+        }
       ]
     },
-             {
+    {
       "id": "security-methodology",
       "kind": "detail",
       "title": "Security Methodology",
@@ -179,17 +276,43 @@
       ],
       "partsTitle": "Kann",
       "parts": [
-        { "name": "Risikokalibrierung", "note": "pro Aufgabe: Trivial / Ordinary / Risky" },
-        { "name": "Pipeline", "note": "erkennen → Belege → informieren → Autor entscheidet → dokumentieren → bauen" },
-        { "name": "Stufenmodell", "note": "Hinweis / Warnung / Stopp" },
-        { "name": "Fussabdruck", "note": "vor dem Bauen" },
-        { "name": "Vertrauensfragen", "note": "drei pro Dependency" },
-        { "name": "Download-Baseline" },
-        { "name": "Bedrohungs-Checks", "note": "0-Days, Supply Chain" },
-        { "name": "Richtungswarnungen und Checklisten" }
+        {
+          "name": "Risikokalibrierung",
+          "note": "pro Aufgabe: Trivial / Ordinary / Risky"
+        },
+        {
+          "name": "Pipeline",
+          "note": "erkennen → Belege → informieren → Autor entscheidet → dokumentieren → bauen"
+        },
+        {
+          "name": "Stufenmodell",
+          "note": "Hinweis / Warnung / Stopp"
+        },
+        {
+          "name": "Fussabdruck",
+          "note": "vor dem Bauen"
+        },
+        {
+          "name": "Vertrauensfragen",
+          "note": "drei pro Dependency"
+        },
+        {
+          "name": "Download-Baseline"
+        },
+        {
+          "name": "Bedrohungs-Checks",
+          "note": "0-Days, Supply Chain"
+        },
+        {
+          "name": "Richtungswarnungen und Checklisten"
+        }
       ],
       "links": [
-        { "label": "GitHub-Repository", "href": "https://github.com/bleniii/security-methodology", "primary": true }
+        {
+          "label": "GitHub-Repository",
+          "href": "https://github.com/bleniii/security-methodology",
+          "primary": true
+        }
       ]
     },
     {
