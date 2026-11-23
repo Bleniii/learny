@@ -93,15 +93,15 @@
       ]
     },
     {
-      "id": "netzcheck",
+      "id": "Netzcheck",
       "kind": "detail",
-      "title": "netzcheck",
+      "title": "Netzcheck",
       "tagline": "Ein Nebenprojekt for fun: Linux-Kentnisse vertiefen und mir gleichzeitig ein cooles Terminal-Dashboard bauen, das Internet-Status und Nachrichten zeigt.",
       "meta": "Bash · Python · SSH · Cron",
-      "state": "available",
+      "state": "live",
       "stateLabel": "Nebenprojekt · Auf Anfrage",
       "intro": [
-        "Das ist eher ein Nebenprojekt gewesen, for fun: Ich wollte meine Linux-Kenntnisse vertiefen und mir gleichzeitig ein cooles Dashboard bauen, das mir auf einen Blick zeigt, ob das Internet läuft und was gerade passiert. Entstanden ist ein kleiner Verfügbarkeits-Monitor fürs Terminal, der Netzwerk-Troubleshooting in einen festen Trichter giesst: lokal, IP, DNS, Regionen, Traceroute.",
+        "Ich wollte meine Linux-Kenntnisse vertiefen und mir gleichzeitig ein cooles Dashboard bauen, das mir auf einen Blick zeigt, ob das Internet läuft und was gerade passiert. Entstanden ist ein kleiner Verfügbarkeits-Monitor fürs Terminal, der Netzwerk-Troubleshooting in einen festen Trichter giesst: lokal, IP, DNS, Regionen, Traceroute.",
         "Dabei beantwortet es die Frage, die jedes Netzwerk-Problem stellt: Das Internet ist weg, aber wo? Am eigenen Gerät, am Router, am Anschluss, beim Provider oder in der Zielregion? netzcheck misst statt zu raten: Ein VPS prüft rund um die Uhr, was in Weltregionen von Zürich bis Tokio erreichbar ist, und misst den eigenen Heimanschluss gleich mit. «Ist die Region down, oder liegt es an meiner Leitung?» hat so eine echte Antwort statt eines Bauchgefühls.",
         "Bewusst Terminal statt Web-Dashboard: Der Heimrechner holt alle 15 Minuten einmal per SSH alles auf einmal ab und schläft sonst. Kein Browser, kein Framework, kein Daemon, Speicherbedarf im einstelligen MB-Bereich. Genau das Vertiefen von bash, cron, SSH und systemd-Dingen war ja der Punkt.",
         "Nebenbei mitgedacht: Pull-only-Architektur ohne offene Ports, Key-Authentifizierung, ein gehärteter Feed-Parser mit XXE-Schutz und Allowlist, Least Privilege überall. Und als Bonusband laufen bereinigte Nachrichten (SRF News, Amnesty International) direkt neben den Messwerten."
